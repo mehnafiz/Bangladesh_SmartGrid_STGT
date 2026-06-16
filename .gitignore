@@ -1,0 +1,101 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ---- Virtual Environments ----
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+profile_default/
+ipython_config.py
+
+# ---- Environments / Secrets ----
+.env
+.env.*
+*.secret
+
+# ---- Data (keep structure, ignore contents) ----
+data/raw/*
+data/interim/*
+data/processed/*
+data/external/*
+data/graph/*
+!data/**/.gitkeep
+!data/**/README.md
+
+# ---- Models / Checkpoints / Logs ----
+models/*
+checkpoints/*
+logs/*
+!models/.gitkeep
+!models/README.md
+!checkpoints/.gitkeep
+!checkpoints/README.md
+!logs/.gitkeep
+!logs/README.md
+
+# ---- Results (large artifacts) ----
+results/predictions/*
+!results/predictions/.gitkeep
+!results/predictions/README.md
+
+# ---- Experiment tracking ----
+mlruns/
+wandb/
+.tensorboard/
+*.ckpt
+*.pth
+*.pt
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+
+# ---- LaTeX ----
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.vrb
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo

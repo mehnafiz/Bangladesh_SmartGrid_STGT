@@ -1,0 +1,46 @@
+feature_name,pandas_dtype,inferred_kind,is_numeric,numeric_parseable_if_text
+Date,object,categorical/text,False,False
+Day of the week,object,categorical/text,False,False
+Year,int64,numeric,True,False
+Month,int64,numeric,True,False
+Max. Demand at eve. peak (Generation end),int64,numeric,True,False
+Max. Demand at eve. peak (Sub-station end),float64,numeric,True,False
+Highest Generation (Generation end),float64,numeric,True,False
+Minimum Generation (Generation end),float64,numeric,True,False
+Day-peak Generation (Generation end),float64,numeric,True,False
+Evening-peak Generation (Generation end),int64,numeric,True,False
+Minimum Generation Forecast up to 8:00 hrs.,float64,numeric,True,False
+Maximum Temperature in Dhaka was,float64,numeric,True,False
+Gas/LF limitation,int64,numeric,True,False
+Coal supply Limitation,int64,numeric,True,False
+Low water level in Kaptai lake,int64,numeric,True,False
+Plants under shut down/ maintenance,float64,numeric,True,False
+Dhaka_demand,int64,numeric,True,False
+Dhaka_supply,int64,numeric,True,False
+Dhaka_load,int64,numeric,True,False
+Chattogram_demand,int64,numeric,True,False
+Chattogram_supply,int64,numeric,True,False
+Chattogram_load,int64,numeric,True,False
+Rajshahi_demand,int64,numeric,True,False
+Rajshahi_supply,int64,numeric,True,False
+Rajshahi_load,int64,numeric,True,False
+Mymensingh_demand,int64,numeric,True,False
+Mymensingh_supply,int64,numeric,True,False
+Mymensingh_load,int64,numeric,True,False
+Sylhet_demand,int64,numeric,True,False
+Sylhet_supply,int64,numeric,True,False
+Sylhet_load,int64,numeric,True,False
+Barishal_demand,int64,numeric,True,False
+Barishal_supply,int64,numeric,True,False
+Barishal_load,int64,numeric,True,False
+Rangpur_demand,int64,numeric,True,False
+Rangpur_supply,int64,numeric,True,False
+Rangpur_load,int64,numeric,True,False
+Cumilla_demand,int64,numeric,True,False
+Cumilla_supply,int64,numeric,True,False
+Cumilla_load,int64,numeric,True,False
+Khulna_demand,int64,numeric,True,False
+Khulna_supply,int64,numeric,True,False
+Khulna_load,int64,numeric,True,False
+Holiday name,object,categorical/text,False,False
+Holiday_cat,int64,numeric,True,False

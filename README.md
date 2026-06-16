@@ -1,0 +1,62 @@
+# Bangladesh_SmartGrid_STGT
+
+**An Explainable Spatio-Temporal Graph Transformer for Multi-Task Load Shedding
+Forecasting and Operational Stress Assessment in Bangladesh Smart Power Networks**
+
+A long-term AI research project investigating explainable spatio-temporal graph
+transformer architectures for multi-task load shedding forecasting and
+operational stress assessment across Bangladesh smart power networks.
+
+---
+
+## Repository Status
+
+This repository currently contains the **foundational architecture only**.
+No models, datasets, experiments, or research content have been implemented yet.
+
+---
+
+## Repository Structure
+
+| Directory      | Purpose                                                            |
+| -------------- | ----------------------------------------------------------------- |
+| `data/`        | All datasets across the data lifecycle (raw → processed → graph). |
+| `docs/`        | Project documentation, phases, reviews, and decision logs.        |
+| `src/`         | Core source code (data, models, training, evaluation, etc.).      |
+| `configs/`     | Configuration files for experiments and pipelines.                |
+| `notebooks/`   | Exploratory and phase-wise research notebooks (Phase 01–16).      |
+| `experiments/` | Experiment definitions (baseline, graph transformer, ablation).   |
+| `results/`     | Generated figures, tables, metrics, predictions, statistics.      |
+| `models/`      | Saved model artifacts.                                             |
+| `checkpoints/` | Training checkpoints.                                              |
+| `logs/`        | Training and execution logs.                                      |
+| `manuscript/`  | Paper drafts, Overleaf project, and submission materials.         |
+| `scripts/`     | Utility and automation scripts.                                   |
+
+---
+
+## Getting Started
+
+Environment setup (choose one):
+
+```bash
+# Using pip
+pip install -r requirements.txt
+
+# Using conda
+conda env create -f environment.yml
+```
+
+---
+
+## Project Phases
+
+The research is organized into 16 sequential phases, mirrored under
+`notebooks/phase_01` through `notebooks/phase_16` and documented in
+`docs/phases/`.
+
+---
+
+## License
+
+See [LICENSE](LICENSE).

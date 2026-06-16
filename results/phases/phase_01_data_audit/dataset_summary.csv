@@ -1,0 +1,13 @@
+metric,value
+source_file,data/raw/bangladesh_smartgrid_raw.csv
+file_size_bytes,388569
+file_md5,28d8594de1b60ba37892e56ae64a8262
+n_rows,1850
+n_columns,45
+n_numeric_columns,42
+n_non_numeric_columns,3
+total_cells,83250
+total_missing_cells,0
+missing_cell_fraction,0.0
+n_duplicate_rows,0
+in_memory_bytes,960643

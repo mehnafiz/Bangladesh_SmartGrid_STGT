@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bangladesh-smartgrid-stgt"
+version = "0.0.1"
+description = "An Explainable Spatio-Temporal Graph Transformer for Multi-Task Load Shedding Forecasting and Operational Stress Assessment in Bangladesh Smart Power Networks"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Bangladesh_SmartGrid_STGT Research Project" }]
+keywords = [
+    "smart-grid",
+    "graph-transformer",
+    "spatio-temporal",
+    "load-shedding",
+    "explainable-ai",
+    "bangladesh",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["src", "experiments"]
+python_files = ["test_*.py"]

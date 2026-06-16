@@ -1,0 +1,36 @@
+candidate_target,dtype,n_missing,n_unique,min,max,mean,std,n_zeros
+Max. Demand at eve. peak (Generation end),int64,0,1464,6958.0,17200.0,11670.2654,2083.7092,0
+Max. Demand at eve. peak (Sub-station end),float64,0,1614,6752.0,16417.0,11167.4359,2028.451,0
+Highest Generation (Generation end),float64,0,1618,6958.0,16477.0,11580.175,1946.6382,0
+Minimum Generation (Generation end),float64,0,1635,4292.2,13298.0,8363.6875,2056.234,0
+Day-peak Generation (Generation end),float64,0,1655,5504.8,14488.0,9870.2854,1858.0477,0
+Evening-peak Generation (Generation end),int64,0,1616,6958.0,16477.0,11545.2151,1937.5923,0
+Minimum Generation Forecast up to 8:00 hrs.,float64,0,1659,2679.2,13298.0,8359.9549,2093.4452,0
+Coal supply Limitation,int64,0,112,0.0,444.0,110.1232,93.6467,500
+Dhaka_demand,int64,0,1339,2079.0,5944.0,3995.0859,771.105,0
+Dhaka_supply,int64,0,1317,2079.0,5869.0,3969.4465,742.9797,0
+Dhaka_load,int64,0,165,0.0,2002.0,25.9568,90.8312,1497
+Chattogram_demand,int64,0,640,611.0,1633.0,1147.4162,176.265,0
+Chattogram_supply,int64,0,632,611.0,1564.0,1141.9016,171.3206,0
+Chattogram_load,int64,0,67,0.0,500.0,5.4908,30.0525,1761
+Rajshahi_demand,int64,0,750,746.0,1881.0,1189.5416,228.0579,0
+Rajshahi_supply,int64,0,737,746.0,1870.0,1178.4157,218.9415,0
+Rajshahi_load,int64,0,95,0.0,356.0,11.2092,40.4716,1675
+Mymensingh_demand,int64,0,631,577.0,1463.0,937.2757,171.9909,0
+Mymensingh_supply,int64,0,536,577.0,1244.0,901.8589,138.3166,0
+Mymensingh_load,int64,0,190,0.0,665.0,35.0811,69.9294,1330
+Sylhet_demand,int64,0,374,257.0,722.0,446.4238,98.72,0
+Sylhet_supply,int64,0,355,257.0,722.0,439.52,91.6936,0
+Sylhet_load,int64,0,87,0.0,350.0,6.9914,24.2977,1630
+Barishal_demand,int64,0,318,121.0,567.0,331.5222,79.9902,0
+Barishal_supply,int64,0,315,121.0,552.0,330.8692,79.0363,0
+Barishal_load,int64,0,20,0.0,110.0,0.7541,6.702,1822
+Rangpur_demand,int64,0,546,190.0,1134.0,724.1632,178.0447,0
+Rangpur_supply,int64,0,495,190.0,1056.0,710.5654,165.0199,0
+Rangpur_load,int64,0,117,0.0,272.0,13.6189,37.7014,1574
+Cumilla_demand,int64,0,727,594.0,1619.0,1055.3384,233.1407,0
+Cumilla_supply,int64,0,686,594.0,1583.0,1038.3697,216.0145,0
+Cumilla_load,int64,0,117,0.0,440.0,16.6822,49.4461,1531
+Khulna_demand,int64,0,807,838.0,2108.0,1379.1622,269.8941,0
+Khulna_supply,int64,0,787,838.0,2088.0,1367.9151,260.6112,0
+Khulna_load,int64,0,100,0.0,400.0,11.1903,45.342,1690

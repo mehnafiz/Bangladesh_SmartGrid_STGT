@@ -1,0 +1,46 @@
+column_index,feature_name,dtype,n_unique,n_missing,example_values
+0,Date,object,1850,0,2019-11-21 00:00:00 | 2019-11-22 00:00:00 | 2019-11-23 00:00:00
+1,Day of the week,object,7,0,Thursday | Friday | Saturday
+2,Year,int64,6,0,2019 | 2020 | 2021
+3,Month,int64,12,0,11 | 12 | 1
+4,Max. Demand at eve. peak (Generation end),int64,1464,0,8785 | 7886 | 8827
+5,Max. Demand at eve. peak (Sub-station end),float64,1614,0,8110.0 | 7344.0 | 8197.0
+6,Highest Generation (Generation end),float64,1618,0,8785.0 | 7886.0 | 8827.0
+7,Minimum Generation (Generation end),float64,1635,0,5647.0 | 5283.5 | 5200.0
+8,Day-peak Generation (Generation end),float64,1655,0,7294.7 | 5725.9 | 6731.7
+9,Evening-peak Generation (Generation end),int64,1616,0,8785 | 7886 | 8946
+10,Minimum Generation Forecast up to 8:00 hrs.,float64,1659,0,5475.9 | 5200.0 | 5470.0
+11,Maximum Temperature in Dhaka was,float64,201,0,29.6 | 29.3 | 28.8
+12,Gas/LF limitation,int64,1451,0,1349 | 1164 | 1114
+13,Coal supply Limitation,int64,112,0,0 | 85 | 100
+14,Low water level in Kaptai lake,int64,148,0,0 | 150 | 149
+15,Plants under shut down/ maintenance,float64,1082,0,470.0 | 555.0 | 324.0
+16,Dhaka_demand,int64,1339,0,3214 | 2686 | 3223
+17,Dhaka_supply,int64,1317,0,3214 | 2686 | 3223
+18,Dhaka_load,int64,165,0,0 | 45 | 111
+19,Chattogram_demand,int64,640,0,905 | 813 | 897
+20,Chattogram_supply,int64,632,0,905 | 813 | 897
+21,Chattogram_load,int64,67,0,0 | 20 | 45
+22,Rajshahi_demand,int64,750,0,953 | 908 | 974
+23,Rajshahi_supply,int64,737,0,953 | 908 | 974
+24,Rajshahi_load,int64,95,0,0 | 37 | 169
+25,Mymensingh_demand,int64,631,0,639 | 613 | 652
+26,Mymensingh_supply,int64,536,0,639 | 613 | 652
+27,Mymensingh_load,int64,190,0,0 | 350 | 44
+28,Sylhet_demand,int64,374,0,329 | 320 | 328
+29,Sylhet_supply,int64,355,0,329 | 320 | 328
+30,Sylhet_load,int64,87,0,0 | 200 | 20
+31,Barishal_demand,int64,318,0,208 | 201 | 210
+32,Barishal_supply,int64,315,0,208 | 201 | 210
+33,Barishal_load,int64,20,0,0 | 35 | 40
+34,Rangpur_demand,int64,546,0,208 | 201 | 210
+35,Rangpur_supply,int64,495,0,208 | 201 | 210
+36,Rangpur_load,int64,117,0,0 | 54 | 31
+37,Cumilla_demand,int64,727,0,701 | 694 | 729
+38,Cumilla_supply,int64,686,0,701 | 694 | 729
+39,Cumilla_load,int64,117,0,0 | 40 | 20
+40,Khulna_demand,int64,807,0,953 | 908 | 974
+41,Khulna_supply,int64,787,0,953 | 908 | 974
+42,Khulna_load,int64,100,0,0 | 55 | 128
+43,Holiday name,object,31,0,No Holiday | Victory Day | Christmas
+44,Holiday_cat,int64,4,0,0 | 1 | 3
