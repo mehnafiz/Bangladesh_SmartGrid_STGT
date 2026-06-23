@@ -1,0 +1,9 @@
+contribution_id,research_gap_id,novelty_id,contribution_statement,contribution_type,manuscript_section_hint
+CON-01,GAP-01,NOV-01,Empirical anchoring of spatio-temporal multi-task load analytics on a curated Bangladesh smart-grid dataset with documented division-level coverage.,Dataset & regional case study,Data description; Experimental setup
+CON-02,GAP-02,NOV-02,Multi-task learning framework unifying demand forecasting and sparse load-shedding prediction under shared regional representations.,Methodological,Problem formulation; Multi-task objective
+CON-03,GAP-03,NOV-03,Forecast-centric shedding formulation addressing zero-inflated daily _load signals identified in exploratory analysis.,Task formulation,Target definition; Loss design (conceptual)
+CON-04,GAP-04,NOV-04,Spatio-temporal graph-transformer approach capturing inter-division demand coupling validated in Phase 02 correlation structure.,Architectural (conceptual positioning only),Related work contrast; Proposed approach overview
+CON-05,GAP-05,NOV-05,Explainability pathway linking SHAP-style attribution to regional graph features and multi-task outputs for operator interpretability.,Explainability,Explainability methodology; Results discussion
+CON-06,GAP-06,NOV-06,Operational stress assessment task complementing demand and shedding heads using engineered stress indices from validated feature pipeline.,Empirical & operational,Multi-task heads; Stress assessment results
+CON-07,GAP-07,NOV-07,"Feature-engineering blueprint and validated covariate set (calendar, lags, limitation stacks, regional shares) supporting graph-temporal learning.",Feature engineering,Features; Ablation rationale
+CON-08,GAP-08,NOV-08,Transparent chronological train/validation/test protocol with leakage validation supporting fair comparison to literature baselines.,Reproducibility,Experimental protocol; Limitations
