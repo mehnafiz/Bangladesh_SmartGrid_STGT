@@ -1,0 +1,8 @@
+action,target,old_value,new_value,reason
+validate_timestamp_dtype,Date,object (string),datetime64[ns],"timestamp validation; values unchanged, type corrected for integrity"
+correct_invalid_weekday_label,row 97 (2020-02-27),Friday,Thursday,weekday label inconsistent with authoritative Date
+correct_invalid_weekday_label,row 98 (2020-02-28),Saturday,Friday,weekday label inconsistent with authoritative Date
+correct_invalid_weekday_label,row 742 (2021-12-05),Saturday,Sunday,weekday label inconsistent with authoritative Date
+correct_invalid_weekday_label,row 919 (2022-05-31),Wednesday,Tuesday,weekday label inconsistent with authoritative Date
+correct_invalid_weekday_label,row 1205 (2023-03-14),Wednesday,Tuesday,weekday label inconsistent with authoritative Date
+correct_invalid_weekday_label,row 1490 (2023-12-29),Wednesday,Friday,weekday label inconsistent with authoritative Date

@@ -1,0 +1,6 @@
+step,action,details
+1,load_processed_splits,"train=1295, val=277, test=278"
+2,engineer_on_clean_timeline,65 high-priority features on 1850 rows
+3,train_only_fits,"temperature_anomaly_month, operational_stress_index, StandardScaler"
+4,merge_by_date,engineered features attached to processed baseline columns
+5,save_feature_splits,data/features

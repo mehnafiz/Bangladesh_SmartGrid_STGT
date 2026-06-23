@@ -1,0 +1,66 @@
+feature_name,blueprint_priority,feature_category,mathematical_definition,required_input_columns,implementation_status,blueprint_reference
+day_of_year_sin,High,Temporal,sin(2π · doy(t) / 365.25) where doy = day-of-year from Date,Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+day_of_year_cos,High,Temporal,cos(2π · doy(t) / 365.25),Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+trend_index,High,Temporal,t_idx = (Date - Date_min).days; optionally StandardScaled on train,Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+gap_days_since_previous_observation,High,Temporal,Δt = (Date_t - Date_{t-1}).days; first row = NaN or 0,Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+total_regional_demand,High,Grid,D_total(t) = Σ_r D_r(t),all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+total_regional_load,High,Grid,L_total(t) = Σ_r L_r(t),,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+generation_reserve,High,Grid,GR(t) = Highest Generation(t) - Max Eve Peak Gen-end(t),Highest Generation (Generation end); Max. Demand at eve. peak (Generation end),Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+temperature_anomaly_month,High,Weather,"TA(t) = T(t) - μ_T,month; μ computed on train split only per calendar month",Maximum Temperature in Dhaka was; Month,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+total_operational_limitation,High,Operational,TOL(t) = Gas/LF + Coal + Water + Shutdown MW,Gas/LF limitation; Coal supply Limitation; Low water level in Kaptai lake; Plants under shut down/ maintenance,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+operational_stress_index,High,Operational,OSI(t) = w1·(L_total/D_total) + w2·(1-GR/Highest Gen) + w3·TOL/Highest Gen; weights w from train-only normalisation (fixed after fit),total_regional_load; total_regional_demand; generation_reserve; total_operational_limitation; Highest Generation (Generation end),Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+any_regional_shedding,High,Operational,ARS(t) = 1 if ∃r: L_r(t) > 0 else 0,all regional load columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Dhaka,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Dhaka_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Chattogram,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Chattogram_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Rajshahi,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Rajshahi_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Mymensingh,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Mymensingh_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Sylhet,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Sylhet_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Barishal,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Barishal_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Rangpur,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Rangpur_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Cumilla,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Cumilla_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_1_Khulna,High,Temporal,D_r(t-1) using strictly past observed row (not calendar day if gap),Khulna_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Dhaka,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Dhaka_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Chattogram,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Chattogram_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Rajshahi,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Rajshahi_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Mymensingh,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Mymensingh_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Sylhet,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Sylhet_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Barishal,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Barishal_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Rangpur,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Rangpur_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Cumilla,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Cumilla_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_lag_7_Khulna,High,Temporal,"D_r(t-7_obs) — 7th preceding observed row (gap-aware, not calendar D-7)",Khulna_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Dhaka,High,Temporal,L_r(t-1); past observed row only,Dhaka_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Chattogram,High,Temporal,L_r(t-1); past observed row only,Chattogram_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Rajshahi,High,Temporal,L_r(t-1); past observed row only,Rajshahi_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Mymensingh,High,Temporal,L_r(t-1); past observed row only,Mymensingh_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Sylhet,High,Temporal,L_r(t-1); past observed row only,Sylhet_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Barishal,High,Temporal,L_r(t-1); past observed row only,Barishal_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Rangpur,High,Temporal,L_r(t-1); past observed row only,Rangpur_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Cumilla,High,Temporal,L_r(t-1); past observed row only,Cumilla_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+load_lag_1_Khulna,High,Temporal,L_r(t-1); past observed row only,Khulna_load; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Dhaka,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Dhaka_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Chattogram,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Chattogram_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Rajshahi,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Rajshahi_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Mymensingh,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Mymensingh_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Sylhet,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Sylhet_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Barishal,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Barishal_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Rangpur,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Rangpur_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Cumilla,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Cumilla_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+demand_rolling_mean_7_Khulna,High,Statistical,mean(D_r(t-k)) for k=1..7 observed rows; min_periods=7; train-only for any fill params,Khulna_demand; Date,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Dhaka,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Dhaka_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Chattogram,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Chattogram_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Rajshahi,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Rajshahi_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Mymensingh,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Mymensingh_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Sylhet,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Sylhet_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Barishal,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Barishal_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Rangpur,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Rangpur_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Cumilla,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Cumilla_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_demand_share_Khulna,High,Regional,share_r(t) = D_r(t) / Σ_{j∈R} D_j(t),Khulna_demand; all regional demand columns,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Dhaka,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Dhaka_load; Dhaka_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Chattogram,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Chattogram_load; Chattogram_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Rajshahi,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Rajshahi_load; Rajshahi_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Mymensingh,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Mymensingh_load; Mymensingh_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Sylhet,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Sylhet_load; Sylhet_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Barishal,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Barishal_load; Barishal_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Rangpur,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Rangpur_load; Rangpur_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Cumilla,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Cumilla_load; Cumilla_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv
+regional_load_intensity_Khulna,High,Regional,"λ_r(t) = L_r(t) / max(D_r(t), ε); ε=1 MW",Khulna_load; Khulna_demand,Implemented,results/phases/phase_05A_feature_blueprint/feature_inventory.csv

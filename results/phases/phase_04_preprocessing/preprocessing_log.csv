@@ -1,0 +1,5 @@
+step,action,details
+1,chronological_split,"train=1295, val=277, test=278"
+2,fit_pipeline,fitted on train split only
+3,transform_splits,train/validation/test transformed
+4,save_outputs,parquet splits + pipeline.pkl

@@ -1,0 +1,4 @@
+column,n_categories_in_train,categories_in_train,n_unique_in_validation,n_unique_in_test,unseen_in_val,unseen_in_test
+Day of the week,7,Friday | Monday | Saturday | Sunday | Thursday | Tuesday | Wednesday,7,7,False,False
+Holiday name,28,Ashura | Baishakhi Purima | Buddho Purnima | Christmas | Durga Puja | EID-E-MILADUNNOBI | Eid-ul-Adha | Eid-ul-Fitr | Father of nation's Birth | Independence Day | International mother language day | Janmo-astami | Jatiyo shokh dibosh | Jonmoastami | May Day | No Holiday | Pohela Baishakh | Ramadan | Ramadan +May Day | Ramadan +Sab-E-Qadar | Ramadan+Independence Day | Ramadan+May | Ramadan+May Day | Ramadan+Sab-E-QADAR | Ramadan+baishakhi  purnima | Ramadan+pohela baishakh | Sab-E-Barat | Victory Day,14,15,True,True
+Holiday_cat,4,0 | 1 | 2 | 3,4,4,False,False

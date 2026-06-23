@@ -1,0 +1,86 @@
+# Phase 04 — Data Preprocessing configuration
+# Fit parameters are learned from the training split only.
+
+seed: 42
+
+input:
+  path: data/interim/bangladesh_smartgrid_clean.parquet
+
+output:
+  processed_dir: data/processed
+  pipeline_path: models/preprocessing_pipeline.pkl
+  reports_dir: results/phases/phase_04_preprocessing
+
+split:
+  strategy: chronological
+  train_ratio: 0.70
+  validation_ratio: 0.15
+  test_ratio: 0.15
+  sort_column: Date
+
+columns:
+  datetime:
+    - Date
+  categorical:
+    - Day of the week
+    - Holiday name
+    - Holiday_cat
+  numeric:
+    - Year
+    - Month
+    - Max. Demand at eve. peak (Generation end)
+    - Max. Demand at eve. peak (Sub-station end)
+    - Highest Generation (Generation end)
+    - Minimum Generation (Generation end)
+    - Day-peak Generation (Generation end)
+    - Evening-peak Generation (Generation end)
+    - Minimum Generation Forecast up to 8:00 hrs.
+    - Maximum Temperature in Dhaka was
+    - Gas/LF limitation
+    - Coal supply Limitation
+    - Low water level in Kaptai lake
+    - Plants under shut down/ maintenance
+    - Dhaka_demand
+    - Dhaka_supply
+    - Dhaka_load
+    - Chattogram_demand
+    - Chattogram_supply
+    - Chattogram_load
+    - Rajshahi_demand
+    - Rajshahi_supply
+    - Rajshahi_load
+    - Mymensingh_demand
+    - Mymensingh_supply
+    - Mymensingh_load
+    - Sylhet_demand
+    - Sylhet_supply
+    - Sylhet_load
+    - Barishal_demand
+    - Barishal_supply
+    - Barishal_load
+    - Rangpur_demand
+    - Rangpur_supply
+    - Rangpur_load
+    - Cumilla_demand
+    - Cumilla_supply
+    - Cumilla_load
+    - Khulna_demand
+    - Khulna_supply
+    - Khulna_load
+
+encoding:
+  method: one_hot
+  handle_unknown: ignore
+  sparse: false
+
+scaling:
+  method: standard
+  fit_on: train_only
+
+dtype_optimization:
+  processed_float: float32
+
+leakage_prevention:
+  fit_transformers_on: train
+  transform_only_on: [validation, test]
+  preserve_temporal_order: true

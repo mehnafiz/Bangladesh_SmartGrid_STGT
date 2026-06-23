@@ -1,0 +1,42 @@
+column,train_mean,train_std,scaler,fit_on
+Year,2021.186873,1.07293,standard,train_only
+Month,6.293436,3.532583,standard,train_only
+Max. Demand at eve. peak (Generation end),11153.919691,1868.038324,standard,train_only
+Max. Demand at eve. peak (Sub-station end),10647.318425,1833.387609,standard,train_only
+Highest Generation (Generation end),11086.14417,1762.253115,standard,train_only
+Minimum Generation (Generation end),7820.205297,1805.180871,standard,train_only
+Day-peak Generation (Generation end),9282.389143,1645.117855,standard,train_only
+Evening-peak Generation (Generation end),11052.817761,1750.002464,standard,train_only
+Minimum Generation Forecast up to 8:00 hrs.,7821.508564,1840.81408,standard,train_only
+Maximum Temperature in Dhaka was,31.464093,4.071621,standard,train_only
+Gas/LF limitation,2182.740541,1013.07083,standard,train_only
+Coal supply Limitation,116.381467,95.6787,standard,train_only
+Low water level in Kaptai lake,131.8139,74.845933,standard,train_only
+Plants under shut down/ maintenance,2045.852124,753.137395,standard,train_only
+Dhaka_demand,3778.390734,707.31048,standard,train_only
+Dhaka_supply,3758.05251,684.254864,standard,train_only
+Dhaka_load,21.625483,96.549543,standard,train_only
+Chattogram_demand,1117.572973,173.125894,standard,train_only
+Chattogram_supply,1112.805405,168.773946,standard,train_only
+Chattogram_load,4.733591,29.820429,standard,train_only
+Rajshahi_demand,1147.777606,199.670663,standard,train_only
+Rajshahi_supply,1137.423938,191.091331,standard,train_only
+Rajshahi_load,10.350579,39.832418,standard,train_only
+Mymensingh_demand,892.126641,149.414629,standard,train_only
+Mymensingh_supply,868.048649,129.115386,standard,train_only
+Mymensingh_load,23.928185,63.316124,standard,train_only
+Sylhet_demand,426.330502,89.583578,standard,train_only
+Sylhet_supply,420.702703,83.781544,standard,train_only
+Sylhet_load,5.348263,23.022533,standard,train_only
+Barishal_demand,309.661004,68.189619,standard,train_only
+Barishal_supply,309.190734,67.182917,standard,train_only
+Barishal_load,0.531274,5.911737,standard,train_only
+Rangpur_demand,677.606178,171.927077,standard,train_only
+Rangpur_supply,669.037838,165.448073,standard,train_only
+Rangpur_load,8.440154,31.495702,standard,train_only
+Cumilla_demand,1008.391506,218.053103,standard,train_only
+Cumilla_supply,995.195367,203.810931,standard,train_only
+Cumilla_load,13.115058,47.682896,standard,train_only
+Khulna_demand,1324.159073,244.733172,standard,train_only
+Khulna_supply,1312.672587,233.486684,standard,train_only
+Khulna_load,11.182239,46.504411,standard,train_only
