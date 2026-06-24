@@ -40,7 +40,6 @@ ipython_config.py
 *.secret
 
 # ---- Data (keep structure, ignore contents) ----
-docs/prompts/**
 !data/**/.gitkeep
 !data/**/README.md
 
