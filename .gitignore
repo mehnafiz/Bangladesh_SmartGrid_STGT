@@ -40,18 +40,10 @@ ipython_config.py
 *.secret
 
 # ---- Data (keep structure, ignore contents) ----
-data/raw/*
-data/interim/*
-data/processed/*
-data/external/*
-data/graph/*
 !data/**/.gitkeep
 !data/**/README.md
 
 # ---- Models / Checkpoints / Logs ----
-models/*
-checkpoints/*
-logs/*
 !models/.gitkeep
 !models/README.md
 !checkpoints/.gitkeep
@@ -60,7 +52,6 @@ logs/*
 !logs/README.md
 
 # ---- Results (large artifacts) ----
-results/predictions/*
 !results/predictions/.gitkeep
 !results/predictions/README.md
 
