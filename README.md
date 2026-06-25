@@ -9,6 +9,16 @@ operational stress assessment across Bangladesh smart power networks.
 
 ---
 
+## Raw data link
+
+https://data.mendeley.com/datasets/x7r7wdb39k/1
+
+Version 5
+
+---
+
+---
+
 ## Repository Status
 
 The repository contains completed foundation sprints (data, models, training,
@@ -36,6 +46,7 @@ See `experiments/architecture_freeze_revision/Final_Architecture_Decision.md`.
 | `models/`      | Saved model artifacts.                                             |
 | `checkpoints/` | Training checkpoints.                                              |
 | `logs/`        | Training and execution logs.                                      |
+| `paper/`       | Paper materials.         |
 | `manuscript/`  | Paper drafts, Overleaf project, and submission materials.         |
 | `scripts/`     | Utility and automation scripts.                                   |
 
