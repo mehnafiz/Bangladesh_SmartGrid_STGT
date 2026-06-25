@@ -30,6 +30,7 @@ No models, datasets, experiments, or research content have been implemented yet.
 | `models/`      | Saved model artifacts.                                             |
 | `checkpoints/` | Training checkpoints.                                              |
 | `logs/`        | Training and execution logs.                                      |
+| `paper/`       | Paper materials.         |
 | `manuscript/`  | Paper drafts, Overleaf project, and submission materials.         |
 | `scripts/`     | Utility and automation scripts.                                   |
 
