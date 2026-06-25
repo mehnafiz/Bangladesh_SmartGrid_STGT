@@ -9,6 +9,14 @@ operational stress assessment across Bangladesh smart power networks.
 
 ---
 
+## Raw data link
+
+https://data.mendeley.com/datasets/x7r7wdb39k/1
+
+---
+
+---
+
 ## Repository Status
 
 This repository currently contains the **foundational architecture only**.
