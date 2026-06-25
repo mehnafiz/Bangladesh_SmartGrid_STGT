@@ -1,0 +1,2 @@
+trial_id,source,num_graph_layers,graph_hidden_dim,graph_dropout,num_transformer_layers,num_attention_heads,transformer_dropout,learning_rate,weight_decay,batch_size
+0,phase09_default_baseline,2,128,0.1,2,4,0.1,0.0005,0.0001,32

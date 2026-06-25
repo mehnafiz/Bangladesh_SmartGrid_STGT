@@ -34,5 +34,6 @@ target-version = "py311"
 select = ["E", "F", "I", "W", "UP", "B"]
 
 [tool.pytest.ini_options]
-testpaths = ["src", "experiments"]
+testpaths = ["tests"]
+pythonpath = ["src"]
 python_files = ["test_*.py"]

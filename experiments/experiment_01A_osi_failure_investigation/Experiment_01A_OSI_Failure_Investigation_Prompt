@@ -1,0 +1,34 @@
+Read Experiment 01 outputs.
+
+Execute ONLY Experiment 01A.
+
+Investigate why OSI forecasting failed.
+
+Perform:
+
+- Distribution analysis
+- Prediction analysis
+- Variance analysis
+- Correlation analysis
+- Loss weight investigation
+
+Generate:
+
+- osi_distribution_report.md
+- prediction_distribution_report.md
+- variance_analysis.md
+- correlation_analysis.md
+- loss_weight_analysis.md
+- root_cause_report.md
+
+Do NOT modify architecture.
+
+Do NOT modify graph construction.
+
+Do NOT run benchmarks.
+
+Do NOT run ablations.
+
+Identify the most likely root cause.
+
+Execute only Experiment 01A.

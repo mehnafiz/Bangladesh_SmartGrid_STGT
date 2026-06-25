@@ -1,0 +1,12 @@
+group_id,group_name,scope,features,tasks,shap_coalition
+G1,regional_demand_block,node,9 × {Region}_demand,demand;stress,True
+G2,regional_supply_block,node,9 × {Region}_supply,demand,True
+G3,regional_load_block,node,9 × {Region}_load,demand;stress,True
+G4,engineered_lags_rolling,node,"demand_lag_1/7, load_lag_1, rolling_mean_7 × 9",demand,True
+G5,regional_share_intensity,node,"regional_demand_share, regional_load_intensity × 9",demand;stress,True
+G6,calendar_trend,global,"day_of_year_sin/cos, trend_index, gap_days, Holiday_cat",demand;stress,True
+G7,grid_aggregates,global,"total_regional_demand, total_regional_load, generation_reserve",demand;stress,True
+G8,limitation_stack,global,"gas, coal, water, maintenance limitations, total_operational_limitation",stress;demand,True
+G9,weather_anomaly,global,temperature_anomaly_month,demand,True
+G10,national_generation_scalars,global,"Max eve peak gen-end, Highest Generation",demand;stress,True
+G11,shedding_indicator,global,any_regional_shedding,stress,True

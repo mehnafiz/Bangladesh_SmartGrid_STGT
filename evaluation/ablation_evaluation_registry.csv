@@ -1,0 +1,8 @@
+ablation_id,variant_name,study_category,spatial_branch,temporal_branch,multi_task,stress_output,seed,reference
+A1,PF-STGT Full Model,reference,True,True,True,True,"42, 123, 456",True
+A2,Without Graph Module,component_removal,False,True,True,True,42,False
+A3,Without Transformer Module,component_removal,True,False,True,True,42,False
+A4,Without Multi-Task Learning,multi_task,True,True,False,False,42,False
+A5-GEO,Geographical Graph Only,hybrid_graph,True,True,True,True,42,False
+A5-CORR,Correlation Graph Only,hybrid_graph,True,True,True,True,42,False
+A6,BiLSTM Black-Box Trunk,explainability,False,True,True,False,42,False

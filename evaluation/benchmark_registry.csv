@@ -1,0 +1,8 @@
+benchmark_id,model_name,family,uses_graph,tasks,input_window_T,horizon_h,seeds,primary_task
+B01,Linear Regression,Classical ML,False,demand,7,1,42,demand
+B02,Random Forest,Classical ML,False,demand,7,1,42,demand
+B03,XGBoost,Classical ML,False,demand,7,1,42,demand
+B04,LSTM,Deep Learning,False,demand,7,1,"42, 123, 456",demand
+B05,GRU,Deep Learning,False,demand,7,1,"42, 123, 456",demand
+B06,T-GCN,Spatio-Temporal GNN,True,demand,7,1,"42, 123, 456",demand
+B07,PF-STGT,Proposed,True,demand;stress,7,1,"42, 123, 456",demand;stress

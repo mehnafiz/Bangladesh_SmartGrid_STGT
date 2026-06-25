@@ -1,0 +1,594 @@
+{
+  "model": "S2",
+  "checkpoint": "/Users/mehnafiz/Documents/SEMESTER/Research Paper/Gomes Sir/FInal_DL/Bangladesh_SmartGrid_STGT/experiments/experiment_03_ablation_studies/checkpoints/A6/seed_42/best.pt",
+  "device": "mps",
+  "global_stress_shap": {
+    "G1": 0.004161977997864596,
+    "G3": 0.001381813109765062,
+    "G5": 0.004610896395752207,
+    "G6": 0.018992365803569555,
+    "G7": 0.008698214060859754,
+    "G8": 0.01910967470612377,
+    "G10": 0.008188049774616957,
+    "G11": 0.001278028742308379
+  },
+  "global_demand_shap_dhaka": {
+    "G1": 77.7172607421875,
+    "G2": 77.41254081726075,
+    "G3": 2.2826942399144174,
+    "G4": 101.2567527770996,
+    "G5": 69.4518615603447,
+    "G6": 162.33954467773438,
+    "G7": 85.84384741783143,
+    "G8": 23.146655225753783,
+    "G9": 10.86901321709156,
+    "G10": 91.4361575961113
+  },
+  "perm_spearman_demand": -0.5636363636363636,
+  "perm_spearman_stress": 0.3659625273557,
+  "attention_adjacency_spearman": 0.42168875900219194,
+  "mean_temporal_alpha": [
+    0.1622404009103775,
+    0.14047054946422577,
+    0.1374974250793457,
+    0.14587685465812683,
+    0.13563324511051178,
+    0.13481782376766205,
+    0.14346371591091156
+  ],
+  "node_mass_mean": {
+    "Barishal": 6.990674714247386,
+    "Chattogram": 6.206650157769521,
+    "Cumilla": 18.039862195650738,
+    "Dhaka": 340.3561363220215,
+    "Khulna": 108.91391213734944,
+    "Mymensingh": 93.83879085381825,
+    "Rajshahi": 110.31708963712056,
+    "Rangpur": 1.98840353017052,
+    "Sylhet": 9.184289534886679
+  },
+  "regional_phi": {
+    "Barishal": [
+      24.121899700164796,
+      29.06953125,
+      1.1016118660569192,
+      20.498026180267335,
+      15.598984050750733,
+      7.845653820037842,
+      13.272732549905777,
+      0.5668575167655945,
+      1.1862548053264619,
+      7.144527357816696
+    ],
+    "Chattogram": [
+      19.291712379455568,
+      43.16297950744629,
+      4.603650200366974,
+      28.684658241271972,
+      40.1540424823761,
+      22.105872631072998,
+      31.5075745344162,
+      6.501289200782776,
+      4.0502328157424925,
+      19.734589862823487
+    ],
+    "Cumilla": [
+      34.51220512390137,
+      58.651665115356444,
+      8.636641931533813,
+      49.642324447631836,
+      33.77131099700928,
+      18.314146518707275,
+      33.93335582017899,
+      6.6871809482574465,
+      5.151880693435669,
+      16.463036131858825
+    ],
+    "Dhaka": [
+      81.46430358886718,
+      85.07833938598633,
+      2.6126516312360764,
+      106.95408630371094,
+      94.65425641536713,
+      172.22767028808593,
+      110.69954109191895,
+      24.186792182922364,
+      12.98354172706604,
+      117.802401304245
+    ],
+    "Khulna": [
+      26.449566078186034,
+      24.52506880760193,
+      0.624957150220871,
+      41.27283973693848,
+      9.631991040706634,
+      33.395562934875485,
+      21.388862657546998,
+      6.9278261184692385,
+      3.5304588615894317,
+      52.51737294197083
+    ],
+    "Mymensingh": [
+      30.068508434295655,
+      43.96176643371582,
+      5.53461687862873,
+      40.69555149078369,
+      18.950467419624328,
+      32.80332489013672,
+      33.11950297951698,
+      4.129101943969727,
+      3.2857602715492247,
+      21.531221866607666
+    ],
+    "Rajshahi": [
+      22.745201921463014,
+      64.78679542541504,
+      2.9535379827022554,
+      42.37417411804199,
+      8.839684224128723,
+      20.133202648162843,
+      31.0456593811512,
+      7.255142879486084,
+      6.147281217575073,
+      19.38462629318237
+    ],
+    "Rangpur": [
+      20.334931945800783,
+      44.37778949737549,
+      10.463345763087272,
+      36.76026649475098,
+      24.563959407806397,
+      38.61944580078125,
+      31.213872963190077,
+      4.969760084152222,
+      4.125659549236298,
+      14.21250548362732
+    ],
+    "Sylhet": [
+      19.335635280609132,
+      39.13679542541504,
+      4.403551748394966,
+      29.39179859161377,
+      15.747209882736206,
+      6.056525659561157,
+      16.18163928985596,
+      2.7718855440616608,
+      2.1303503215312958,
+      3.386989438533783
+    ]
+  },
+  "cases": [
+    {
+      "date": "2023-11-16",
+      "split": "validation",
+      "stratum": "high_osi",
+      "osi": 0.5592247843742371,
+      "demand_total": 10362.0,
+      "demand_pred_dhaka": 4246.03466796875,
+      "osi_pred": 0.3316076397895813,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-6",
+        "t-0",
+        "t-5"
+      ]
+    },
+    {
+      "date": "2024-01-19",
+      "split": "validation",
+      "stratum": "high_osi",
+      "osi": 0.5505136251449585,
+      "demand_total": 9782.0,
+      "demand_pred_dhaka": 3748.338134765625,
+      "osi_pred": 0.4325428605079651,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-0",
+        "t-6",
+        "t-4"
+      ]
+    },
+    {
+      "date": "2024-01-06",
+      "split": "validation",
+      "stratum": "high_osi",
+      "osi": 0.4934953451156616,
+      "demand_total": 8225.0,
+      "demand_pred_dhaka": 3655.862548828125,
+      "osi_pred": 0.40924519300460815,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-0",
+        "t-1",
+        "t-6"
+      ]
+    },
+    {
+      "date": "2024-01-18",
+      "split": "validation",
+      "stratum": "high_osi",
+      "osi": 0.48282670974731445,
+      "demand_total": 9061.0,
+      "demand_pred_dhaka": 3925.65283203125,
+      "osi_pred": 0.4224051535129547,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-6",
+        "t-3",
+        "t-5"
+      ]
+    },
+    {
+      "date": "2023-12-31",
+      "split": "validation",
+      "stratum": "high_osi",
+      "osi": 0.43426844477653503,
+      "demand_total": 9415.0,
+      "demand_pred_dhaka": 4011.108642578125,
+      "osi_pred": 0.36624106764793396,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-0",
+        "t-6",
+        "t-3"
+      ]
+    },
+    {
+      "date": "2023-07-25",
+      "split": "validation",
+      "stratum": "low_osi",
+      "osi": 0.1841956377029419,
+      "demand_total": 14651.0,
+      "demand_pred_dhaka": 5144.84130859375,
+      "osi_pred": 0.24536019563674927,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-6",
+        "t-5",
+        "t-2"
+      ]
+    },
+    {
+      "date": "2023-07-28",
+      "split": "validation",
+      "stratum": "low_osi",
+      "osi": 0.18708713352680206,
+      "demand_total": 14463.0,
+      "demand_pred_dhaka": 5014.17431640625,
+      "osi_pred": 0.22347323596477509,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-5",
+        "t-4",
+        "t-0"
+      ]
+    },
+    {
+      "date": "2023-07-29",
+      "split": "validation",
+      "stratum": "low_osi",
+      "osi": 0.18708713352680206,
+      "demand_total": 14463.0,
+      "demand_pred_dhaka": 5100.85009765625,
+      "osi_pred": 0.22127734124660492,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-6",
+        "t-5",
+        "t-4"
+      ]
+    },
+    {
+      "date": "2023-09-28",
+      "split": "validation",
+      "stratum": "low_osi",
+      "osi": 0.19957473874092102,
+      "demand_total": 12861.0,
+      "demand_pred_dhaka": 5013.00341796875,
+      "osi_pred": 0.23067954182624817,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-6",
+        "t-4",
+        "t-0"
+      ]
+    },
+    {
+      "date": "2023-07-27",
+      "split": "validation",
+      "stratum": "low_osi",
+      "osi": 0.2011440396308899,
+      "demand_total": 13676.0,
+      "demand_pred_dhaka": 5103.44775390625,
+      "osi_pred": 0.23630188405513763,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-4",
+        "t-3",
+        "t-6"
+      ]
+    },
+    {
+      "date": "2023-07-24",
+      "split": "validation",
+      "stratum": "peak_demand",
+      "osi": 0.2258930802345276,
+      "demand_total": 14906.0,
+      "demand_pred_dhaka": 5161.98974609375,
+      "osi_pred": 0.2609267830848694,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-5",
+        "t-4",
+        "t-6"
+      ]
+    },
+    {
+      "date": "2023-07-18",
+      "split": "validation",
+      "stratum": "peak_demand",
+      "osi": 0.3425098955631256,
+      "demand_total": 14905.0,
+      "demand_pred_dhaka": 5108.02978515625,
+      "osi_pred": 0.27400845289230347,
+      "top_demand_group": "G6",
+      "top_stress_group": "G7",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-0",
+        "t-6",
+        "t-4"
+      ]
+    },
+    {
+      "date": "2023-07-23",
+      "split": "validation",
+      "stratum": "peak_demand",
+      "osi": 0.24937804043293,
+      "demand_total": 14893.0,
+      "demand_pred_dhaka": 5148.66796875,
+      "osi_pred": 0.2717072069644928,
+      "top_demand_group": "G6",
+      "top_stress_group": "G7",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-4",
+        "t-3",
+        "t-0"
+      ]
+    },
+    {
+      "date": "2023-09-16",
+      "split": "validation",
+      "stratum": "peak_demand",
+      "osi": 0.2861763834953308,
+      "demand_total": 14728.0,
+      "demand_pred_dhaka": 5121.73291015625,
+      "osi_pred": 0.2685535252094269,
+      "top_demand_group": "G6",
+      "top_stress_group": "G7",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-5",
+        "t-4",
+        "t-6"
+      ]
+    },
+    {
+      "date": "2023-07-19",
+      "split": "validation",
+      "stratum": "peak_demand",
+      "osi": 0.2433425635099411,
+      "demand_total": 14712.0,
+      "demand_pred_dhaka": 5200.58544921875,
+      "osi_pred": 0.3019108772277832,
+      "top_demand_group": "G6",
+      "top_stress_group": "G7",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-0",
+        "t-1",
+        "t-5"
+      ]
+    },
+    {
+      "date": "2023-07-04",
+      "split": "validation",
+      "stratum": "shedding",
+      "osi": 0.23399090766906738,
+      "demand_total": 12586.0,
+      "demand_pred_dhaka": 4192.54736328125,
+      "osi_pred": 0.2407531440258026,
+      "top_demand_group": "G5",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-0",
+        "t-3",
+        "t-2"
+      ]
+    },
+    {
+      "date": "2023-10-25",
+      "split": "validation",
+      "stratum": "shedding",
+      "osi": 0.25549954175949097,
+      "demand_total": 12116.0,
+      "demand_pred_dhaka": 4639.01708984375,
+      "osi_pred": 0.27370700240135193,
+      "top_demand_group": "G6",
+      "top_stress_group": "G6",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-1",
+        "t-2",
+        "t-3"
+      ]
+    },
+    {
+      "date": "2024-02-08",
+      "split": "validation",
+      "stratum": "shedding",
+      "osi": 0.30064675211906433,
+      "demand_total": 9774.0,
+      "demand_pred_dhaka": 3988.948486328125,
+      "osi_pred": 0.35862189531326294,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-6",
+        "t-5",
+        "t-4"
+      ]
+    },
+    {
+      "date": "2024-02-07",
+      "split": "validation",
+      "stratum": "shedding",
+      "osi": 0.3108045756816864,
+      "demand_total": 10263.0,
+      "demand_pred_dhaka": 4045.211669921875,
+      "osi_pred": 0.4009048342704773,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-5",
+        "t-6",
+        "t-4"
+      ]
+    },
+    {
+      "date": "2024-02-05",
+      "split": "validation",
+      "stratum": "shedding",
+      "osi": 0.3716220557689667,
+      "demand_total": 10308.0,
+      "demand_pred_dhaka": 3938.101806640625,
+      "osi_pred": 0.4130346477031708,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-3",
+        "t-6",
+        "t-4"
+      ]
+    },
+    {
+      "date": "2024-10-27",
+      "split": "test",
+      "stratum": "typical_demand",
+      "osi": 0.42553696036338806,
+      "demand_total": 13357.0,
+      "demand_pred_dhaka": 4987.63623046875,
+      "osi_pred": 0.41142764687538147,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-2",
+        "t-3",
+        "t-1"
+      ]
+    },
+    {
+      "date": "2024-04-28",
+      "split": "test",
+      "stratum": "high_demand",
+      "osi": 0.34387561678886414,
+      "demand_total": 16418.0,
+      "demand_pred_dhaka": 5330.9404296875,
+      "osi_pred": 0.2936663031578064,
+      "top_demand_group": "G10",
+      "top_stress_group": "G7",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-0",
+        "t-3",
+        "t-4"
+      ]
+    },
+    {
+      "date": "2024-12-19",
+      "split": "test",
+      "stratum": "low_demand",
+      "osi": 0.486815869808197,
+      "demand_total": 8866.0,
+      "demand_pred_dhaka": 4092.50341796875,
+      "osi_pred": 0.46826982498168945,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c3_limitation",
+      "driver_agreement": true,
+      "top_temporal_lags": [
+        "t-6",
+        "t-3",
+        "t-5"
+      ]
+    },
+    {
+      "date": "2024-09-08",
+      "split": "test",
+      "stratum": "high_stress",
+      "osi": 0.5645509362220764,
+      "demand_total": 15354.0,
+      "demand_pred_dhaka": 5222.6982421875,
+      "osi_pred": 0.4291468858718872,
+      "top_demand_group": "G6",
+      "top_stress_group": "G8",
+      "osi_driver": "c2_reserve",
+      "driver_agreement": false,
+      "top_temporal_lags": [
+        "t-3",
+        "t-4",
+        "t-0"
+      ]
+    }
+  ]
+}

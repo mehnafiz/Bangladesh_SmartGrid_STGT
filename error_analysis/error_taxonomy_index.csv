@@ -1,0 +1,7 @@
+error_id,category,name,scope,primary_metrics,segmentation,model_scope,priority
+E1,overall_forecast,Overall Forecast Error,Macro demand + national OSI on test split,"MAE, RMSE, MAPE, R² (Phase 10)",None — global baseline,All benchmarks + PF-STGT,Required
+E2,regional,Regional Error Analysis,Per-node demand residuals for 9 divisions,"MAE, RMSE, MAPE, R² per region; Dhaka separate",9 regions + macro aggregate,B07 PF-STGT (A1 seed 42),Required
+E3,stress,Operational Stress Error Analysis,OSI(t+1) residuals by stress regime,"MAE, RMSE, R²; bias; calibration",Low / Medium / High (train tertiles frozen),B07 PF-STGT (A1 seed 42),Required
+E4,extreme_event,Extreme Event Analysis,"Demand spikes, supply drops, shedding periods","Event recall, peak MAE, false-alarm rate",3 event types × severity tiers,B07 PF-STGT (A1 seed 42) + T-GCN comparison,Required
+E5,temporal,Temporal Error Analysis,"Weekly, seasonal, holiday error patterns","MAE by DOW, month, holiday flag; seasonality ratio",Weekday/weekend; month 1–12; holiday vs non-holiday,B07 PF-STGT (A1 seed 42),Required
+E6,graph,Graph Error Analysis,Error vs hybrid-graph node connectivity,MAE vs degree; attention–error correlation,"High-connectivity ['Dhaka', 'Cumilla', 'Mymensingh']; Low-connectivity ['Barishal', 'Rangpur', 'Sylhet']",B07 PF-STGT (A1 seed 42),Required

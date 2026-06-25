@@ -1,0 +1,15 @@
+from_pipeline,to_pipeline,artefact,description
+P1,P2,DataFrame rows,Feature extraction per timestep
+P1,P4,DataFrame rows,Target columns at t+1
+P2,P5,node/global tensors,Model input embedding
+P3,P5,adjacency bias,Spatial encoder bias
+P4,P5,"demand, osi targets",Supervision (training only)
+P5,P6,ModelOutput,Loss computation
+P6,P7,checkpoints,Load best weights for test
+P6,P8,checkpoints,XAI on trained model
+P7,P8,case-study dates,Stratified XAI selection
+P2,P8,feature groups G1–G11,SHAP coalition mapping
+P3,P8,adjacency overlay,Attention visualisation
+P4,P8,OSI components,Stress driver validation
+P1,P7,test DataLoader,Held-out evaluation
+P5,P7,predictions,Metric computation

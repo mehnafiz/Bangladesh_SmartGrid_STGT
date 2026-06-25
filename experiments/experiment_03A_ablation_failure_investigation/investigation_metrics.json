@@ -1,0 +1,55 @@
+{
+  "graph": [
+    {
+      "variant": "hybrid",
+      "undirected_edges": 24,
+      "density_pct": 66.66666666666666,
+      "mean_weight": 0.1875
+    },
+    {
+      "variant": "geo",
+      "undirected_edges": 21,
+      "density_pct": 58.333333333333336,
+      "mean_weight": 0.2142857164144516
+    },
+    {
+      "variant": "corr",
+      "undirected_edges": 33,
+      "density_pct": 91.66666666666666,
+      "mean_weight": 0.13636364042758942
+    }
+  ],
+  "attention": {
+    "mean_temporal_attn_entropy": 1.9420623534330816,
+    "max_entropy_log_T": 1.9459101490553132,
+    "normalized_entropy_ratio": 0.9980226242079576,
+    "mean_mass_on_last_timestep": 0.1435154475497477,
+    "n_windows": 1056
+  },
+  "grad_probe": {
+    "demand_loss_raw": 70.00557708740234,
+    "stress_loss_raw": 0.00107490923255682,
+    "demand_term_normalized": 0.7000557780265808,
+    "stress_term_weighted": 0.0214981846511364,
+    "demand_head_grad_l2": 2.390420553463087,
+    "stress_head_grad_l2": 13.531710374771459,
+    "shared_backbone_grad_l2": 2.8276623149754,
+    "grad_ratio_demand_over_stress": 0.17665324539607283,
+    "loss_ratio_demand_over_stress_weighted": 32.563483353910804
+  },
+  "representation": {
+    "A1_vs_A3": {
+      "mean_cosine_per_sample": 0.695634126663208,
+      "std_cosine_per_sample": 0.21728405356407166
+    },
+    "A1_vs_A4": {
+      "mean_cosine_per_sample": 0.30448439717292786,
+      "std_cosine_per_sample": 0.23571886122226715
+    }
+  },
+  "pred_std": {
+    "A1": 1223.0281982421875,
+    "A3": 1211.20263671875,
+    "A4": 1230.5245361328125
+  }
+}

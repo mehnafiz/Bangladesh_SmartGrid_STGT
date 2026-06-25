@@ -1,0 +1,10 @@
+module,parameter,symbol,type,range_min,range_max,candidates,default_phase09,justification
+graph,num_graph_layers,L_s,integer,1.0,3.0,"1, 2, 3",2.0,9-node graph; depth 1–3 avoids over-smoothing on small N
+graph,graph_hidden_dim,d_model,integer,64.0,192.0,"64, 128, 192",128.0,"~1,287 train windows; cap capacity vs overfit"
+graph,graph_dropout,p_g,float,0.1,0.3,"0.1, 0.2, 0.3",0.1,Regularise graph attention on 24-edge hybrid graph
+transformer,num_transformer_layers,L_t,integer,1.0,3.0,"1, 2, 3",2.0,T=7 window; 1–3 layers cover weekly pattern depth
+transformer,num_attention_heads,H,integer,2.0,8.0,"2, 4, 8",4.0,Must divide d_model; constrained sampling in HPO
+transformer,transformer_dropout,p_t,float,0.1,0.3,"0.1, 0.2, 0.3",0.1,Match graph dropout band for balanced regularisation
+training,learning_rate,lr,float,0.0001,0.001,"1e-4, 5e-4, 1e-3",0.0005,Phase 10 grid; stable for AdamW on small batches
+training,weight_decay,wd,float,1e-05,0.001,"1e-5, 1e-4, 1e-3",0.0001,AdamW decoupled L2; log-spaced regularisation band
+training,batch_size,B,integer,16.0,64.0,"16, 32, 64",32.0,~40 steps/epoch at B=32; memory-safe for 9×7×9 tensor

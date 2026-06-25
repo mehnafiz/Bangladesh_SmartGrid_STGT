@@ -1,0 +1,8 @@
+benchmark_id,model_name,family,uses_graph,tasks_supported,input_window_T,horizon_h,adjacency,multi_task
+B01,Linear Regression,Classical ML,False,demand,7,1,N/A,False
+B02,Random Forest,Classical ML,False,demand,7,1,N/A,False
+B03,XGBoost,Classical ML,False,demand,7,1,N/A,False
+B04,LSTM,Deep Learning (temporal),False,demand,7,1,N/A,False
+B05,GRU,Deep Learning (temporal),False,demand,7,1,N/A,False
+B06,T-GCN,Spatio-Temporal GNN,True,demand,7,1,graphs/adjacency_matrix.csv,False
+B07,PF-STGT,Proposed,True,demand;stress,7,1,graphs/adjacency_matrix.csv,True

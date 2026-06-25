@@ -1,0 +1,11 @@
+batch_size: 32
+benchmark_id: B07
+lambda_demand: 1.0
+lambda_stress: 10.0
+learning_rate: 0.0005
+locked_md5:
+  data/features/train_features.parquet: b8b3bda95d0fd6cc65f4910d85a98e16
+  data/interim/bangladesh_smartgrid_clean.parquet: 4255024d735a91a4b53b2edee203d0ca
+  graphs/adjacency_matrix.csv: dacb7ac3a827d00a4b61ea9400e75686
+seed: 42
+weight_decay: 0.0001

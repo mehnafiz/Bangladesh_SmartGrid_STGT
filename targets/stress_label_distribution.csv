@@ -1,0 +1,17 @@
+split,formulation,label_type,n,mean,std,min,p50,p90,max,positive_rate,pct_low,pct_medium,pct_high
+train,continuous_osi,continuous,1295,0.2869,0.0843,0.0613,0.2586,0.4152,0.7113,,,,
+train,binary_osi_median,binary,1295,,,,,,,0.5004,,,
+train,binary_any_shedding,binary,1295,,,,,,,0.1815,,,
+train,multiclass_osi_tertiles,multiclass,1295,,,,,,,,0.3336,0.3328,0.3336
+validation,continuous_osi,continuous,277,0.2949,0.0651,0.1842,0.2865,0.3976,0.5592,,,,
+validation,binary_osi_median,binary,277,,,,,,,0.639,,,
+validation,binary_any_shedding,binary,277,,,,,,,0.5235,,,
+validation,multiclass_osi_tertiles,multiclass,277,,,,,,,,0.1227,0.5596,0.3177
+test,continuous_osi,continuous,278,0.3371,0.0947,0.157,0.3353,0.4738,0.5795,,,,
+test,binary_osi_median,binary,278,,,,,,,0.7734,,,
+test,binary_any_shedding,binary,278,,,,,,,0.6331,,,
+test,multiclass_osi_tertiles,multiclass,278,,,,,,,,0.1619,0.241,0.5971
+all,continuous_osi,continuous,1850,0.2957,0.0852,0.0613,0.2707,0.4209,0.7113,,,,
+all,binary_osi_median,binary,1850,,,,,,,0.5622,,,
+all,binary_any_shedding,binary,1850,,,,,,,0.3005,,,
+all,multiclass_osi_tertiles,multiclass,1850,,,,,,,,0.2762,0.353,0.3708

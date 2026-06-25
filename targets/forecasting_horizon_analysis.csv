@@ -1,0 +1,5 @@
+horizon_days,forecast_mode,target_variables,mean_regional_mae_mw,mean_regional_mape_pct,national_eve_peak_mae_mw,national_eve_peak_mape_pct,mean_regional_autocorr_lag_h,recommended_primary,rationale_snippet
+1,single-step,9 x {Region}_demand + national eve peak (reference),69.56,5.546,541.74,4.834,0.9237,True,Primary daily operational horizon; strongest autocorrelation and lowest persistence error.
+3,single-step,9 x {Region}_demand + national eve peak (reference),96.22,7.721,773.99,6.742,0.8535,False,Secondary extension; error and autocorrelation degrade vs h=1.
+7,single-step,9 x {Region}_demand + national eve peak (reference),106.79,8.776,848.81,7.186,0.8,False,Secondary extension; error and autocorrelation degrade vs h=1.
+14,single-step,9 x {Region}_demand + national eve peak (reference),125.66,10.13,989.19,8.36,0.7485,False,Secondary extension; error and autocorrelation degrade vs h=1.

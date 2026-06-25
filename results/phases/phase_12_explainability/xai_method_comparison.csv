@@ -1,0 +1,6 @@
+method,interpretability,computational_cost,literature_support,pf_stgt_suitability,multi_task_coverage,total_score,role,selected
+SHAP,5,2,5,5,5,22,Primary — feature & stress attribution,True
+Attention Visualization,4,5,4,5,3,21,"Primary — node, temporal, graph analysis",True
+Permutation Importance,4,3,4,3,4,18,Validation — global sanity check,True
+SHAP only (standalone),5,2,5,3,4,19,Rejected as sole toolkit — misses native graph/temporal structure,False
+Attention only (standalone),3,5,3,3,2,16,Rejected as sole toolkit — not faithful attributions (Jain & Wallace 2019),False

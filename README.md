@@ -11,8 +11,14 @@ operational stress assessment across Bangladesh smart power networks.
 
 ## Repository Status
 
-This repository currently contains the **foundational architecture only**.
-No models, datasets, experiments, or research content have been implemented yet.
+The repository contains completed foundation sprints (data, models, training,
+evaluation, explainability modules) and executed experiments **01–03B**.
+
+**Architecture freeze (2026-06-25):** **S2** (Correlation-Only PF-STGT, Exp03 A6) is
+the final model for Experiment 04 and manuscript work. **S1** (original hybrid PF-STGT W20)
+remains the historical design reference and Exp02 benchmark B07.
+
+See `experiments/architecture_freeze_revision/Final_Architecture_Decision.md`.
 
 ---
 

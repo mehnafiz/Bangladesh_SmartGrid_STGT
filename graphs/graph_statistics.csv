@@ -1,0 +1,4 @@
+strategy,nodes,undirected_edges,density,mean_edge_weight,min_edge_weight,max_edge_weight,mean_demand_corr_on_edges,mean_demand_corr_off_edges,mean_corr_geographic_edges,is_connected,self_loops
+Geographical Graph,9,21,0.5833,0.2143,0.125,0.3333,0.7759,0.7837,0.7759,True,0
+Correlation Graph,9,33,0.9167,0.1364,0.1072,0.2144,0.7927,0.6303,0.7759,True,0
+Hybrid Graph,9,24,0.6667,0.1875,0.1046,0.2809,0.7901,0.7573,0.7759,True,0

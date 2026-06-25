@@ -1,0 +1,46 @@
+file_path,pipeline,class_or_fn,responsibility,inputs,outputs
+src/data/loader.py,P1,DataLoader,Load clean parquet + feature parquet,DataFrame,Validated DataFrame
+src/data/splits.py,P1,SplitManager,Chronological split indices + MD5 verify,DataFrame,train/val/test masks
+src/data/validators.py,P1,DataValidator,"Schema, row count, date continuity",DataFrame,ValidationReport
+src/datasets/smartgrid_dataset.py,"P1,P2,P4",SmartGridDataset,PyTorch Dataset: windowed samples,index,batch dict
+src/datasets/collate.py,P1,collate_fn,Batch stacking + padding,list[dict],batched tensors
+src/features/node_features.py,P2,NodeFeatureBuilder,Extract F_n=9 per region,"DataFrame, t","(N,F_n)"
+src/features/global_features.py,P2,GlobalFeatureBuilder,Extract F_g=17 (no OSI input),"DataFrame, t","(F_g,)"
+src/features/window_builder.py,P2,WindowBuilder,T=7 gap-aware windows,DataFrame,"(T,N,F_n),(T,F_g)"
+src/features/scaler.py,P2,FeatureScaler,Load train-fitted StandardScaler,raw features,scaled features
+src/preprocessing/leakage_guard.py,P2,LeakageGuard,Strip OSI from inputs at h=1,feature list,safe feature list
+src/graph/adjacency.py,P3,AdjacencyLoader,"Load hybrid CSV, row-normalise",path,"(N,N) tensor"
+src/graph/bias.py,P3,AdjacencyBias,log(A+ε) bias matrix for attention,"(N,N)","bias (N,N)"
+src/graph/registry.py,P3,GraphRegistry,Hybrid/geo/corr variants (ablation),variant_id,"(N,N)"
+src/datasets/targets.py,P4,TargetBuilder,demand_target at t+1,"DataFrame, t","(N,) MW"
+src/datasets/osi_target.py,P4,OSITargetBuilder,OSI at t+1 from frozen formula,"DataFrame, t+1","scalar [0,1]"
+src/datasets/multitask_batch.py,P4,MultiTaskBatch,Assemble demand + osi targets,batch,target dict
+src/models/embeddings.py,P5,InputEmbedding,Node + global + positional enc,tensors,"H0 (B,T,N,d)"
+src/models/spatial_encoder.py,P5,GraphTransformer,L_s=2 spatial layers + attn export,"H0, bias","H_spatial, attn_s"
+src/models/temporal_encoder.py,P5,TemporalTransformer,L_t=2 encoder + attn export,H0,"H_temporal, attn_t"
+src/models/fusion.py,P5,ParallelFusion,Gated concat → H_shared,"H_s, H_t","H_shared (B,N,d)"
+src/models/heads.py,P5,MultiTaskHeads,DemandHead (9) + StressHead (1),"H_shared, h_graph",preds
+src/models/pf_stgt.py,P5,PFSTGT,Full forward + ablation switches,batch,ModelOutput
+src/models/baselines/,P5,BaselineModels,B01–B06 implementations,batch,preds
+src/models/ablations/,P5,AblationVariants,A2–A6 structural switches,batch,preds
+src/losses/multitask.py,P5,MultiTaskLoss,λ1·Huber + λ2·MSE,"preds, targets",scalar loss
+src/training/trainer.py,P6,Trainer,Train/val loop orchestration,"model, loaders",history
+src/training/callbacks.py,P6,EarlyStopping,"Patience 15, val macro MAE",metrics,stop signal
+src/training/checkpoint.py,P6,CheckpointManager,best.pt + metadata MD5,state,path
+src/training/optimizer.py,P6,build_optimizer,AdamW + ReduceLROnPlateau,"model, config","optim, sched"
+src/training/seed.py,P6,set_seed,Reproducibility 42/123/456,seed,—
+src/metrics/demand.py,P7,DemandMetrics,"MAE, RMSE, MAPE, R² macro","y, y_hat",metric dict
+src/metrics/stress.py,P7,StressMetrics,"OSI MAE, RMSE, R², r","osi, osi_hat",metric dict
+src/evaluation/benchmark_runner.py,P7,BenchmarkRunner,B01–B07 test eval,checkpoint,Table 1 rows
+src/evaluation/ablation_runner.py,P7,AblationRunner,A1–A6 vs reference,checkpoints,Table 2 rows
+src/evaluation/statistics.py,P7,StatisticalTests,Wilcoxon + Bonferroni + bootstrap,daily errors,Table 4 rows
+src/evaluation/robustness.py,P7,RobustnessEvaluator,Phase 14 segments,residuals,Table S3
+src/evaluation/error_analysis.py,P7,ErrorAnalysisRunner,E1–E6 taxonomy,predictions,segment CSVs
+src/explainability/shap_runner.py,P8,SHAPRunner,GradientSHAP grouped,"model, batch",φ values
+src/explainability/attention_export.py,P8,AttentionExporter,Spatial + temporal maps,model forward,attn tensors
+src/explainability/permutation.py,P8,PermutationImportance,Validation global ranks,"model, val",importance CSV
+src/explainability/stress_decompose.py,P8,StressDecomposer,c1/c2/c3 ground truth,DataFrame,driver labels
+src/visualization/manuscript.py,P8,ManuscriptFigures,Fig 1–5 renderers,artefacts,PNG/PDF
+src/utils/config.py,ALL,Config,YAML config loader,path,Config dataclass
+src/utils/logging.py,ALL,Logger,Structured experiment logs,—,log files
+src/utils/md5.py,ALL,MD5Guard,Verify locked artefact hashes,paths,pass/fail
