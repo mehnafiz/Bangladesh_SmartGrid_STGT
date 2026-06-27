@@ -52,6 +52,7 @@ ipython_config.py
 !logs/README.md
 
 # ---- Results (large artifacts) ----
+docs/prompts/
 paper/prompts/
 !results/predictions/.gitkeep
 !results/predictions/README.md
