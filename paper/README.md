@@ -23,11 +23,23 @@ retraining or regenerating experiment outputs.
 
 ---
 
+## Manuscript workspace
+
+| Item | Location |
+| --- | --- |
+| Section scaffolds (11 files) | `sections/` |
+| Reference repository | `reference/` |
+| Workspace init record | `manuscript_workspace_init.md` |
+| Consistency audit | `consistency_audit/` |
+| Paper outline | `paper_outline/Paper_Outline.md` |
+| Final results package | `final_results_package/` |
+
 ## Manuscript directories
 
 | Directory | Purpose |
 | --- | --- |
-| `../manuscript/overleaf/` | LaTeX project, figures, tables |
+| `sections/` | One Markdown file per manuscript section (scaffold only) |
+| `../manuscript/overleaf/` | LaTeX project, figures, tables, bibliography |
 | `../manuscript/drafts/` | Working prose |
 | `prompts/` | Execution prompts (including this freeze) |
 
