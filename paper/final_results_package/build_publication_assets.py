@@ -12,6 +12,21 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
 from PIL import Image
 
+PUBLICATION_DPI = 300
+
+plt.rcParams.update(
+    {
+        "font.size": 11,
+        "axes.titlesize": 13,
+        "axes.labelsize": 11,
+        "xtick.labelsize": 10,
+        "ytick.labelsize": 10,
+        "savefig.dpi": PUBLICATION_DPI,
+        "savefig.bbox": "tight",
+        "figure.dpi": PUBLICATION_DPI,
+    }
+)
+
 ROOT = Path(__file__).resolve().parents[2]
 PKG = Path(__file__).resolve().parent
 FIG = PKG / "figures"
@@ -84,7 +99,8 @@ def figure_01_framework() -> None:
         color="#2d3748",
     )
     fig.tight_layout()
-    fig.savefig(FIG / "figure_01_framework.png", dpi=200, bbox_inches="tight")
+    fig.savefig(FIG / "figure_01_framework.png", dpi=PUBLICATION_DPI, bbox_inches="tight")
+    fig.savefig(FIG / "figure_01_framework.pdf", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -145,7 +161,8 @@ def figure_02_s2_architecture() -> None:
     ax.text(5.0, 4.35, "−4.66 MW", ha="center", fontsize=8, color="#276749")
 
     fig.tight_layout()
-    fig.savefig(FIG / "figure_02_s2_architecture.png", dpi=200, bbox_inches="tight")
+    fig.savefig(FIG / "figure_02_s2_architecture.png", dpi=PUBLICATION_DPI, bbox_inches="tight")
+    fig.savefig(FIG / "figure_02_s2_architecture.pdf", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -161,7 +178,7 @@ def figure_03_training_curves() -> None:
     axes[1].axis("off")
     fig.suptitle("Figure 3 — Training Curves (frozen historical run)", fontsize=13, fontweight="bold")
     fig.tight_layout()
-    fig.savefig(FIG / "figure_03_training_curves.png", dpi=200, bbox_inches="tight")
+    fig.savefig(FIG / "figure_03_training_curves.png", dpi=PUBLICATION_DPI, bbox_inches="tight")
     plt.close(fig)
 
 
@@ -196,7 +213,8 @@ def figure_04_benchmark_comparison() -> None:
         ax.text(mae + 2, bar.get_y() + bar.get_height() / 2, f"{mae:.1f}", va="center", fontsize=9)
     ax.set_xlim(0, max(maes) * 1.15)
     fig.tight_layout()
-    fig.savefig(FIG / "figure_04_benchmark_comparison.png", dpi=200, bbox_inches="tight")
+    fig.savefig(FIG / "figure_04_benchmark_comparison.png", dpi=PUBLICATION_DPI, bbox_inches="tight")
+    fig.savefig(FIG / "figure_04_benchmark_comparison.pdf", bbox_inches="tight")
     plt.close(fig)
 
 
@@ -224,20 +242,23 @@ def figure_05_ablation_comparison() -> None:
     for bar, mae in zip(bars, maes):
         ax.text(mae + 1.5, bar.get_y() + bar.get_height() / 2, f"{mae:.1f}", va="center", fontsize=9)
     fig.tight_layout()
-    fig.savefig(FIG / "figure_05_ablation_comparison.png", dpi=200, bbox_inches="tight")
+    fig.savefig(FIG / "figure_05_ablation_comparison.png", dpi=PUBLICATION_DPI, bbox_inches="tight")
+    fig.savefig(FIG / "figure_05_ablation_comparison.pdf", bbox_inches="tight")
     plt.close(fig)
 
 
 def copy_explainability_figures() -> None:
-    mapping = {
-        "figure_shap_summary_stress.png": "figure_06_shap_summary_stress.png",
-        "figure_shap_summary_demand.png": "figure_06_shap_summary_demand.png",
-        "figure_node_importance_heatmap.png": "figure_07_node_importance.png",
-        "figure_temporal_importance.png": "figure_08_temporal_attribution.png",
-        "figure_stress_attribution.png": "figure_09_stress_attribution.png",
-    }
-    for src_name, dst_name in mapping.items():
-        shutil.copy2(EXP04_FIG / src_name, FIG / dst_name)
+    """Figures 6a/6b/8/9 are replotted via replot_frozen_explainability.py."""
+    import subprocess
+    import sys
+
+    subprocess.run(
+        [sys.executable, str(PKG / "replot_frozen_explainability.py")],
+        check=True,
+    )
+    # Figure 7: spatial attention matrix not exported to frozen CSV — keep existing PNG.
+    src = EXP04_FIG / "figure_node_importance_heatmap.png"
+    shutil.copy2(src, FIG / "figure_07_node_importance.png")
 
 
 def main() -> None:

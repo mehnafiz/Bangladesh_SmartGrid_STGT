@@ -1,4 +1,3 @@
 # Keywords
 
-<!-- Workspace scaffold — Stage 06 prose not written -->
-<!-- Outline: Paper_Outline.md §3 -->
+Multi-task learning; Spatio-temporal forecasting; Operational stress index; Load forecasting; Correlation graph; Smart grid; Explainability; Bangladesh power grid

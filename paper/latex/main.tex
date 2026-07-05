@@ -1,0 +1,82 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{xurl}
+\def\BibTeX{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
+
+\begin{document}
+
+\title{A Correlation-Aware Graph Transformer Framework for Joint Regional Load and Operational Stress Forecasting in Bangladesh}
+
+\author{
+\IEEEauthorblockN{MD. Nafiz Ahmed Tanim}
+\IEEEauthorblockA{\textit{Department of Computer Science \& Engineering}\\
+\textit{American International University-Bangladesh (AIUB)}\\
+Dhaka, Bangladesh \\
+24-56644-1@student.aiub.edu}
+\and
+\IEEEauthorblockN{MD. Tanvir Hasan}
+\IEEEauthorblockA{\textit{Department of Computer Science \& Engineering}\\
+\textit{American International University-Bangladesh (AIUB)}\\
+Dhaka, Bangladesh \\
+23-54796-3@student.aiub.edu}
+\and
+\IEEEauthorblockN{MD. Robiul Islam}
+\IEEEauthorblockA{\textit{Department of Computer Science \& Engineering}\\
+\textit{American International University-Bangladesh (AIUB)}\\
+Dhaka, Bangladesh \\
+24-56643-1@student.aiub.edu}
+\and
+\IEEEauthorblockN{Wasimul Bari Tonmoy}
+\IEEEauthorblockA{\textit{Department of Computer Science \& Engineering}\\
+\textit{American International University-Bangladesh (AIUB)}\\
+Dhaka, Bangladesh \\
+24-56653-1@student.aiub.edu}
+\and
+\IEEEauthorblockN{MD. Hasanuzzaman}
+\IEEEauthorblockA{\textit{Department of Computer Science \& Engineering}\\
+\textit{American International University-Bangladesh (AIUB)}\\
+Dhaka, Bangladesh \\
+24-56666-1@student.aiub.edu}
+\and
+\IEEEauthorblockN{Dipta Justin Gomes}
+\IEEEauthorblockA{\textit{Department of Computer Science \& Engineering}\\
+\textit{American International University-Bangladesh (AIUB)}\\
+Dhaka, Bangladesh \\
+diptagomes@aiub.edu}
+}
+
+\maketitle
+
+\begin{abstract}
+Day-ahead planning in developing-economy national grids requires synchronised visibility over regional electricity demand and system-wide operational pressure, yet load prediction and stress monitoring are often handled separately. On the Bangladesh national power system, daily records from nine administrative divisions jointly report evening-peak load with limitation, reserve, and shedding indicators, making coupled forecasting necessary. This study examines whether a spatio-temporal model can jointly predict next-day regional demand and a graph-level Operational Stress Index (OSI) from shared historical inputs under chronological evaluation. We implement the Correlation-Aware Multi-Task Forecasting Framework as a Parallel-Fusion Spatio-Temporal Graph Transformer (PF-STGT) that encodes a seven-day lookback of division-level and national context with a train-estimated correlation graph, then decodes regional demand and a bounded system-wide stress scalar through shared spatio-temporal encoding and task-specific heads, using a repaired multi-task loss to stabilise joint learning. On a frozen held-out test year, evaluation includes classical, recurrent, and graph-convolution benchmarks, graph and architecture ablations, regional error analysis, and multi-method post-hoc attribution. Within the Bangladesh setting, correlation-graph PF-STGT achieves the strongest joint demand-and-stress performance in the internal suite, with statistically supported demand improvement over the historical hybrid reference and comparatively informative OSI outputs relative to stress-capable baselines. Ablation favours correlation adjacency over geographical or hybrid priors, documents a demand-only versus joint-stress trade-off, and attribution analysis highlights limitation and calendar coalitions with partial cross-method agreement. The paper presents a reproducible national case study of graph-transformer multi-task forecasting scoped to offline evaluation rather than universal superiority or demonstrated deployment outcomes.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Multi-task learning, Spatio-temporal forecasting, Operational stress index, Load forecasting, Correlation graph, Smart grid, Explainability, Bangladesh power grid
+\end{IEEEkeywords}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_methodology}
+\input{sections/04_experimental_setup}
+\input{sections/05_results}
+\input{sections/06_discussion}
+\input{sections/07_conclusion}
+\input{sections/09_acknowledgment}
+
+\appendices
+\input{sections/08_appendix}
+
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography/12_References}
+
+\end{document}

@@ -1,0 +1,539 @@
+\section{Supplementary Materials}\label{sec:supplementary_materials}
+
+This appendix consolidates supplementary technical material for the main manuscript. All entries reference artefacts under publication freeze \texttt{publication-freeze-2026-06-25} (commit \texttt{dda83f1d9201d55ad8daf6b4cc0456569a84b6aa}). Table values are copied from frozen CSV/JSON outputs; no experiments were rerun.
+
+
+\subsection{Complete benchmark tables}\label{subsection:complete_benchmark_tables}
+
+\subsubsection{External benchmark comparison (test set)}\label{subsubsection:external_benchmark_comparison_test_set}
+
+Macro demand metrics average over nine divisions. \textbf{S2} is the final model (Exp.~03, A6); \textbf{B07} is the historical PF-STGT W20 hybrid reference (S1). Stress columns apply only to OSI-emitting models.
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+ID & Model & Demand MAE (MW) & Demand RMSE (MW) & Demand MAPE (\%) & Demand $R^2$ & Stress MAE & Stress $R^2$ \\
+\hline
+\textbf{S2} & Correlation-Only PF-STGT (final) & 88.65 & 127.29 & 6.55 & 0.684 & 0.0371 & 0.745 \\
+B07 & PF-STGT W20 hybrid (S1 ref.) & 93.31 & 128.81 & 6.76 & 0.674 & 0.0499 & 0.585 \\
+B02 & Random Forest & 97.03 & 156.99 & 7.04 & 0.984 & 0.0481 & 0.555 \\
+B03 & XGBoost & 109.73 & 178.53 & 7.99 & 0.979 & 0.0497 & 0.525 \\
+B01 & Linear Regression & 247.79 & 597.01 & 17.32 & 0.770 & 0.1074 & -1.824 \\
+B04 & LSTM & 237.03 & 278.67 & 14.35 & -0.242 & 0.0861 & -0.191 \\
+B05 & GRU & 233.48 & 274.39 & 14.13 & -0.201 & 0.0863 & -0.214 \\
+B06 & T-GCN & 257.21 & 301.06 & 15.72 & -0.483 & 0.0891 & -0.304 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Source:} \url{experiments/experiment_02_benchmark_models/benchmark_results.csv} (B01--B07); \url{experiments/experiment_03_ablation_studies/ablation_results.csv} (S2 = A6).
+
+\subsubsection{Ablation study (test set)}\label{subsubsection:ablation_study_test_set}
+
+Reference: \textbf{A1} = S1 (hybrid graph, multi-task W20); \textbf{A6 = S2} (final architecture).
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+ID & Variant & Graph & Multi-task & Demand MAE (MW) & Demand $R^2$ & Stress MAE & Stress $R^2$ \\
+\hline
+A4 & Single-Task & hybrid & No & 86.89 & 0.731 & --- & --- \\
+\textbf{A6} & \textbf{Correlation Graph Only (S2)} & corr & Yes & \textbf{88.65} & \textbf{0.684} & \textbf{0.0371} & \textbf{0.745} \\
+A3 & No Transformer & hybrid & Yes & 92.64 & 0.671 & 0.0405 & 0.701 \\
+A1 & PF-STGT W20 (S1 ref.) & hybrid & Yes & 93.31 & 0.674 & 0.0499 & 0.585 \\
+A2 & No Graph & hybrid & Yes & 93.93 & 0.701 & 0.0405 & 0.701 \\
+A5 & Geographical Graph Only & geo & Yes & 97.98 & 0.554 & 0.0340 & 0.764 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Source:} \url{experiments/experiment_03_ablation_studies/ablation_results.csv}, \texttt{ablation\_raw.json}.
+
+\subsubsection{Architecture simplification (test set)}\label{subsubsection:architecture_simplification_test_set}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|l|l|}
+\hline
+ID & Model & Graph & Transformer & Demand MAE (MW) & Demand $R^2$ & Stress $R^2$ & Active params \\
+\hline
+\textbf{S2} & Correlation-Only PF-STGT & corr & Yes & 88.65 & 0.684 & 0.745 & 749,058 \\
+S3 & No-Transformer PF-STGT & hybrid & No & 92.64 & 0.671 & 0.701 & 451,202 \\
+S1 & PF-STGT W20 (ref.) & hybrid & Yes & 93.31 & 0.674 & 0.585 & 749,058 \\
+S4 & Corr + No-Transformer & corr & No & 114.63 & 0.362 & 0.747 & 451,202 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Source:} \url{experiments/experiment_03B_architecture_simplification/simplification_results.csv}.
+
+\subsubsection{Per-region demand MAE --- S2 (test set)}\label{subsubsection:per_region_demand_mae_s2_test_set}
+
+Per-division MAE for S2 is in the frozen ablation record; per-division $R^2$ is not tabulated (macro demand $R^2$ only).
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Region & S2 demand MAE (MW) \\
+\hline
+Barishal & 32.73 \\
+Chattogram & 76.52 \\
+Cumilla & 75.92 \\
+Dhaka & 293.98 \\
+Khulna & 88.62 \\
+Mymensingh & 59.22 \\
+Rajshahi & 76.25 \\
+Rangpur & 53.97 \\
+Sylhet & 40.62 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Source:} \url{experiments/experiment_03_ablation_studies/ablation_raw.json} (variant A6, \texttt{per\_region\_mae}).
+
+\subsubsection{Per-region verification --- B07 and B02 (test set)}\label{subsubsection:per_region_verification_b07_and_b02_test_set}
+
+Division-level MAE and $R^2$ for B07 and B02 were recomputed in Experiment 02A.
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Region & B07 MAE (MW) & B07 $R^2$ & B02 MAE (MW) & B02 $R^2$ \\
+\hline
+Barishal & 30.85 & 0.4808 & 32.07 & 0.6936 \\
+Chattogram & 75.04 & 0.6362 & 79.97 & 0.5941 \\
+Cumilla & 71.83 & 0.7930 & 73.63 & 0.7688 \\
+Dhaka & 299.78 & 0.5744 & 311.59 & 0.6666 \\
+Khulna & 118.72 & 0.7353 & 92.06 & 0.7835 \\
+Mymensingh & 58.74 & 0.7584 & 85.85 & 0.6126 \\
+Rajshahi & 85.70 & 0.8270 & 83.13 & 0.8274 \\
+Rangpur & 59.77 & 0.6928 & 68.41 & 0.6264 \\
+Sylhet & 39.35 & 0.5707 & 46.54 & 0.6171 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Source:} \url{experiments/experiment_02A_classical_benchmark_verification/aggregation_audit.md}.
+
+\textbf{Not in frozen repository:} Per-region tables for B01, B04--B06; per-region $R^2$ for S2; S2 per-window prediction arrays (Exp.~02A stores B07, B02, B03 only).
+
+
+\subsection{Additional statistical summaries}\label{subsection:additional_statistical_summaries}
+
+\subsubsection{Benchmark Wilcoxon tests (demand MAE)}\label{subsubsection:benchmark_wilcoxon_tests_demand_mae}
+
+Paired Wilcoxon tests \cite{Wilcoxon1945SignedRank} on per-window macro demand MAE (n = 264). Reference: \textbf{B07 (S1)}; Bonferroni \cite{Dunn1961Bonferroni} $\alpha$ = 0.0083 (six comparisons).
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+Comparison & Median $\Delta$MAE (MW) & p (two-sided) & Cohen's d & Bonferroni sig. & Bootstrap 95\% CI \\
+\hline
+B07 vs B01 & -58.98 & $1.72 \times 10^{-31}$ & -0.491 & Yes & [-193.11, -120.58] \\
+B07 vs B02 & -4.92 & 0.00135 & -0.077 & Yes & [-8.87, 2.62] \\
+B07 vs B03 & -14.13 & $6.68 \times 10^{-12}$ & -0.298 & Yes & [-22.76, -9.55] \\
+B07 vs B04 & -134.42 & $2.33 \times 10^{-39}$ & -1.224 & Yes & [-158.49, -129.48] \\
+B07 vs B05 & -128.94 & $1.92 \times 10^{-39}$ & -1.219 & Yes & [-154.54, -126.62] \\
+B07 vs B06 & -160.66 & $1.48 \times 10^{-40}$ & -1.296 & Yes & [-179.85, -148.85] \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Source:} \url{experiments/experiment_02_benchmark_models/statistical_significance.md}.
+
+\subsubsection{Ablation Wilcoxon tests (demand MAE)}\label{subsubsection:ablation_wilcoxon_tests_demand_mae}
+
+Paired Wilcoxon tests \cite{Wilcoxon1945SignedRank} vs \textbf{A1}; Bonferroni \cite{Dunn1961Bonferroni} $\alpha$ = 0.01 (five comparisons).
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Comparison & Median $\Delta$MAE (MW) & p (two-sided) & Bonferroni sig. (worse) & Bootstrap 95\% CI \\
+\hline
+A1 vs A6 (S2) & -5.43 & $5.5 \times 10^{-5}$ & No (A6 better) & [-7.17, -2.16] \\
+A1 vs A4 & -5.25 & 0.00284 & No (A4 better demand) & [-10.63, -2.40] \\
+A1 vs A5 & +3.85 & $1.48 \times 10^{-4}$ & Yes (A5 worse demand) & [2.19, 6.90] \\
+A1 vs A2 & +2.81 & 0.301 & No & [-3.69, 4.93] \\
+A1 vs A3 & -1.13 & 0.384 & No & [-2.35, 1.08] \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Source:} \url{experiments/experiment_03_ablation_studies/statistical_significance.md}.
+
+\subsubsection{S2 vs S1 and $R^2$ aggregation note}\label{subsubsection:s2_vs_s1_and_r_2_aggregation_note}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+Item & Value / note & Source \\
+\hline
+S2 vs S1 (A6 vs A1) & Median $\Delta$MAE = -5.43 MW; p = $5.5 \times 10^{-5}$; bootstrap 95\% CI [-7.17, -2.16] & Exp03 statistical summary \\
+B02/B03 reported $R^2$ in Exp02 & Equals \textbf{pooled} $R^2$, not macro $R^2$ & \texttt{aggregation\_audit.md} \\
+B07 reported $R^2$ & Equals \textbf{macro} $R^2$ (mean of nine per-region $R^2$) & \texttt{metric\_verification.md} \\
+Unified macro $R^2$ (recomputed) & B02: 0.6878; B07: 0.6743; B03: 0.5902 & Exp02A \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Not in frozen repository:} S2 vs B02 Wilcoxon test; OSI hypothesis tests and bootstrap CIs; S2 pooled signed-residual store; Phase~14 temporal error-segmentation outputs.
+
+
+\subsection{Hyperparameter configuration}\label{subsection:appendix_hyperparameter_configuration}
+
+Frozen training configuration for S2 (= A6, seed 42), per Experiment 01B W20 repair protocol.
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Setting & Value \\
+\hline
+Architecture & \texttt{PFSTGT} + \texttt{GraphVariant.CORR} ($\tau$ = 0.65) \\
+Tasks & Multi-task: regional demand + graph-level OSI \\
+Loss & L = Huber(demand)/100 + $\lambda_2$ $\cdot$ MSE(OSI) \\
+$\lambda_2$ (stress weight) & 20.0 \\
+Optimiser & Adam, lr = $5 \times 10^{-4}$, weight decay = $10^{-4}$ \\
+Batch size & 32 \\
+Max epochs & 200 (early stopping ~epoch 69 for A6) \\
+Early stopping & Patience 15; score = 0.7$\cdot$(val\_demand\_MAE/100) + 0.3$\cdot$val\_stress\_MAE \\
+Scheduler & ReduceLROnPlateau on validation demand MAE; factor 0.5, patience 5 \\
+Gradient clipping & Max norm 1.0 \\
+Seed & 42 \\
+Parameters & 749,058 \\
+S2 checkpoint & \url{experiments/experiment_03_ablation_studies/checkpoints/A6/seed_42/best.pt} \\
+S1 reference checkpoint & \url{experiments/experiment_01B_multitask_optimization_repair/checkpoints/W20/B07/seed_42/best.pt} \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Supporting documents:} \url{experiments/experiment_01B_multitask_optimization_repair/best_configuration.md}, \url{experiments/architecture_freeze_revision/final_model_specification.md}.
+
+\textbf{Not in frozen repository:} Multi-seed sweeps (seed 42 only); probabilistic head configuration.
+
+
+\subsection{Feature dictionary}\label{subsection:feature_dictionary}
+
+\subsubsection{Model input tensors}\label{subsubsection:model_input_tensors}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|}
+\hline
+Tensor & Shape (per batch) & Channels & Description \\
+\hline
+Node features & (T=7, N=9, F\_n=9) & 9 per division & Contemporaneous demand/supply/load; lags and rolling mean; regional share and load intensity \\
+Global features & (T=7, F\_g=17) & 17 & Calendar/trend; grid aggregates; limitation stack; weather; generation scalars; shedding indicator \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Leakage policy:} Same-day OSI($t$) is excluded when forecasting OSI($t{+}1$); the engineered stress composite is withheld from global inputs at inference.
+
+\subsubsection{Node-level channels (F\_n = 9 per division)}\label{subsubsection:node_level_channels_f_n_9_per_division}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Channel group & Contents \\
+\hline
+Power balance (contemporaneous) & Processed evening-peak demand, supply, and load (MW-scale, standardised) \\
+Autoregressive temporal & Demand lag (1 obs.), demand lag (7 obs.), load lag (1 obs.), 7-observation demand rolling mean \\
+Regional derived & Division demand share; load intensity (load / max(demand, $\varepsilon$)) \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\subsubsection{Global-level channels (F\_g = 17)}\label{subsubsection:global_level_channels_f_g_17}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Channel group & Contents \\
+\hline
+Calendar and trend & Day-of-year sin/cos, monotonic trend index, inter-observation gap days, holiday-category ordinal \\
+Grid aggregates & Total regional demand, total regional load, generation reserve \\
+Operational & Total operational limitation (aggregated), any-division shedding indicator (binary) \\
+Weather & Temperature anomaly (month-relative, train-fitted means) \\
+Limitation stack & Gas, coal, water, and maintenance limitation scalars (preprocessed) \\
+National generation & Two preprocessed generation-endpoint scalars \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\subsubsection{Coalition grouping (explainability)}\label{subsubsection:coalition_grouping_explainability}
+
+Eleven coalitions (Exp.~04 grouped attribution):
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|}
+\hline
+ID & Coalition name & Scope & Primary contents \\
+\hline
+G1 & regional\_demand\_block & Node & Contemporaneous division demand \\
+G2 & regional\_supply\_block & Node & Contemporaneous division supply \\
+G3 & regional\_load\_block & Node & Contemporaneous division load \\
+G4 & engineered\_lags\_rolling & Node & Demand lags and rolling mean \\
+G5 & regional\_share\_intensity & Node & Demand share and load intensity \\
+G6 & calendar\_trend & Global & Cyclical calendar, trend, gap, holiday summary \\
+G7 & grid\_aggregates & Global & Total demand, total load, generation reserve \\
+G8 & limitation\_stack & Global & Fuel, infrastructure, maintenance limitations \\
+G9 & weather\_anomaly & Global & Temperature anomaly \\
+G10 & national\_generation\_scalars & Global & Generation-endpoint scalars \\
+G11 & shedding\_indicator & Global & Binary any-division shedding flag \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Design registry:} \url{results/phases/phase_05A_feature_blueprint/feature_inventory.csv} (Phase 05A; matches Section~\ref{subsection:feature_engineering}).
+
+\textbf{Not in frozen repository:} Standalone column-name manifest from \url{data/features/*_features.parquet}; feature columns are defined in Section~\ref{subsection:feature_engineering} and the coalition table above.
+
+
+\subsection{Graph construction details}\label{subsection:graph_construction_details}
+
+\subsubsection{Final model --- correlation graph (S2)}\label{subsubsection:final_model_correlation_graph_s2}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Property & Value \\
+\hline
+Construction rule & Undirected edge (i,j) retained when train-split Pearson $\rho$\_ij $\geq$ $\tau$ on regional evening-peak demand \\
+Threshold $\tau$ & 0.65 \\
+Train rows for $\rho$ & 1,295 daily records (training partition only) \\
+Retained pairs & 33 of 36 undirected pairs (91.7\% density) \\
+Edge weight & w\_ij = $\rho$\_ij (zero diagonal; no self-loops) \\
+Normalisation & Row-normalised adjacency A (outgoing weights sum to unity) \\
+Temporal behaviour & Static: estimated once from training data; fixed for validation and test \\
+Runtime variant & \texttt{GraphVariant.CORR} in \url{src/models/pf_stgt.py} \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Attention bias:} Derived from $\mathbf{A}$ (log-scaled positive entries; masked absent edges) for additive spatial masking.
+
+\subsubsection{Alternative graphs evaluated in ablations}\label{subsubsection:alternative_graphs_evaluated_in_ablations}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Variant & Rule & Undirected edges & Density & Notes \\
+\hline
+Geographical & Border-adjacent divisions; uniform binary weights, row-normalised & 21 & 58.3\% & Frozen geographic prior in \url{graphs/adjacency_matrix.csv} (MD5-locked) \\
+Hybrid (S1) & Edge if geographic neighbour \textbf{or} $\rho$\_ij $\geq$ 0.85; weight = $\rho$\_ij & 24 & 66.7\% & Historical reference graph for A1/B07 \\
+Correlation (S2) & Edge if $\rho$\_ij $\geq$ 0.65; weight = $\rho$\_ij & 33 & 91.7\% & Selected final prior \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Design report:} \url{graphs/graph_construction_report.md} (Phase 08 hybrid rationale); S2 selects correlation-only adjacency per \url{experiments/architecture_freeze_revision/Final_Architecture_Decision.md}.
+
+\textbf{Not in frozen repository:} Persisted correlation-adjacency CSV; dynamic or rolling-window graph variants.
+
+
+\subsection{Additional explainability outputs}\label{subsection:additional_explainability_outputs}
+
+Experiment 04 post-hoc analysis on the frozen S2 checkpoint (\url{A6/seed_42/best.pt}).
+
+\subsubsection{Summary reports}\label{subsubsection:summary_reports}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Report & Path \\
+\hline
+XAI summary & \url{experiments/experiment_04_explainability_analysis/xai_summary.md} \\
+SHAP summary & \url{experiments/experiment_04_explainability_analysis/shap_summary.md} \\
+Permutation importance & \url{experiments/experiment_04_explainability_analysis/feature_importance.md} \\
+Node attribution & \url{experiments/experiment_04_explainability_analysis/node_attribution.md} \\
+Temporal attribution & \url{experiments/experiment_04_explainability_analysis/temporal_attribution.md} \\
+Stress dual-path attribution & \url{experiments/experiment_04_explainability_analysis/stress_attribution.md} \\
+Case studies (24 dates) & \url{experiments/experiment_04_explainability_analysis/case_studies.md} \\
+Machine-readable metrics & \url{experiments/experiment_04_explainability_analysis/xai_metrics.json} \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\subsubsection{Tabular and figure artefacts}\label{subsubsection:tabular_and_figure_artefacts}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+Label & Content & Path \\
+\hline
+Table S2 & Global grouped SHAP (stress) & \url{results/explainability/shap/global_stress.csv} \\
+Table S2 & Global grouped SHAP (Dhaka demand) & \url{results/explainability/shap/global_demand_dhaka.csv} \\
+Table S3 & Permutation $\Delta$MAE (demand) & \url{results/explainability/permutation/demand_importance.csv} \\
+Table S3 & Permutation $\Delta$ (stress) & \url{results/explainability/permutation/stress_importance.csv} \\
+Table S4 & Case-study records & \url{results/explainability/case_studies/<date>/} (24 date folders) \\
+Figure S1 & Signed stress SHAP bar & \url{experiments/experiment_04_explainability_analysis/figures/figure_shap_bar_stress.png} \\
+Figures 3--9 & Manuscript explainability figures & \url{manuscript/overleaf/figures/} (copies from Exp04) \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\subsubsection{Cross-method headline metrics (S2)}\label{subsubsection:cross_method_headline_metrics_s2}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Metric & Value \\
+\hline
+Attention--adjacency Spearman $\rho$ & 0.422 \\
+SHAP--permutation Spearman (demand) & -0.564 \\
+SHAP--permutation Spearman (stress) & 0.366 \\
+OSI driver agreement (case studies) & 52.2\% (13/24) \\
+Global demand SHAP sample & n = 20 validation windows \\
+Case-study dates on test split & 4 of 24 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\textbf{Not in frozen repository:} Independent Captum export; operator-in-the-loop records; explainability for ablation variants other than S2.
+
+
+\subsection{Reproducibility checklist}\label{subsection:reproducibility_checklist}
+
+\subsubsection{Freeze metadata}\label{subsubsection:freeze_metadata}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+Item & Value \\
+\hline
+Freeze date & 2026-06-25 \\
+Designated tag & \texttt{publication-freeze-2026-06-25} \\
+Git commit (freeze HEAD) & \texttt{dda83f1d9201d55ad8daf6b4cc0456569a84b6aa} \\
+Final model ID & S2 --- Correlation-Aware Multi-Task Forecasting Framework \\
+Freeze authority & \url{paper/publication_freeze/Publication_Asset_Freeze.md} \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\subsubsection{MD5-locked data artefacts}\label{subsubsection:md5_locked_data_artefacts}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|}
+\hline
+File & MD5 \\
+\hline
+\url{data/interim/bangladesh_smartgrid_clean.parquet} & \texttt{4255024d735a91a4b53b2edee203d0ca} \\
+\url{data/features/train_features.parquet} & \texttt{b8b3bda95d0fd6cc65f4910d85a98e16} \\
+\url{graphs/adjacency_matrix.csv} & \texttt{dacb7ac3a827d00a4b61ea9400e75686} \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\subsubsection{Chronological split policy}\label{subsubsection:chronological_split_policy}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+Split & Date range & Valid windows (T = 7) \\
+\hline
+Train & 2019-11-21 → 2023-06-15 & 1,281 \\
+Validation & 2023-06-16 → 2024-03-19 & 263 \\
+Test & 2024-03-20 → 2024-12-30 & 264 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+Model selection uses validation only; test is held out until final evaluation. Warm-up skip: seven rows per split.
+
+\subsubsection{Experiment completeness (frozen)}\label{subsubsection:experiment_completeness_frozen}
+
+\begin{center}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|}
+\hline
+Experiment & Primary artefact & Status \\
+\hline
+01 / 01A / 01B & W20 protocol + S1 checkpoint & Complete \\
+02 & \texttt{benchmark\_results.csv} & Complete \\
+02A & Verification reports + B07/B02/B03 predictions & Complete \\
+03 & \texttt{ablation\_results.csv} + A6 checkpoint & Complete \\
+03A / 03B & Investigation reports + simplification CSV & Complete \\
+04 & \texttt{xai\_metrics.json} + figures + CSV tree & Complete \\
+\hline
+\end{tabular}%
+}
+\end{center}
+
+\subsubsection{Artefacts not included in the frozen repository}\label{subsubsection:artefacts_not_included_in_the_frozen_repository}
+
+The following items are \textbf{not} present as executed outputs in the frozen record:
+
+1. Per-region demand $R^2$ table for S2.
+2. Pooled signed-residual diagnostics, residual histograms, or residual time-series store for S2.
+3. Materialised per-window prediction arrays for S2 (B07/B02/B03 only in Exp02A).
+4. OSI-specific Wilcoxon tests, bootstrap intervals, or multiple-comparison correction on stress metrics.
+5. Direct paired inferential test of S2 vs random forest (B02).
+6. Temporal error-segmentation bins or monthly residual profiles for S2 (Phase 14 protocol defined but not executed for the final checkpoint).
+7. Forecast prediction intervals, ensemble spread, or conformal uncertainty bounds.
+8. Persisted correlation-adjacency matrix file (runtime construction from training demand).
+9. Multi-seed result tables (seed 42 only).
+10. Field deployment, shadow-mode, or operator-in-the-loop trial records.
+
+Reproduce reported results using the checkpoint, MD5 hashes, split policy, and scripts in \url{paper/publication_freeze/frozen_results_inventory.md} without modifying frozen artefacts.

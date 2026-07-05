@@ -1,0 +1,11 @@
+\section{Discussion}\label{sec:discussion}
+
+The frozen evaluation demonstrates that one correlation-graph PF-STGT can supply operationally coupled day-ahead load and stress visibility from shared representations on Bangladesh national grid data. Three design lessons emerge from the evidence chain.
+
+\textbf{Graph prior selection.} Train-estimated correlation adjacency outperforms geographical-only and hybrid priors on joint demand accuracy, while geographical conditioning significantly degrades demand ($p{=}1.48{\times}10^{-4}$). Inter-regional coupling on this national footprint reflects shared growth and seasonality more than border adjacency---a pattern under-represented in US/European graph-forecasting benchmarks \cite{Zhao2024GraphAttentionTransformer,Bentsen2023GraphTransformer}.
+
+\textbf{Multi-task trade-offs.} Repaired loss balancing ($\lambda_2{=}20$, demand scaling by 100~MW) restores stress learnability absent in earlier configurations. Demand-only training attains a lower megawatt ceiling, but multi-task S2 enables informative OSI outputs ($R^2{=}0.745$) at a modest 1.76~MW demand offset---the empirically preferred joint optimum for synchronised planning.
+
+\textbf{Regional error geography.} Error concentrates in Dhaka across all model families, indicating structural difficulty at the dominant load centre rather than graph-conditioning artefact. Operators should report the capital division separately while relying on S2 for peripheral and mid-scale service.
+
+\textbf{Limitations.} Evidence is bounded to a single Bangladesh timeline with daily cadence and frozen internal benchmarks; no external replication or deployment trial is included. Inferential support applies to demand MAE; OSI gains lack hypothesis tests. Attribution describes model behaviour, not physical causation, with documented cross-method discordance. Uncertainty quantification and S2 residual diagnostics were not executed. Practical implications are planning diagnostics grounded in offline accuracy---not demonstrated improvements in grid reliability or economic outcome.

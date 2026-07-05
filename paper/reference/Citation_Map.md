@@ -3,7 +3,7 @@
 **Revised:** 2026-06-30  
 **Purpose:** Map manuscript sections to required literature domains and citation placement  
 **Manuscript files:** §4 = `04_Introduction.md`; §5 = `05_Related_Work.md`; §6 = `06_Methodology.md`  
-**Note:** This document lists **citation needs** only — no `.bib` entries generated here. Add references to `manuscript/overleaf/bibliography/` during drafting.
+**Note:** This document lists **citation needs** only — no `.bib` entries generated here. Add entries to `paper/sections/12_References.bib` during drafting.
 
 ---
 
@@ -163,9 +163,10 @@
 
 ## Bibliography file plan
 
-| File (to create during drafting) | Contents |
+| File | Contents |
 | --- | --- |
-| `manuscript/overleaf/bibliography/references.bib` | All external citations |
+| `paper/sections/12_References.bib` | All external citations (official manuscript bibliography) |
+| `manuscript/overleaf/bibliography/` | LaTeX export/sync copy (optional) |
 | `manuscript/overleaf/bibliography/citation_keys.md` | Key → short description (optional) |
 
 **Minimum estimated references:** 35–50 for Q1/Q2 engineering journal (Related Work heavy).

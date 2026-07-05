@@ -1,0 +1,27 @@
+\section{Results}\label{sec:results}
+
+\subsection{Benchmark Performance}
+
+Table~\ref{tab:benchmark} and Fig.~\ref{fig:4} summarise held-out test performance ($n{=}264$ windows). S2 attains the lowest macro demand MAE (88.65~MW; RMSE 127.29~MW; MAPE 6.55\%) and highest OSI $R^2$ (0.745; MAE 0.0371), improving 4.66~MW (5.0\%) over B07 (93.31~MW) and 8.38~MW over random forest B02 (97.03~MW). Recurrent baselines B04/B05 exceed 233~MW MAE with negative macro $R^2$; T-GCN B06 reaches 257.21~MW. Classical ensembles remain competitive but do not match S2 megawatt accuracy despite B02's higher macro $R^2$ (0.984).
+
+Paired Wilcoxon tests confirm benchmark rankings. B07 significantly outperforms B01--B06 at Bonferroni $\alpha{=}0.0083$. S2 versus B07 yields median $\Delta$MAE $= -5.43$~MW, $p{=}5.5{\times}10^{-5}$, bootstrap 95\% CI $[-7.17, -2.16]$~MW---the only graph-variant comparison with statistically supported demand improvement over the historical reference.
+
+\subsection{Regional and Stress Analysis}
+
+Per-region MAE under S2 spans 32.73~MW (Barishal) to 293.98~MW (Dhaka). Dhaka accounts for $\sim$35.7\% of national demand and dominates the megawatt error budget; S2 reduces Dhaka MAE by 5.80~MW versus B07 while peripheral divisions remain below 60~MW. Macro summaries understate planning significance for the principal load centre.
+
+On OSI, S2 reduces MAE by 0.0128 and raises $R^2$ by 0.160 absolute versus B07. Deep baselines B04--B06 yield negative stress $R^2$ ($-$0.191 to $-$0.304). No paired Wilcoxon tests were computed for OSI; stress claims rest on point estimates.
+
+\subsection{Ablation Study}
+
+Table~\ref{tab:ablation} and Fig.~\ref{fig:5} report configuration results. Correlation-graph A6 (S2) delivers the lowest demand MAE among multi-task variants (88.65~MW) with OSI $R^2$ 0.745. Geographical-graph A5 attains marginally better stress metrics (MAE 0.0340, $R^2$ 0.764) but 9.33~MW higher demand error. Demand-only A4 achieves the lowest demand MAE (86.89~MW) without OSI output---a 1.76~MW advantage over S2 documenting a genuine demand--stress Pareto trade-off. Transformer removal on the hybrid graph (A3) is not statistically distinguishable from A1 ($p{=}0.384$); geographical graph A5 significantly degrades demand ($p{=}1.48{\times}10^{-4}$).
+
+\subsection{Explainability}
+
+Post-hoc attribution \cite{Lundberg2017SHAP,Sundararajan2017IntegratedGradients} on the frozen S2 checkpoint applies grouped GradientSHAP, permutation importance, and spatial attention export. On stress, limitation stack (G8) and calendar/trend (G6) coalitions rank highest ($|\phi|{=}0.0191$ and 0.0190). On Dhaka demand, calendar (G6), engineered lags (G4), and national generation (G10) dominate ($|\phi|{=}162.34$, 101.26, 91.44). Fig.~\ref{fig:7} shows node-level attribution mass concentrated on Dhaka (340.36), Rajshahi, and Khulna; Spearman correlation between spatial attention and correlation adjacency is $\rho{=}0.422$. Dual-path comparison of gradient attributions with OSI component drivers agrees in 13 of 24 case studies (52.2\%); demand gradient and permutation rankings disagree ($\rho{=}{-}0.564$).
+
+\input{tables/table_02_benchmark}
+\input{figures/figure_04.tex}
+\input{tables/table_03_ablation}
+\input{figures/figure_05.tex}
+\input{figures/figure_07.tex}

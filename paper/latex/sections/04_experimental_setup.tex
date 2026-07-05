@@ -1,0 +1,100 @@
+\section{Experimental Setup}\label{sec:experimental_setup}
+
+\subsection{Experimental Environment}\label{subsection:experimental_environment}
+
+All experiments run in a version-controlled environment supporting reproducible training, evaluation, and post-hoc analysis of PF-STGT. The stack combines pinned Python dependencies with PyTorch deep learning, classical machine-learning routines, and explainability tooling. Hardware selection follows a portable policy (CUDA, Apple MPS, then CPU) so model definitions and data pipelines remain unchanged across platforms.
+
+\textbf{Compute platform.} Deep-learning jobs select the execution device at runtime. Frozen PF-STGT runs---training, ablation, and explainability---used the \textbf{MPS} backend. Classical benchmarks (B01--B03) trained and evaluated on \textbf{CPU} without loading PyTorch.
+
+\textbf{Software environment.} Experiments used Conda environment \texttt{smartgrid-stgt} (Python 3.11) with dependencies pinned in \texttt{requirements.txt} for the publication-freeze repository (25 June 2026). Core packages: \textbf{PyTorch 2.3.1} \cite{Paszke2019PyTorch}, \textbf{PyTorch Geometric 2.5.3} \cite{Fey2019PyG}, \textbf{NumPy 1.26.4}, \textbf{Pandas 2.2.2}, \textbf{scikit-learn 1.5.0} \cite{Pedregosa2011ScikitLearn}, \textbf{SHAP 0.45.1} \cite{Lundberg2017SHAP}, and \textbf{Captum 0.7.0} \cite{Kokhlikyan2020Captum}. Hydra and PyYAML handled configuration and logging.
+
+\textbf{Reproducibility controls.} Versions are frozen in \texttt{requirements.txt} and \texttt{environment.yml}. Seed 42 governs initialisation, shuffling, and stochastic operations. Datasets, features, and graph specifications are verified against frozen inputs. Reported results derive from the publication-freeze repository and were not regenerated during manuscript preparation.
+
+\subsection{Baseline Models}\label{subsection:baseline_models}
+
+We compare PF-STGT against seven reference models (B01--B07) \cite{Breiman2001RandomForest,Chen2016XGBoost,Hochreiter1997LSTM,Cho2014GRU,Zhao2020TGCN} spanning classical machine learning, recurrent deep learning, and graph-based spatio-temporal learning. B01--B06 target Task 1 (regional demand); B07 supports joint Task 1 and Task 2 (OSI) as the historical PF-STGT reference. The final model S2 is evaluated separately in the ablation study.
+
+\textbf{Classical baselines (B01--B03).} \textit{B01 (Linear Regression)} flattens the seven-day feature window and applies ordinary least-squares multi-output regression. \textit{B02 (Random Forest)} \cite{Breiman2001RandomForest} uses bagged decision trees for non-linear interactions. \textit{B03 (XGBoost)} \cite{Chen2016XGBoost} represents gradient boosting. Each classical model also fits a scalar OSI regressor for common stress evaluation.
+
+\textbf{Deep temporal baselines (B04--B05).} \textit{B04 (LSTM)} \cite{Hochreiter1997LSTM} and \textit{B05 (GRU)} \cite{Cho2014GRU} use two-layer recurrent encoders (hidden 128, dropout 0.1) with concatenated node and global features and a linear head outputting nine regional forecasts.
+
+\textbf{Graph-based baseline (B06).} \textit{B06 (T-GCN)} \cite{Zhao2020TGCN} applies single-hop graph convolution with the row-normalised hybrid adjacency matrix and GRU temporal aggregation.
+
+\textbf{Multi-task PF-STGT reference (B07).} \textit{B07 (PF-STGT W20)} implements parallel-fusion graph transformer training under the W20 protocol with hybrid geographical--correlation graph conditioning. S2 (correlation-only graph, ablation A6) supersedes B07 as the publication-facing architecture.
+
+\textbf{Fairness protocol.} All models share chronological train/validation/test partitions (Section~\ref{sec:methodology}, Table~\ref{tab:1}), the frozen feature store, leakage policies, and windowing (\(T = 7\), \(H = 1\), seven-row warm-up). Graph models receive hybrid adjacency (B06, B07) or correlation adjacency (S2). Task 1 uses macro-averaged MAE, RMSE, MAPE, and $R^2$; Task 2 uses MAE, RMSE, and $R^2$ on OSI. Hyperparameters were tuned on validation only; seed 42 governs frozen runs.
+
+\subsection{Evaluation Metrics}\label{subsection:evaluation_metrics}
+
+Performance is assessed on the held-out test partition after model selection on training and validation data. Task 1 (regional evening-peak demand) is the primary axis; Task 2 (OSI) is reported for multi-task models.
+
+\textbf{Evaluation scope.} Metrics are computed on 264 valid test windows (Table~\ref{tab:1}) without refitting scalers, graph parameters, or weights.
+
+\textbf{Task 1 --- Regional demand metrics.} For region \(r \in \{1, \ldots, 9\}\), let \(D_{r,i}\) and \(\hat{D}_{r,i}\) denote observed and predicted evening-peak demand (MW) on test sample \(i\).
+
+\begin{align}
+\mathrm{MAE}_r &= \frac{1}{n} \sum_{i=1}^{n} \left| D_{r,i} - \hat{D}_{r,i} \right|, &
+\mathrm{MAE}_{\mathrm{macro}} &= \frac{1}{N} \sum_{r=1}^{N} \mathrm{MAE}_r, \\
+\mathrm{RMSE}_r &= \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left( D_{r,i} - \hat{D}_{r,i} \right)^2}, &
+\mathrm{RMSE}_{\mathrm{macro}} &= \frac{1}{N} \sum_{r=1}^{N} \mathrm{RMSE}_r.
+\end{align}
+
+Macro demand MAE is the \textbf{primary ranking metric}. RMSE accompanies MAE to highlight occasional large misses.
+
+\textit{Mean absolute percentage error (MAPE)} is
+
+\[
+\mathrm{MAPE} = \frac{100}{|\mathcal{V}|} \sum_{(r,i) \in \mathcal{V}} \frac{\left| D_{r,i} - \hat{D}_{r,i} \right|}{\left| D_{r,i} \right|},
+\]
+
+where \(\mathcal{V}\) contains valid region-day pairs with \(|D_{r,i}| > \varepsilon\). MAPE supports literature comparison but is not used for selection.
+
+\textit{Coefficient of determination ($R^2$)} is computed per region and macro-averaged:
+
+\[
+R^2_r = 1 - \frac{\sum_{i=1}^{n} \left( D_{r,i} - \hat{D}_{r,i} \right)^2}{\sum_{i=1}^{n} \left( D_{r,i} - \bar{D}_r \right)^2}, \qquad
+R^2_{\mathrm{macro}} = \frac{1}{N} \sum_{r=1}^{N} R^2_r.
+\]
+
+Macro $R^2$ weights divisions equally. Dhaka MAE is reported separately given its share of national evening-peak load.
+
+\textbf{Task 2 --- Operational stress metrics.} OSI metrics apply over \(n\) test samples:
+
+\[
+\mathrm{MAE}_{\mathrm{osi}} = \frac{1}{n} \sum_{i=1}^{n} \left| y^{\mathrm{osi}}_i - \hat{y}^{\mathrm{osi}}_i \right|, \quad
+\mathrm{RMSE}_{\mathrm{osi}} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} \left( y^{\mathrm{osi}}_i - \hat{y}^{\mathrm{osi}}_i \right)^2},
+\]
+
+\[
+R^2_{\mathrm{osi}} = 1 - \frac{\sum_{i=1}^{n} \left( y^{\mathrm{osi}}_i - \hat{y}^{\mathrm{osi}}_i \right)^2}{\sum_{i=1}^{n} \left( y^{\mathrm{osi}}_i - \bar{y}^{\mathrm{osi}} \right)^2}.
+\]
+
+Pearson correlation on OSI is supplementary only. Inferential comparison uses paired Wilcoxon signed-rank tests \cite{Wilcoxon1945SignedRank} with Bonferroni correction \cite{Dunn1961Bonferroni} on per-window macro demand MAE (Section~\ref{subsection:statistical_testing}).
+
+\subsection{Hyperparameter Configuration}\label{subsection:hyperparameter_configuration}
+
+Hyperparameters were selected on validation only; the test split was not used for tuning. Seed 42 governs stochastic components.
+
+\textbf{Shared windowing.} All models use \(T = 7\) days and \(H = 1\).
+
+\textbf{Proposed PF-STGT (S2 / A6).} Table~\ref{tab:2} lists optimisation settings: Adam \cite{Kingma2015Adam} (\(\eta = 5 \times 10^{-4}\), weight decay \(10^{-4}\)), batch size 32, up to 200 epochs with early stopping (patience 15 on balanced validation score), ReduceLROnPlateau on validation macro demand MAE (factor 0.5, patience 5), gradient clipping at 1.0, \(\lambda_2 = 20.0\), and demand-loss scaling dividing Huber loss by 100 MW. Capacity: \(d_{\mathrm{model}} = 128\), four heads, two spatial and two temporal layers, feed-forward dimension 256, dropout 0.1.
+
+\textbf{Deep baselines (B04--B06).} B04/B05 use two-layer LSTM/GRU (hidden 128, dropout 0.1); B06 uses hidden 64. Trained with AdamW \cite{Loshchilov2019AdamW}, batch size 32, up to 60 epochs, early stopping on validation demand MAE.
+
+\textbf{Classical baselines (B01--B03).} B01 uses ordinary least squares; B02 uses 300 trees; B03 uses 300 estimators (max depth 6, learning rate 0.1). Inputs are standardised from training-partition statistics only.
+
+\subsection{Statistical Testing}\label{subsection:statistical_testing}
+
+Inferential analysis targets Task 1 macro demand MAE across three families: benchmark (B07 versus B01--B06), ablation (A1 versus A2--A6), and architecture simplification (S1 versus S2--S4).
+
+\textbf{Paired comparison unit.} For test window \(i\), per-window macro MAE is \(\mathrm{MAE}_i = \frac{1}{N} \sum_{r=1}^{N} |D_{r,i} - \hat{D}_{r,i}|\). Paired differences \(\Delta\mathrm{MAE}_i\) control for day-specific conditions.
+
+\textbf{Wilcoxon signed-rank test.} The paired Wilcoxon test \cite{Wilcoxon1945SignedRank} is applied to \(\{\Delta\mathrm{MAE}_i\}\) with two-sided \(p\)-values by default; one-sided tests require a pre-registered directional hypothesis.
+
+\textbf{Multiple-comparison correction.} Bonferroni thresholds: \(\alpha_B = 0.05/6 \approx 0.0083\) for benchmarks; \(\alpha_B = 0.01\) for ablation and architecture families.
+
+\textbf{Effect size and uncertainty.} Cohen's \(d\) \cite{Cohen1988StatisticalPower} and bootstrap 95\% confidence intervals \cite{Efron1993Bootstrap} (2{,}000 resamples, seed 42) supplement \(p\)-values. Significance indicates systematic per-window MAE difference; practical importance follows megawatt magnitude, bootstrap intervals, and effect-size conventions.
+
+
+% --- Section floats (publication package) ---
+\input{figures/figure_03.tex}

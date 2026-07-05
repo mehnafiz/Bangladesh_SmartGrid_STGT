@@ -1,0 +1,151 @@
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Principal Findings}\label{subsection:principal_findings}
+
+\subsubsection{Overall contribution}\label{subsubsection:overall_contribution}
+
+The completed study delivers a frozen Correlation-Aware Multi-Task Forecasting Framework that jointly forecasts regional demand and graph-level OSI from a single spatio-temporal graph-transformer \cite{Vaswani2017Attention,Kipf2017GCN} on Bangladesh national grid data \cite{Hossain2025BangladeshSmartGrid}. The principal finding is that one architecture can supply operationally coupled day-ahead load and stress visibility from shared representations. S2 was selected through evidence spanning benchmarks, ablations, architecture selection, error characterisation, and attribution---not design intent alone.
+
+\subsubsection{Interaction between demand forecasting and stress prediction}\label{subsubsection:interaction_between_demand_forecasting_and_stress_prediction}
+
+Demand and OSI are complementary rather than redundant within one model. Shared encoding captures calendar, limitation, and grid-context structure; task-specific heads preserve distinct output semantics. Multi-task training \cite{Caruana1997Multitask,Song2024MultiTaskEnergy} under the repaired W20 protocol restores stress learnability that earlier configurations lacked. Lower demand error does not automatically imply better stress fidelity---geographically specialised and demand-only variants illustrate a genuine demand--stress trade-off space.
+
+\subsubsection{Architecture selection and empirical simplification}\label{subsubsection:architecture_selection_and_empirical_simplification}
+
+Evidence-driven simplification of the graph prior improves the frozen model: correlation-only adjacency outperforms geographical-only and hybrid designs, while geographical-only conditioning degrades demand accuracy. Transformer capacity appears critical on correlation graphs---removal on the correlation topology sharply degrades demand performance---even though transformer removal on the hybrid reference is statistically indistinguishable on demand error. Predictive inter-region coupling is better encoded by train-estimated correlation than by static geography alone.
+
+\subsubsection{Regional robustness and error structure}\label{subsubsection:regional_robustness_and_error_structure}
+
+Regional analysis reveals a robust but heterogeneous forecaster: peripheral divisions achieve low absolute error, while the national load centre dominates the megawatt error budget across model families. S2 improves the capital division relative to earlier PF-STGT and classical references without eliminating structural error concentration in the largest division. Regional robustness here means stable multi-division service with predictable error geography, not uniform accuracy. Error concentration in the highest-variability division persists across architectures, suggesting remaining demand difficulty reflects scale and volatility of the dominant node rather than graph conditioning alone. Operators should report Dhaka separately in deployment monitoring while relying on the model for consistent peripheral and mid-scale service.
+
+\subsubsection{Explainability contribution}\label{subsubsection:explainability_contribution}
+
+Post-hoc attribution on S2 shows interpretable coalition families---limitation and calendar for OSI, calendar and lag channels for the principal load division---with spatial mass on high-load nodes and moderate attention--adjacency alignment. Dual-path comparison achieves partial agreement (52.2\% of case studies); demand attributions disagree with permutation rankings ($\rho$ = -0.564). Attributions offer transparency, not causal validation: limitation-stack and calendar coalitions should headline stress dashboards; demand views should report gradient-based and permutation-based rankings separately.
+
+\subsubsection{Scientific significance}\label{subsubsection:scientific_significance}
+
+Correlation-graph PF-STGT multi-task learning jointly models regional demand and operational stress on a chronologically held-out Bangladesh year, with statistically supported demand improvement over the historical hybrid reference and stronger stress $R^2$ within the frozen suite. The evidence-locked chain---task repair, benchmarks, ablation, architecture freeze, error geography, and attribution---is reproducible without rerunning training. The work extends spatio-temporal forecasting beyond load-only benchmarks to coupled stress indices and shows that graph priors and multi-task objectives require empirical tuning. Day-ahead joint load-and-stress forecasting is feasible as a single-model service when graph structure, task weighting, and division-level monitoring co-design with the evaluation evidence (Section~\ref{sec:results}).
+
+\subsection{Comparison with Existing Literature}\label{subsection:comparison_with_existing_literature}
+
+\subsubsection{Graph-based spatial forecasting}\label{subsubsection:graph_based_spatial_forecasting}
+
+The present study finds that train-estimated correlation adjacency outperforms geographical-only and hybrid geographical--correlation priors for joint regional demand and OSI forecasting on the Bangladesh national grid, while a shallow spatio-temporal graph-convolution baseline demonstrates substantially lower predictive performance than the graph-transformer family in the frozen benchmark suite. Prior graph-neural work in power systems---represented in the reviewed corpus by a small set of high-relevance spatio-temporal GNN and graph-attention studies \cite{Shi2024EVChargingGNN,Zhuang2024MultiScaleGNN,Wu2023TransferLearningGNN}---typically couples nodes through geographic proximity, charging-network topology, or integrated-energy-system structure on US and European case studies rather than on developing-economy division-level operational records.
+
+Graph designs validated on residential or microgrid networks do not transfer automatically to a nine-division national system with strong inter-region coupling and nationally co-visible limitation dynamics \cite{Zhao2024GraphAttentionTransformer,Bentsen2023GraphTransformer,Sun2024GLFN}. Data-driven correlation graphs can encode predictive spatial structure where static geography is insufficient; external replication on other South Asian national grids remains an open gap.
+
+\subsubsection{Transformer-based temporal modelling}\label{subsubsection:transformer_based_temporal_modelling}
+
+The frozen architecture-selection record shows that temporal transformer capacity appears critical when the graph prior is correlation-based, whereas transformer removal on the historical hybrid reference is not statistically distinguishable on demand error---a pattern not commonly reported in transformer forecasting papers that evaluate a single backbone on a fixed graph. Transformer-based load forecasting \cite{Wu2021Autoformer,Helmy2024AutoformerEV} constitutes a larger but still minority share of the reviewed literature, often applied to residential sequences, EV charging, or multivariate energy series without multi-node national stress heads.
+
+Transformer contribution is conditional on graph topology in this multi-task setting; near-uniform temporal attention suggests limited lag selectivity. Transformer value in spatio-temporal energy forecasting should be reported with graph context and ablation evidence, not assumed from single-configuration benchmarks.
+
+\subsubsection{Multi-task demand and operational stress learning}\label{subsubsection:multi_task_demand_and_operational_stress_learning}
+
+A principal outcome of this study is that regional demand and graph-level OSI can be learned jointly from shared representations when task weighting is explicitly repaired, yielding a favourable joint configuration relative to single-task and stress-weak baselines, while still exhibiting a documented demand--stress trade-off against a demand-only upper bound. The reviewed literature rarely couples continuous multi-node demand forecasting with operational-stress-style targets in one model: multi-task entries in the corpus are sparse, and the shedding cluster predominantly addresses control, optimisation, or under-frequency response rather than day-ahead forecasting of coupled load and pressure indices.
+
+Relative to hierarchical multi-energy proposals \cite{Song2024MultiTaskEnergy,Guillen2026LoadComposition}, this formulation couples limitation-aware operational stress with evening-peak demand rather than sectoral energy vectors. Multi-task learning is viable when tasks are operationally related yet non-redundant, but not as a default regulariser without loss calibration; cross-dataset task-interference evidence remains limited.
+
+\subsubsection{Explainability in graph-temporal forecasting}\label{subsubsection:explainability_in_graph_temporal_forecasting}
+
+Post-hoc attribution on the frozen model shows coherent coalition-level and spatial patterns---limitation and calendar structure for stress, calendar and lag channels for the principal load division---with partial dual-path agreement against OSI component drivers and discordance between gradient-based and permutation-based demand rankings. Explainability appears in only a small fraction of the reviewed corpus; where present, it often serves microgrid shedding control, distillation, or generic interpretable ML frameworks rather than multi-node graph-transformer forecasts with operator-facing dual-task outputs.
+
+Compared with SHAP-centric shedding studies \cite{Wang2026SHAPLoadShedding,Lundberg2017SHAP} and XAI reviews \cite{Baur2024XAIReview}, this work embeds multi-method explainability in a national graph-transformer pipeline \cite{Cifci2025InterpretableSmartGrid} and reports method disagreement explicitly. Prospective operator validation of attribution outputs remains an open gap.
+
+\subsubsection{Bangladesh smart-grid context and evaluation discipline}\label{subsubsection:bangladesh_smart_grid_context_and_evaluation_discipline}
+
+The Bangladesh case \cite{Hossain2025BangladeshSmartGrid} and spatial load-shedding literature \cite{Paphitis2025SpatialLoadShedding} provide contextual anchors for interpreting the frozen evaluation record.
+
+The programme addresses a geographic void: no reviewed comparator used Bangladesh division-level data, and developing-economy national grids remain under-represented in graph-transformer benchmarks. The frozen evaluation chain---chronological hold-out, benchmark and ablation suites, inferential testing, and locked artefacts---provides reproducible internal evidence without claiming superiority over unbenchmarked external systems. External validity requires new datasets and independent replication beyond the Bangladesh timeline.
+
+\subsection{Practical Implications}\label{subsection:practical_implications}
+
+\subsubsection{Day-ahead operational planning}\label{subsubsection:day_ahead_operational_planning}
+
+S2 delivers the strongest joint demand-and-stress credentials on the held-out test year, supporting a single service that updates regional evening-peak load and national OSI from one input window. Planners could review paired forecasts on the same daily cycle as the one-day horizon and seven-day lookback. Deployment requires the frozen S2 checkpoint, feature and graph artefacts, and MD5-locked preprocessing rules. Forecast accuracy gains (Section~\ref{sec:results}) are planning diagnostics only---not demonstrated reductions in operational risk or economic cost.
+
+\subsubsection{Regional monitoring}\label{subsubsection:regional_monitoring}
+
+Error concentrates in the national load centre while peripheral divisions show low megawatt deviations; macro summaries may understate planning sensitivity in the largest division. Monitoring should treat the capital division as a separate diagnostic alongside macro dashboards, with two-tier reporting (national summary plus division panels for Dhaka, Khulna, and high-residual nodes). Per-region signed-residual diagnostics for S2 are incomplete; protocols should track division MAE and audited $R^2$ where available.
+
+\subsubsection{Joint demand and OSI forecasting}\label{subsubsection:joint_demand_and_osi_forecasting}
+
+Demand-only and stress-optimal configurations occupy a documented trade-off space; S2 is the empirically preferred joint option, not simultaneous optimum on every task. Organisations needing load only may consider a demand-only variant; centres requiring synchronised load and stress visibility may favour S2. OSI claims rest on point estimates without stress-specific hypothesis tests; joint monitoring should treat OSI as a complementary indicator, not an automatic control trigger.
+
+\subsubsection{Explainability for operator support}\label{subsubsection:explainability_for_operator_support}
+
+Limitation-stack and calendar coalitions dominate stress explanations; calendar, lag, and national-generation coalitions feature for the principal load division. Stress views should foreground limitation and calendar channels; demand views should present gradient-based and permutation-based attributions separately and flag dual-path disagreement strata. Attributions are model-local and must not substitute for engineering judgement on high-stress days.
+
+\subsubsection{Deployment considerations}\label{subsubsection:deployment_considerations}
+
+The frozen programme provides a reproducible evidence base for considering S2 but is not a field deployment trial. Integration requires the chronological feature store, correlation adjacency, W20 checkpoint, and inference pipeline from the experimental setup. Shadow-mode operation alongside incumbent tools is recommended before cutover. Monitoring should track limitation and calendar inputs and separate Dhaka reporting; absence of S2 residual time-series diagnostics and uncertainty bounds limits automated bias alarms.
+
+\subsection{Limitations}\label{subsection:limitations}
+
+\subsubsection{Dataset scope}\label{subsubsection:dataset_scope}
+
+The empirical evidence is bounded by a single chronologically split daily record of the Bangladesh national power system: nine administrative divisions, a seven-day input window, a one-day evening-peak forecast horizon, and a feature regime comprising nine node-level and seventeen global channels derived from the frozen preprocessing pipeline. That design supports reproducible within-dataset comparison but does not span alternative temporal resolutions, intra-day dispatch horizons, or feature sets outside the locked parquet artefacts.
+
+Model selection, graph construction, and OSI definition were calibrated on one national timeline (train through mid-2023, validation through early 2024, test on 264 windows through late 2024) with MD5-locked inputs. Conclusions apply to this feature geometry and calendar span, not to arbitrary telemetry schemas or revised stress formulations without re-execution.
+
+\subsubsection{Bangladesh-only evaluation}\label{subsubsection:bangladesh_only_evaluation}
+
+All reported benchmarks, ablations, error characterisations, and explainability outputs derive from the Bangladesh national grid case alone; no independent replication on other South Asian or developing-economy systems is included in the frozen record. The study addresses a geographic void in the reviewed literature but remains a single-country evidence base.
+
+Correlation-graph priors and limitation-stack coalitions were estimated from Bangladesh records and may not transfer where coupling or stress semantics differ. External validity is limited to systems with comparable divisional structure and daily planning cadence.
+
+\subsubsection{Benchmark scope}\label{subsubsection:benchmark_scope}
+
+Comparative evidence is confined to the frozen internal suite---seven reference models (B01--B07) plus the final proposed configuration S2---and six ablation variants (A1--A6) drawn from the same PF-STGT family and training protocol. No external state-of-the-art leaderboard, proprietary operator model, or real-time control benchmark participates in the reported rankings.
+
+Inferential testing applies primarily to macro demand MAE; direct S2-versus-random-forest testing is absent. Classical ensembles show favourable macro $R^2$ without leading on megawatt MAE; demand-only A4 attains lower demand error than S2, documenting an explicit demand--stress trade-off. ``Leading'' performance is bounded to the frozen suite, not unbenchmarked external systems.
+
+\subsubsection{Uncertainty estimation}\label{subsubsection:uncertainty_estimation}
+
+The evaluation reports point forecasts and aggregate error metrics---MAE, RMSE, $R^2$, and MAPE on demand; MAE and $R^2$ on OSI---without prediction intervals, ensemble spread, conformal bounds, or other uncertainty quantification on the held-out test split. Bootstrap confidence intervals exist for selected paired demand MAE contrasts but do not cover OSI residuals or per-division S2 forecasts.
+
+Stress-specific hypothesis tests, OSI confidence intervals, and S2 pooled signed-residual diagnostics were not executed; temporal error segmentation remains unreported. OSI gains rest on point estimates (Section~\ref{sec:results}); demand improvements retain inferential backing.
+
+\subsubsection{Explainability limits}\label{subsubsection:explainability_limits}
+
+Post-hoc attribution was applied to the frozen S2 checkpoint using grouped integrated gradients, permutation importance, attention export, and stratified case studies; these methods describe model behaviour on the evaluation sample and do not establish physical causation or operator-ground-truth driver validation. Global gradient attributions for demand were computed on twenty validation windows; dual-path OSI comparison draws on twenty-four stratified days, of which only four lie on the test split.
+
+Cross-method agreement is partial: OSI component drivers align with the top gradient-attribution coalition in 52.2\% of audited case studies, demand gradient and permutation rankings disagree (Spearman $\rho$ = -0.564), and spatial attention correlates moderately with the correlation adjacency ($\rho$ = 0.422). Near-uniform temporal attention weights further limit claims of sharp lag selectivity from attribution outputs alone. Attributions describe input sensitivities only; they do not validate OSI physics or substitute for engineering judgement (Table~\ref{tab:7}).
+
+\subsubsection{Deployment limits}\label{subsubsection:deployment_limits}
+
+The completed programme is an offline, chronologically held-out evaluation on locked artefacts; it does not include field deployment, operator-in-the-loop trials, shadow-mode operation, or quantification of downstream dispatch, reserve, shedding, or economic outcomes. Production integration would depend on reproducing the frozen feature store, correlation adjacency, W20 multi-task checkpoint, and inference pipeline under the same train-only preprocessing rules that governed reported scores.
+
+Single-seed training (seed 42), incomplete S2 residual stores, and absent uncertainty bounds limit operational readiness assessment to published accuracy diagnostics. Practical implications (Section~\ref{subsection:practical_implications}) are advisory recommendations, not measured deployment outcomes.
+
+\subsection{Future Research Directions}\label{subsection:future_research_directions}
+
+\subsubsection{External validation}\label{subsubsection:external_validation}
+
+The completed study establishes that correlation-graph PF-STGT multi-task learning can jointly forecast regional evening-peak demand and a graph-level Operational Stress Index on a chronologically held-out year of Bangladesh division-level data, with statistically supported demand improvement over the historical hybrid reference within the frozen benchmark suite. That evidence is internally rigorous but geographically singular.
+
+Future studies could replicate the frozen protocol---chronological splitting, joint demand--stress targets, graph ablation, and multi-method attribution---on comparable South Asian national systems. External validation would separate architecture-specific gains from country-specific feature geometry.
+
+\subsubsection{Richer graph construction}\label{subsubsection:richer_graph_construction}
+
+Ablation evidence shows that correlation-only adjacency outperforms geographical-only and hybrid priors for joint demand and stress performance on this dataset, while a geographical graph variant attains superior OSI point estimates at materially higher demand error, documenting a demand--stress trade-off rather than a single optimal topology. Transformer capacity further appears conditional on graph choice: removal on the correlation graph degrades demand performance sharply, whereas hybrid-topology simplification does not yield statistically distinguishable demand change.
+
+Future work could evaluate adaptive correlation graphs, multi-graph attention, and physics-informed edge constraints under the same multi-task objective. This would clarify whether correlation-graph simplification is a robust national-grid principle or a Bangladesh-specific optimum.
+
+\subsubsection{Uncertainty-aware forecasting}\label{subsubsection:uncertainty_aware_forecasting}
+
+Demand-side inferential support in the frozen record includes paired Wilcoxon tests and bootstrap confidence intervals on macro MAE contrasts, whereas OSI performance is reported through point estimates without stress-specific hypothesis tests, prediction intervals, or pooled signed-residual diagnostics for the final checkpoint. Planners reviewing joint forecasts therefore lack distributional statements on per-division error and stress uncertainty on the held-out split.
+
+Probabilistic extensions---ensembles, quantile heads, or conformal calibration---could supply interval-valued demand and OSI outputs. Executing predefined residual and temporal error protocols on S2 would enable signed-bias characterisation and OSI inferential testing.
+
+\subsubsection{Explainability validation}\label{subsubsection:explainability_validation}
+
+Post-hoc attribution on the frozen model surfaces coherent coalition-level and spatial patterns---limitation and calendar structure for stress, calendar and lag channels for the principal load division---with explicit documentation of partial dual-path agreement against OSI component drivers and discordance between gradient-based and permutation-based demand rankings. Transparency is demonstrated on frozen artefacts rather than through prospective validation with domain experts.
+
+Future studies could expand attribution coverage on held-out test windows, standardise dual-task reporting templates, and conduct controlled operator studies measuring whether discordant explanation views affect forecast trust.
+
+\subsubsection{Deployment studies}\label{subsubsection:deployment_studies}
+
+The frozen evaluation programme delivers reproducible offline accuracy diagnostics, architecture selection, and post-hoc analysis on locked data artefacts, but it does not measure runtime integration, shadow-mode operation, data-drift response, or downstream planning outcomes. Practical implications in Section~\ref{subsection:practical_implications} therefore remain conditional on evidence not collected in the present study.
+
+Future studies could implement shadow-mode forecasting, document retraining triggers, and record operator review of paired demand--OSI dashboards under realistic planning cycles, connecting offline accuracy to control-centre behaviour.

@@ -21,7 +21,7 @@
 
 ## Task 1 — Section files
 
-Created **11** manuscript section scaffolds in `paper/sections/` (outline-aligned numbering).
+Created **12** manuscript section files in `paper/sections/` (outline-aligned; §11 = Appendix A, §12 = BibTeX references).
 
 | # | File | Outline § | Status |
 | ---: | --- | ---: | --- |
@@ -35,7 +35,8 @@ Created **11** manuscript section scaffolds in `paper/sections/` (outline-aligne
 | 8 | `08_Results.md` | 8 | ✅ Created |
 | 9 | `09_Discussion.md` | 9 | ✅ Created |
 | 10 | `10_Conclusion.md` | 10 | ✅ Created |
-| 11 | `11_References.md` | 11 | ✅ Created |
+| 11 | `11_Appendix_A_Supplementary_Materials.md` | 11 | ✅ Created |
+| 12 | `12_References.bib` | 12 | ✅ Created (BibTeX) |
 
 **Correction applied:** Previous workspace used 10 files with Keywords omitted and Introduction numbered as §3. Renumbered to match `Paper_Outline.md` Part VI.
 
@@ -97,7 +98,8 @@ All tables referenced in `Paper_Outline.md` Part III verified in `paper/final_re
 | 8 Results | `08_Results.md` | ✅ |
 | 9 Discussion | `09_Discussion.md` | ✅ |
 | 10 Conclusion | `10_Conclusion.md` | ✅ |
-| 11 References | `11_References.md` | ✅ |
+| 11 Appendix A | `11_Appendix_A_Supplementary_Materials.md` | ✅ |
+| 12 References | `12_References.bib` | ✅ |
 
 **IMRaD mapping:** Outline §6–8 correspond to Methodology, Experimental Setup, Results files §06–08.
 
@@ -127,14 +129,16 @@ All tables referenced in `Paper_Outline.md` Part III verified in `paper/final_re
 
 ---
 
-## Task 7 — Bibliography folder
+## Task 7 — Bibliography
 
 | Path | Status |
 | --- | --- |
-| `manuscript/overleaf/bibliography/` | ✅ Exists |
+| `paper/sections/12_References.bib` | ✅ Official manuscript bibliography (BibTeX) |
+| `paper/sections/11_Appendix_A_Supplementary_Materials.md` | ✅ Appendix A |
+| `manuscript/overleaf/bibliography/` | ✅ Exists (LaTeX export target) |
 | `manuscript/overleaf/bibliography/README.md` | ✅ Present |
 
-`.bib` files to be added during Stage 06 drafting.
+Bibliography is maintained exclusively in `12_References.bib`. No Markdown references chapter is used.
 
 ---
 
@@ -162,7 +166,7 @@ All tables referenced in `Paper_Outline.md` Part III verified in `paper/final_re
 
 ## Definition of done
 
-✔ All 11 section files created (outline-aligned)  
+✔ All 12 manuscript section files present (outline-aligned; §11 = Appendix, §12 = BibTeX)  
 ✔ All 10 figure assets verified (9 + subfigure 6b)  
 ✔ All 7 table definitions verified  
 ✔ Section numbering matches outline  

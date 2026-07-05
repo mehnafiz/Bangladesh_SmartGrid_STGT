@@ -1,0 +1,212 @@
+\section{Results}\label{sec:results}
+
+\subsection{Overall Benchmark Performance}\label{subsection:overall_benchmark_performance}
+
+\subsubsection{Overall benchmark summary}\label{subsubsection:overall_benchmark_summary}
+
+The benchmark evaluation compares S2 against seven reference models (B01--B07) on 264 held-out test windows (Table~\ref{tab:3}). S2 attains the lowest macro demand MAE (88.65 MW), followed by B07 (93.31 MW) and B02 (97.03 MW). Recurrent and GCN baselines exceed 230 MW MAE. S2 also leads on OSI (MAE 0.0371, $R^2$ 0.745), improving over B07 (0.0499 MAE, 0.585 $R^2$) and all stress-capable classical and deep baselines.
+
+\subsubsection{Demand forecasting performance}\label{subsubsection:demand_forecasting_performance}
+
+S2 achieves the lowest macro demand MAE (88.65 MW; RMSE 127.29 MW; MAPE 6.55\%), improving 4.66 MW (5.0\%) over B07 (93.31 MW) and 8.38 MW over B02 (97.03 MW). B03 records 109.73 MW. Recurrent baselines B04/B05 exceed 233 MW MAE with negative macro $R^2$; B06 (T-GCN) \cite{Zhao2020TGCN} reaches 257.21 MW. Graph-aware PF-STGT variants consistently outperform classical ensembles and standalone recurrent encoders on megawatt MAE.
+
+B02 reports higher macro $R^2$ (0.984) than S2 (0.684) and B07 (0.674), but MAE remains the primary ranking metric---$R^2$ and MAE quantify different performance aspects. S2 represents the stronger demand forecaster among multi-task models in Table~\ref{tab:3}.
+
+\subsubsection{Operational Stress prediction}\label{subsubsection:operational_stress_prediction}
+
+S2 achieves stress MAE 0.0371 and $R^2$ 0.745---the best OSI performance in Table~\ref{tab:3}. B07 records 0.0499 MAE and 0.585 $R^2$; B02/B03 reach 0.0481/0.555 and 0.0497/0.525 respectively. B04--B06 yield negative stress $R^2$ (-0.191 to -0.304). S2 reduces stress MAE by 0.0128 and raises $R^2$ by 0.160 absolute versus B07, delivering the most informative day-ahead stress signal in the benchmark suite.
+
+\subsubsection{Statistical evidence}\label{subsubsection:statistical_evidence}
+
+Paired Wilcoxon tests \cite{Wilcoxon1945SignedRank} on per-window macro demand MAE (n = 264) support benchmark rankings (Table~\ref{tab:4}). With B07 as reference and Bonferroni threshold \cite{Dunn1961Bonferroni} $\alpha$ = 0.0083, B07 significantly outperforms B01--B06; median paired improvements range from 4.92 MW (B02) to 160.66 MW (B06). S2 versus B07: median $\Delta$MAE = -5.43 MW, p = $5.5 \times 10^{-5}$, bootstrap 95\% CI \cite{Efron1993Bootstrap} [-7.17, -2.16] MW. B07 versus B02 is significant (p = 0.00135, Cohen's d \cite{Cohen1988StatisticalPower} = -0.077) but the bootstrap CI [-8.87, 2.62] MW spans zero. No formal S2-versus-B02 test was conducted; the 8.38 MW point-estimate advantage should be interpreted alongside the B07--B02 result.
+
+\subsubsection{Overall interpretation}\label{subsubsection:overall_interpretation}
+
+S2 leads Table~\ref{tab:3} on both tasks: lowest macro demand MAE (88.65 MW) and highest stress $R^2$ (0.745). PF-STGT variants outperform standalone LSTM, GRU, and T-GCN architectures (demand MAE $>$230 MW; uninformative stress predictions). Classical ensembles remain competitive but do not match S2 megawatt accuracy despite B02's higher macro $R^2$. Demand gains over random forest are modest and should be communicated with appropriate statistical qualification.
+
+\subsection{Regional Forecast Analysis}\label{subsection:regional_forecast_analysis}
+
+\subsubsection{Macro context and regional scope}\label{subsubsection:macro_context_and_regional_scope}
+
+Building on Section~\ref{subsection:overall_benchmark_performance}, this subsection examines regional error distribution (Fig.~\ref{fig:4}). S2 per-region MAE spans 32.73 MW (Barishal) to 293.98 MW (Dhaka); macro summaries understate planning significance for the principal load centre.
+
+\subsubsection{Regional demand performance}\label{subsubsection:regional_demand_performance}
+
+Per-region MAE for S2 is tabulated in supplementary ablation outputs. The three lowest-MAE divisions---Barishal, Sylhet, and Rangpur---each remain below 55 MW, whereas Dhaka alone exceeds 290 MW and Khulna exceeds 88 MW. At the macro level, S2 records demand RMSE of 127.29 MW, demand MAPE of 6.55\%, and macro demand $R^2$ of 0.684 on the test split.
+
+Relative to B07 (Table S1), peripheral accuracy is broadly comparable but not uniform: S2 records slightly higher MAE in Barishal, Chattogram, Cumilla, Mymensingh, and Sylhet, while reducing MAE in Khulna (88.62 versus 118.72 MW), Rajshahi (76.25 versus 85.70 MW), Rangpur (53.97 versus 59.77 MW), and Dhaka (293.98 versus 299.78 MW). Against random forest B02, S2 achieves lower Dhaka and Khulna MAE while trailing B02 in Barishal and several other divisions by small margins. S2's macro leadership reflects division-level gains and minor regressions rather than uniform improvement. Planners should treat Fig.~\ref{fig:4} as an equal-weight summary and consult Table S1 for load centres with the largest residuals.
+
+\subsubsection{Regional consistency and variability}\label{subsubsection:regional_consistency_and_variability}
+
+Per-region MAE under S2 exhibits substantial cross-division spread: the ratio between Dhaka MAE (293.98 MW) and Barishal MAE (32.73 MW) exceeds ninefold on the test split. B07 and B02 display a similar pattern in Table S1, with Dhaka MAE of 299.78 MW and 311.59 MW respectively against peripheral MAE values generally below 90 MW. This consistency of error concentration across model families indicates that regional heterogeneity in absolute megawatt error is a persistent feature of the test period rather than an artefact of a single architecture.
+
+Comparing S2 with B07 division by division, the largest improvements occur in Khulna (-30.10 MW), Rajshahi (-9.45 MW), Dhaka (-5.80 MW), and Rangpur (-5.80 MW), whereas S2 records slightly higher MAE than B07 in five peripheral divisions, each by less than 5 MW in absolute terms. The macro MAE gain of 4.66 MW (S2 versus B07) aggregates offsetting regional effects; deployment reviews should examine division-level metrics alongside Fig.~\ref{fig:4}.
+
+Per-region $R^2$ values in Table S1 further illustrate metric divergence. For B07, division-level $R^2$ ranges from 0.4808 (Barishal) to 0.8270 (Rajshahi); for B02, Rajshahi reaches 0.8274 while Dhaka records 0.6666 despite B02’s higher Dhaka MAE than S2. $R^2$ and MAE therefore need not agree at the division level, consistent with the macro-level distinction noted in Section~\ref{subsubsection:demand_forecasting_performance}. Forecast quality assessments that rely on a single metric may reach different conclusions depending on whether absolute megawatt deviation or variance explanation is emphasised.
+
+\subsubsection{Dhaka-specific performance}\label{subsubsection:dhaka_specific_performance}
+
+Dhaka carries the largest evening-peak load among the nine divisions and accounts for approximately 35.7\% of mean national regional demand in the exploratory data analysis. On the test split, Dhaka also exhibits the highest demand variability among audited regions, with B07 recording an observed demand standard deviation of 670.15 MW in Table S1---far exceeding peripheral divisions. Dhaka MAE under S2 is 293.98 MW, compared with 299.78 MW for B07 and 311.59 MW for B02 (Table S1); the supplementary audit reports Dhaka $R^2$ of 0.5744 for B07 and 0.6666 for B02 on the same split.
+
+S2 therefore achieves the lowest audited Dhaka MAE among the three models with published division-level tables, reducing absolute Dhaka error by 5.80 MW relative to B07 and 17.61 MW relative to B02. Because Dhaka’s load scale dominates national totals, even modest percentage improvements translate into larger absolute megawatt reductions than comparable percentage gains in low-load divisions. Nevertheless, Dhaka MAE remains an order of magnitude above peripheral MAE under S2, so the principal national load centre continues to account for the largest share of forecast error in megawatt terms. Day-ahead planning for the capital region should continue to treat Dhaka as a separately reported diagnostic rather than relying solely on macro-averaged scores.
+
+\subsubsection{Regional strengths and limitations}\label{subsubsection:regional_strengths_and_limitations}
+
+The strongest regional performance under S2 occurs in Barishal, Sylhet, and Rangpur, where MAE remains below 55 MW, and in Mymensingh (59.22 MW). These divisions contribute relatively little to the macro numerator despite receiving equal weight in the macro average. In the present benchmark, S2 also delivers its largest MAE reductions relative to B07 in Khulna and Rajshahi, indicating that the proposed model improves selected mid-scale divisions with material evening-peak load without registering worse MAE in every peripheral node.
+
+The principal regional limitation is persistent Dhaka error concentration (293.98 MW MAE). Secondary limitations include small MAE regressions versus B07 in five divisions (each below 5 MW) and absent per-region $R^2$ for S2. Overall, regional evidence supports S2 as a consistent multi-division forecaster with meaningful Dhaka gains, while equal-weight macro summaries in Fig.~\ref{fig:4} understate the planning significance of the largest load centre.
+
+\subsection{Operational Stress (OSI) Analysis}\label{subsection:operational_stress_osi_analysis}
+
+\subsubsection{Scope and evaluation context}\label{subsubsection:scope_and_evaluation_context}
+
+Task 2 is evaluated on the same 264-window test split as demand forecasting. OSI is reported as MAE and $R^2$ on \([0, 1]\). Demand-only variant A4 (Table~\ref{tab:5}) is excluded. Analysis combines external benchmark comparison (Table~\ref{tab:3}) with configuration comparison (Table~\ref{tab:5}; Fig.~\ref{fig:5}).
+
+\subsubsection{OSI benchmark comparison}\label{subsubsection:osi_benchmark_comparison}
+
+S2 leads stress-capable models in Table~\ref{tab:3} (OSI MAE 0.0371, $R^2$ 0.745), improving over B07 (0.0499, 0.585) and B02/B03 (0.0481/0.555 and 0.0497/0.525). B04--B06 yield OSI MAE 0.0861--0.0891 with negative $R^2$ (-0.191 to -0.304); B01 records 0.1074 MAE and $R^2$ of -1.824. Relative to B07, S2 reduces OSI MAE by 0.0128 (25.7\%) and raises $R^2$ by 0.160; relative to B02, by 0.0110 MAE and 0.190 $R^2$. Classical baselines remain closer on absolute OSI MAE than on variance explanation.
+
+\subsubsection{Configuration-level OSI performance}\label{subsubsection:configuration_level_osi_performance}
+
+Table~\ref{tab:5} reports OSI metrics for the frozen multi-task configuration suite evaluated on the identical test split. S2 (variant A6) records OSI MAE of 0.0371 and OSI $R^2$ of 0.745. The historical hybrid-graph reference A1 (equivalent to B07) records OSI MAE of 0.0499 and OSI $R^2$ of 0.585. Variants A2 (no graph) and A3 (no transformer) each achieve OSI MAE of 0.0405 and OSI $R^2$ of 0.701---lower absolute error and higher $R^2$ than A1 but still behind A6 on both stress metrics. Variant A5 (geographical graph only) attains the lowest OSI MAE among multi-task configurations at 0.0340 and the highest stress $R^2$ at 0.764, while recording demand MAE of 97.98 MW. Variant A4 (single-task) achieves the lowest demand MAE in the suite at 86.89 MW but provides no OSI output.
+
+Fig.~\ref{fig:5} orders the same configurations by test demand MAE: A4 at 86.89 MW, A6 (S2) at 88.65 MW, A3 at 92.64 MW, A1 at 93.31 MW, A2 at 93.93 MW, and A5 at 97.98 MW. Read together with Table~\ref{tab:5}, the figure and table show that lower demand MAE does not imply superior OSI accuracy across configurations. A5 leads on both OSI metrics yet records the highest demand MAE among the multi-task variants shown in Fig.~\ref{fig:5}, whereas A6 combines the second-lowest demand bar in that chart with the second-best OSI MAE and $R^2$ in Table~\ref{tab:5}. The benchmark artefacts demonstrate this demand--stress divergence but do not establish the underlying mechanism responsible for variant-level trade-offs. For joint day-ahead planning, S2 represents the configuration that simultaneously delivers the lowest multi-task demand MAE among OSI-producing variants in Fig.~\ref{fig:5} and the strongest OSI $R^2$ in the external benchmark of Table~\ref{tab:3}, accepting that A5 attains marginally lower OSI MAE and higher stress $R^2$ at the cost of 9.33 MW higher demand error relative to S2.
+
+\subsubsection{Statistical evidence and reporting limits}\label{subsubsection:statistical_evidence_and_reporting_limits}
+
+Formal inferential testing in the frozen statistical record is defined on per-window macro \textbf{demand} MAE rather than on OSI residuals. The paired Wilcoxon comparison of A1 versus A6 (S2) reports median demand $\Delta$MAE of -5.43 MW, two-sided p = $5.5 \times 10^{-5}$, and bootstrap 95\% confidence interval [-7.17, -2.16] MW on the test split (Table~\ref{tab:5}; statistical summary). That interval excludes zero and corroborates the demand improvement of S2 over the historical reference; no corresponding Wilcoxon test, p-value, or bootstrap confidence interval for OSI MAE or OSI $R^2$ was computed in Experiments 02 or 03.
+
+Stress improvement from A1 to A6 rests on point estimates only (OSI MAE 0.0499 to 0.0371; $R^2$ 0.585 to 0.745); no paired OSI hypothesis tests were computed. Wilcoxon results in Table~\ref{tab:4} cover demand MAE only. OSI claims should be communicated as point-estimate advantages on the frozen test split.
+
+\subsubsection{Practical implications and limitations}\label{subsubsection:practical_implications_and_limitations}
+
+S2 delivers graph-level stress forecasts with MAE below 0.04 and $R^2$ of 0.745, explaining approximately three-quarters of test-set OSI variance while leading the demand benchmark (Section~\ref{subsection:overall_benchmark_performance}). For joint day-ahead load and stress monitoring, S2 offers the strongest credentials in Tables~\ref{tab:3} and~\ref{tab:5}, outperforming classical baselines on stress $R^2$ (B02: 0.555; B03: 0.525) and recurrent architectures with uninformative stress predictions.
+
+Three limitations follow. First, no stress-specific confidence intervals or corrected hypothesis tests are available. Second, A5 achieves lower OSI MAE (0.0340) and higher stress $R^2$ (0.764) than S2 but at materially higher demand MAE (97.98 versus 88.65 MW). Third, A4 establishes a demand-only bound of 86.89 MW---1.76 MW below S2---without OSI output, confirming a demand--stress Pareto trade-off. Deployment should monitor reported MAE and $R^2$ alongside division-level demand metrics (Section~\ref{subsection:regional_forecast_analysis}).
+
+\subsection{Ablation Study}\label{subsection:ablation_study}
+
+\subsubsection{Ablation scope and reference configuration}\label{subsubsection:ablation_scope_and_reference_configuration}
+
+The frozen ablation programme evaluates six PF-STGT configurations (A1--A6) on the held-out test split of 264 forecast windows, with A1 serving as the reference: hybrid geographical--correlation graph, full transformer trunk, and multi-task demand--OSI learning under the W20 protocol. Table~\ref{tab:5} consolidates test-set macro demand MAE, demand $R^2$, stress MAE, and stress $R^2$ for each variant; Fig.~\ref{fig:5} visualises the same configurations ranked by demand MAE. Together, the table and figure permit component-wise comparison against A1 without rerunning experiments.
+
+A1 (equivalent to B07) records demand MAE 93.31 MW, demand $R^2$ 0.674, stress MAE 0.0499, and stress $R^2$ 0.585. Subsequent contrasts use A1 as the frozen hybrid-graph baseline from which S2 was derived.
+
+\subsubsection{Graph contribution}\label{subsubsection:graph_contribution}
+
+Graph topology is isolated by three variants: A2 removes graph conditioning entirely while retaining the hybrid multi-task trunk; A5 replaces the hybrid adjacency with a geographical graph only; and A6 (S2) replaces it with a correlation-only graph ($\tau$ = 0.65). On demand MAE, A2 records 93.93 MW---0.62 MW above A1---whereas A5 records 97.98 MW, the highest demand error among the six configurations. A6 achieves 88.65 MW, reducing demand MAE by 4.66 MW relative to A1 (approximately 5.0\%). Paired Wilcoxon testing reports median demand $\Delta$MAE of +2.81 MW for A1 versus A2 (p = 0.301, bootstrap 95\% CI [-3.69, 4.93] MW), +3.85 MW for A1 versus A5 (p = $1.48 \times 10^{-4}$, Bonferroni significant at $\alpha$ = 0.01, CI [2.19, 6.90] MW), and -5.43 MW for A1 versus A6 (p = $5.5 \times 10^{-5}$, CI [-7.17, -2.16] MW).
+
+On the stress task, A2 improves upon A1 (stress MAE 0.0405 versus 0.0499; stress $R^2$ 0.701 versus 0.585), whereas A5 attains the lowest stress MAE in Table~\ref{tab:5} at 0.0340 with stress $R^2$ of 0.764---marginally above A6 (0.0371 MAE, 0.745 $R^2$). Graph choice affects both tasks non-uniformly: A2 shows no significant demand change versus A1; A5 significantly degrades demand; A6 significantly improves demand and raises stress $R^2$ versus A1. Correlation-graph conditioning (A6) is the only variant with statistically supported demand improvement over A1.
+
+\subsubsection{Transformer contribution}\label{subsubsection:transformer_contribution}
+
+Variant A3 removes the transformer encoder while preserving the hybrid graph and multi-task heads. A3 records demand MAE of 92.64 MW---0.67 MW below A1---and stress MAE of 0.0405 with stress $R^2$ of 0.701, compared with A1 values of 93.31 MW, 0.0499, and 0.585 respectively. Wilcoxon comparison of A1 versus A3 yields median demand $\Delta$MAE of -1.13 MW, two-sided p = 0.384, and bootstrap 95\% CI [-2.35, 1.08] MW, which spans zero; the comparison is not significant at the Bonferroni-adjusted threshold $\alpha$ = 0.01.
+
+On the hybrid graph, A3 matches A1 on demand MAE (non-significant Wilcoxon); transformer removal is not justified on hybrid-graph grounds without topology-specific validation.
+
+\subsubsection{Multi-task contribution}\label{subsubsection:multi_task_contribution}
+
+Multi-task learning is isolated by variant A4, which disables the OSI head and trains demand only on the hybrid graph. A4 achieves the lowest demand MAE in the ablation suite at 86.89 MW with demand $R^2$ of 0.731, compared with A1 at 93.31 MW and 0.674. Wilcoxon comparison of A1 versus A4 reports median demand $\Delta$MAE of -5.25 MW, p = 0.00284, and bootstrap 95\% CI [-10.63, -2.40] MW; A4 improves demand relative to the multi-task reference A1, though the Bonferroni flag for “significantly worse” does not apply because A4 is better, not worse. A4 provides no stress MAE or stress $R^2$ entries in Table~\ref{tab:5}.
+
+Relative to the final multi-task configuration A6 (S2), A4 retains a 1.76 MW demand advantage (86.89 versus 88.65 MW) but forfeits OSI forecasting entirely. Conversely, A6 improves demand by 4.66 MW over A1 while delivering stress $R^2$ of 0.745---0.160 above A1---indicating that multi-task training under the correlation graph does not reproduce the demand-only ceiling but does enable joint stress prediction at substantially higher quality than A1. Multi-task learning trades 1.76 MW demand MAE versus the single-task ceiling (A4) for OSI outputs with $R^2$ above 0.74; demand-only use cases may prefer A4, joint planning A6.
+
+\subsubsection{Demand–stress trade-offs across A1–A6}\label{subsubsection:demand_stress_trade_offs_across_a1_a6}
+
+Fig.~\ref{fig:5} orders all six configurations by demand MAE: A4 (86.89 MW), A6 (88.65 MW), A3 (92.64 MW), A1 (93.31 MW), A2 (93.93 MW), and A5 (97.98 MW). Read with Table~\ref{tab:5}, the ranking shows that the lowest demand bar (A4) corresponds to the absence of stress outputs, while the second-lowest (A6) pairs the best multi-task demand score with stress $R^2$ of 0.745. A5 occupies the highest demand position yet attains the best stress MAE (0.0340) and stress $R^2$ (0.764) among OSI-producing variants, confirming that stress-optimal and demand-optimal configurations diverge within the frozen suite. A2 and A3 cluster near A1 on demand while recording identical stress MAE (0.0405) and stress $R^2$ (0.701), suggesting similar joint-task behaviour when either the graph module or transformer is removed on the hybrid trunk.
+
+No single configuration minimises demand MAE and maximises both stress metrics; selection requires explicit joint versus demand-only priorities.
+
+\subsubsection{Final model selection}\label{subsubsection:final_model_selection}
+
+Architecture A6 (correlation-only graph, full transformer, multi-task) is designated S2---the final proposed model---based on its position in Table~\ref{tab:5} and Fig.~\ref{fig:5}. A6 delivers the lowest demand MAE among all multi-task configurations (88.65 MW), with statistically supported improvement over A1 (median $\Delta$MAE -5.43 MW, p = $5.5 \times 10^{-5}$, bootstrap 95\% CI [-7.17, -2.16] MW). It simultaneously records stress $R^2$ of 0.745 and stress MAE of 0.0371, exceeding A1 on both stress metrics and matching the S2 row in the external benchmark of Table~\ref{tab:3}. A6 is not demand-optimal within the ablation suite---A4 remains 1.76 MW lower---and is not stress-optimal among multi-task variants---A5 records lower stress MAE and higher stress $R^2$ at the cost of 9.33 MW additional demand error.
+
+A6 (S2) is selected for best multi-task demand accuracy with strong OSI performance and significant improvement over A1, adopting correlation-only graph conditioning with full transformer capacity and W20 multi-task heads.
+
+\subsection{Error Analysis}\label{subsection:error_analysis}
+
+\subsubsection{Scope and aggregate error magnitudes}\label{subsubsection:scope_and_aggregate_error_magnitudes}
+
+Sections~\ref{subsection:overall_benchmark_performance}--\ref{subsection:ablation_study} established rankings; this subsection characterises remaining error structure on the test split. The frozen evaluation record for S2 (variant A6) reports macro demand MAE of 88.65 MW, demand RMSE of 127.29 MW, demand MAPE of 6.55\%, and macro demand $R^2$ of 0.684, together with OSI MAE of 0.0371, OSI RMSE of 0.0473, and OSI $R^2$ of 0.745 on 264 test windows (Table~\ref{tab:3}; \texttt{ablation\_raw.json}).
+
+The ratio of demand RMSE to demand MAE is approximately 1.44 (127.29/88.65), indicating that squared-error emphasis falls on a subset of windows or regions with larger absolute deviations than the macro mean. For OSI, the RMSE-to-MAE ratio is approximately 1.27 (0.0473/0.0371), suggesting comparatively less tail amplification relative to demand on the normalised stress scale. Pooled signed-residual statistics---mean bias, skewness, and histogram shape---for S2 are not tabulated in the frozen results package; the planned error-analysis framework defined post-hoc residual protocols, but residual-store generation was not executed for the final checkpoint. Aggregate error magnitudes therefore rest on MAE, RMSE, and $R^2$ summaries rather than on full distributional diagnostics for S2.
+
+\subsubsection{Regional error concentration}\label{subsubsection:regional_error_concentration}
+
+Per-region demand MAE for S2 on the test split ranges from 32.73 MW (Barishal) to 293.98 MW (Dhaka), with Khulna at 88.62 MW, Rajshahi at 76.25 MW, Rangpur at 53.97 MW, Sylhet at 40.62 MW, Mymensingh at 59.22 MW, Chattogram at 76.52 MW, and Cumilla at 75.92 MW (\texttt{ablation\_raw.json}, variant A6). Dhaka MAE exceeds the next-largest division (Khulna) by more than 205 MW and accounts for the dominant share of the macro numerator despite equal per-division weighting in the macro average.
+
+The same concentration pattern appears for the historical hybrid reference B07 in Table S1 (Dhaka MAE 299.78 MW versus peripheral values generally below 90 MW), indicating that high absolute error in the capital division is a persistent feature of the test period across PF-STGT configurations rather than an artefact isolated to S2. S2 reduces Dhaka MAE by 5.80 MW relative to B07 (293.98 versus 299.78 MW) while retaining a ninefold gap between Dhaka and Barishal MAE. The interpretation is that remaining demand error is structurally concentrated in the largest load centre; the limitation is that per-region signed residuals and box-plot distributions for S2 are not published in the frozen supplementary materials, restricting regional diagnostics to absolute MAE.
+
+\subsubsection{Demand versus stress error comparison}\label{subsubsection:demand_versus_stress_error_comparison}
+
+On the common test split, S2 explains approximately 68.4\% of macro demand variance ($R^2$ = 0.684) while explaining 74.5\% of OSI variance ($R^2$ = 0.745). Absolute demand error is reported in megawatts (macro MAE 88.65 MW), whereas OSI error is reported on the unit interval (MAE 0.0371), so the two tasks are not directly comparable in physical units; the relevant comparison is relative explanatory power and absolute error on each task’s native scale.
+
+Demand MAPE of 6.55\% indicates that typical regional percentage deviations remain modest at the macro level, but megawatt RMSE of 127.29 MW shows that demand errors on high-load days or in high-load divisions can exceed the mean absolute level. OSI MAE below 0.04 with $R^2$ of 0.745 indicates that graph-level stress forecasts track the held-out OSI series more closely in variance terms than demand forecasts do, despite demand being the primary optimisation weight in training. Representative test-day case records from Experiment 04 illustrate isolated stress deviations: on 2024-09-08 (high-stress stratum), observed OSI is 0.565 while the S2 prediction is 0.429, whereas on 2024-10-27 (typical-demand stratum) observed OSI is 0.426 and the prediction is 0.411 (\texttt{case\_studies.md}). The benchmark demonstrates that large single-day OSI gaps can occur on the test split, but four published test case studies are insufficient to characterise systematic temporal or regime-dependent stress bias; that mechanism remains unresolved in the frozen artefacts.
+
+\subsubsection{Coalition-level error structure}\label{subsubsection:coalition_level_error_structure}
+
+Fig.~\ref{fig:6a} and Fig.~\ref{fig:6b} present frozen coalition-level summary plots from Experiment 04 for the S2 checkpoint, visualising how forecast deviations associate with grouped input coalitions on the stress task (Fig.~\ref{fig:6a}) and on Dhaka demand (Fig.~\ref{fig:6b}). On the stress task, limitation stack (G8) and calendar/trend (G6) coalitions show the widest spread among the plotted groups; grid aggregates (G7) and national generation scalars (G10) exhibit narrower spread (Fig.~\ref{fig:6a}; frozen Exp04 coalition rankings). On Dhaka demand, calendar/trend (G6), engineered lags and rolling statistics (G4), and national generation scalars (G10) show the widest spread, with regional demand and supply blocks (G1, G2) at intermediate levels (Fig.~\ref{fig:6b}).
+
+The plots indicate that remaining forecast error co-occurs with variability in calendar, limitation, and lagged-demand input coalitions rather than being uniformly distributed across all feature groups. The repository evidence does not establish whether errors are driven by mis-specification of those coalitions or by unmodelled events outside the input tensor; causal attribution is not resolved by the error summaries alone. The limitation is that these coalition plots summarise association structure on the frozen evaluation sample and do not replace per-window residual traces or signed bias tests for S2.
+
+\subsubsection{Temporal behaviour and residual diagnostics}\label{subsubsection:temporal_behaviour_and_residual_diagnostics}
+
+The predefined error-analysis protocol specified temporal, extreme-event, and graph-conditioned error segments, but no executed temporal MAE bins, monthly residual profiles, or pooled residual store for S2 appear in the frozen results package. Temporal error behaviour on the 2024 test period therefore cannot be reported as a segmented time series from repository outputs.
+
+Experiment 04 includes four representative test dates (2024-10-27, 2024-04-28, 2024-12-19, 2024-09-08) spanning typical-demand, high-demand, low-demand, and high-stress strata (\texttt{case\_studies.md}). These records show day-specific demand totals between 8,866 MW and 16,418 MW and OSI values between 0.344 and 0.565 on the test split, confirming that the held-out year contains diverse operating points, but they do not constitute a systematic temporal error audit. Equivalent pooled signed-residual statistics are not available for S2 in the frozen evaluation record; the historical PF-STGT reference B07 is therefore discussed below for contextual orientation only. Experiment 02A reports pooled residual diagnostics for B07---mean residual -19.58 MW, median -18.97 MW, residual skew -2.998, and pred-to-actual standard-deviation ratio 0.983 with attenuated peak tracking (\texttt{residual\_analysis.md}, \texttt{prediction\_distribution\_analysis.md}). Those values characterise the prior hybrid-graph configuration and cannot be transferred to S2 without a dedicated residual audit of the final checkpoint. The limitation is that temporal and signed-residual characterisation of S2 remains incomplete in the present evaluation.
+
+\subsubsection{Deployment implications}\label{subsubsection:deployment_implications}
+
+The frozen error evidence supports deploying S2 as a joint forecaster with macro demand MAE of 88.65 MW and OSI $R^2$ of 0.745, while treating Dhaka as a separately monitored division: its MAE of 293.98 MW dominates national error budgets despite S2 achieving the lowest audited Dhaka MAE among models with published division tables (Section~\ref{subsection:regional_forecast_analysis}). Operators should expect comparatively well-calibrated graph-level stress forecasts on average, with awareness that high-stress test days documented in Experiment 04 can exhibit OSI under-prediction exceeding the macro stress MAE.
+
+Coalition-level summaries in Figs.~\ref{fig:6a} and~\ref{fig:6b} suggest that deployment monitoring should include limitation-stack and calendar inputs alongside lagged demand channels, because forecast deviations cluster with variability in those coalitions on the frozen evaluation. Without executed temporal segmentation under the planned error-analysis framework or S2 signed-residual histograms, routine operational guardrails should rely on published macro and per-region MAE/$R^2$ thresholds, division-level Dhaka reporting, and periodic stress-case review rather than on repository-supplied uncertainty intervals or automated bias alarms. A limitation of the current evaluation is the absence of complete S2 residual time-series diagnostics and uncertainty bounds; remaining error structure is therefore documented through aggregate metrics, regional concentration, and coalition associations rather than through signed residual traces or forecast confidence intervals on the test split.
+
+\subsection{Explainability Analysis}\label{subsection:explainability_analysis}
+
+\subsubsection{Scope and attribution methods}\label{subsubsection:scope_and_attribution_methods}
+
+The explainability evaluation applies post-hoc attribution \cite{Lundberg2017SHAP,Sundararajan2017IntegratedGradients} to the frozen S2 checkpoint (A6, seed 42) without retraining or altering benchmark metrics from Sections~\ref{subsection:overall_benchmark_performance}--\ref{subsection:error_analysis}. Table~\ref{tab:7} consolidates headline outputs from Experiment 04: grouped GradientSHAP attributions (reported as coalition magnitudes |$\phi$|), coalition-level permutation importance, exported spatial and temporal attention weights, and 24 stratified case studies (20 validation, 4 test). Coalition |$\phi$| values are obtained through a Captum-compatible integrated-gradients loop using a GradientSHAP approximation with 25 steps and a zero baseline---a SHAP-style attribution pipeline rather than classical exact Shapley enumeration (\texttt{shap\_summary.md}; \texttt{shap\_engine.py}).
+
+Cross-method checks compare gradient attributions with permutation importance and OSI component decomposition; attributions reflect model behaviour on the validation sample, not physical causation.
+
+\subsubsection{Coalition-level gradient attribution}\label{subsubsection:coalition_level_gradient_attribution}
+
+On the global stress task, grouped GradientSHAP magnitudes rank limitation stack (G8) first at |$\phi$| = 0.0191 and calendar/trend (G6) second at |$\phi$| = 0.0190, followed by grid aggregates (G7) at 0.0087 and national generation scalars (G10) at 0.0082 (Table~\ref{tab:7}; \texttt{shap\_summary.md}, validation n = 20). For Dhaka demand, calendar/trend (G6) records |$\phi$| = 162.34, engineered lags and rolling statistics (G4) record 101.26, and national generation scalars (G10) record 91.44; regional demand and supply blocks (G1, G2) follow at 77.72 and 77.41 respectively, with limitation stack (G8) far lower at 23.15 on this task.
+
+Stress and demand heads emphasise different coalition families: limitation and calendar channels dominate stress attributions; calendar, lag, and national-generation channels dominate Dhaka demand attributions.
+
+\subsubsection{Spatial node attribution}\label{subsubsection:spatial_node_attribution}
+
+Fig.~\ref{fig:7} presents the node-level importance heatmap combining mean GradientSHAP node mass and spatial attention on the correlation graph. Dhaka receives the highest mean node attribution mass at 340.36, followed by Rajshahi (110.32), Khulna (108.91), and Mymensingh (93.84); peripheral nodes record substantially lower mass, with Rangpur at 1.99 and Chattogram at 6.21 (Table~\ref{tab:7}; \texttt{node\_attribution.md}). The Spearman correlation between learned spatial attention and the frozen correlation adjacency is $\rho$ = 0.422.
+
+Attribution mass concentrates on high-load divisions with strong Dhaka connectivity ($\rho$ = 0.422 between attention and correlation adjacency), consistent with regional error concentration in Section~\ref{subsection:error_analysis}.
+
+\subsubsection{Temporal attribution}\label{subsubsection:temporal_attribution}
+
+Fig.~\ref{fig:8} plots mean temporal attention weights $\alpha$\_t across the seven-day input window. Weights are near-uniform, with the largest mean weight at lag t-6 ($\alpha$ = 0.1622), followed by t-3 (0.1459) and t-0 (0.1435); remaining lags range from 0.1348 to 0.1405 (\texttt{temporal\_attribution.md}). Case-study records most frequently list t-6 among the top three temporal lags (Table~\ref{tab:7}).
+
+Temporal attention is near-uniform across the seven-day window (peak at t-6, $\alpha$ = 0.1622), suggesting broad rather than single-lag dependence.
+
+\subsubsection{OSI dual-path stress attribution}\label{subsubsection:osi_dual_path_stress_attribution}
+
+Fig.~\ref{fig:9} compares grouped GradientSHAP stress attributions with OSI component drivers (reserve margin \(c_2\) versus limitation stack \(c_3\)) across the 24 case studies. The dominant stress coalition in case records is G8 (limitation\_stack); peak-demand strata sometimes rank G7 (grid\_aggregates) highest. Dual-path agreement between the top gradient-attribution coalition and the OSI component driver occurs in 13 of 24 cases (52.2\%) (\texttt{stress\_attribution.md}; \texttt{case\_studies.md}). Stress explanations should report this partial alignment and the 47.8\% disagreement rate.
+
+\subsubsection{Cross-method validation and limitations}\label{subsubsection:cross_method_validation_and_limitations}
+
+Permutation importance partially corroborates stress gradient-attribution rankings (Spearman $\rho$ = 0.366) but disagrees with Dhaka demand gradient-attribution order ($\rho$ = -0.564) (Table~\ref{tab:7}; \texttt{feature\_importance.md}). On demand, permutation ranks regional supply block (G2) highest by mean MAE degradation (1.96 MW) while GradientSHAP ranks calendar/trend (G6) highest (|$\phi$| = 162.34); engineered lags (G4) show high |$\phi$| magnitude (101.26) but low permutation degradation (0.013 MW). On stress, limitation stack (G8) leads both gradient-attribution and permutation tables, though permutation deltas are numerically small (top stress permutation $\Delta$ $\approx$ $3.8 \times 10^{-5}$).
+
+Gradient and permutation rankings disagree on demand ($\rho$ = -0.564) but partially agree on stress ($\rho$ = 0.366). Attributions (n = 20 validation windows; 24 case studies) describe model behaviour, not causal validation; explanations should combine Figs.~\ref{fig:7}--\ref{fig:9} with explicit cross-method discordance reporting.
+
+
+% --- Section floats (publication package) ---
+\input{tables/table_03_benchmark.tex}
+\input{tables/table_04_benchmark_stats.tex}
+\input{tables/table_05_ablation.tex}
+\input{tables/table_06_architecture.tex}
+\input{tables/table_07_explainability.tex}
+\input{figures/figure_04.tex}
+\input{figures/figure_05.tex}
+\input{figures/figure_06a.tex}
+\input{figures/figure_06b.tex}
+\input{figures/figure_07.tex}
+\input{figures/figure_08.tex}
+\input{figures/figure_09.tex}

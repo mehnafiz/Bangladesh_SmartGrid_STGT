@@ -49,12 +49,14 @@ All numeric values are copied from frozen CSV/JSON artefacts. No experiments wer
 | **Architecture** | `PFSTGT` + `GraphVariant.CORR` (τ = 0.65) |
 | **Tasks** | Multi-task: regional demand + graph-level OSI |
 | **Loss** | `L = Huber(demand)/100 + λ₂ · MSE(OSI)` |
+| **Demand loss scaling** | Huber demand term ÷ 100 MW |
 | **λ₂ (stress weight)** | 20.0 |
 | **Optimiser** | Adam, lr = 5×10⁻⁴, weight decay = 10⁻⁴ |
 | **Batch size** | 32 |
 | **Max epochs** | 200 |
 | **Early stopping** | Patience 15; score = 0.7·(val_demand_MAE/100) + 0.3·val_stress_MAE |
-| **Scheduler** | ReduceLROnPlateau on validation demand MAE |
+| **Scheduler** | ReduceLROnPlateau on validation demand MAE; factor 0.5, patience 5 |
+| **Gradient clipping** | Max norm 1.0 |
 | **Seed** | 42 |
 | **Parameters** | 749,058 (all active) |
 | **Checkpoint** | `experiments/experiment_03_ablation_studies/checkpoints/A6/seed_42/best.pt` |

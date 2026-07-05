@@ -36,7 +36,7 @@ When sources conflict during manuscript writing:
 6. `paper/publication_freeze/` (inventory metadata)
 
 **Figure/table numbering:** Final Results Package + Paper Outline (not early freeze inventory).  
-**Manuscript files:** `paper/sections/NN_*.md` where `NN` equals journal section number (e.g. `06_Methodology.md` = Section 6).
+**Manuscript files:** `paper/sections/NN_*.md` where `NN` equals file order prefix (e.g. `06_Methodology.md` = Section 6). Appendix A is `11_Appendix_A_Supplementary_Materials.md`; references are `12_References.bib` (BibTeX only; no Markdown references chapter).
 
 ---
 
@@ -49,7 +49,7 @@ Repository-wide rules for all manuscript work:
 - **Check `Claim_Guide.md`** before writing Abstract, Results, Discussion, and Conclusion.
 - **Consult `Writing_Style_Guide.md`** for tone, preferred wording, and figure/table citation format.
 - **Every scientific claim must be supported** by frozen project evidence (experiments, tables, figures, audit).
-- **Never invent citations.** Add references only via `Citation_Map.md` into `manuscript/overleaf/bibliography/`.
+- **Never invent citations.** Add entries to `paper/sections/12_References.bib` using `Citation_Map.md`. Do not create a Markdown references chapter.
 - **Never rename frozen figures or tables.** Use IDs 1–9 and 1–7 per `Figure_Index.md` / `Table_Index.md`.
 - **Never modify frozen experimental results**, checkpoints, CSVs, or JSON under `experiments/`.
 - **Do not regenerate or edit** publication figures/tables in `paper/final_results_package/`.
@@ -63,11 +63,12 @@ Repository-wide rules for all manuscript work:
 
 | Asset | Path |
 | --- | --- |
-| Manuscript sections | `paper/sections/` (`01_Title.md` … `11_References.md`) |
+| Manuscript sections | `paper/sections/` (`01_Title.md` … `10_Conclusion.md`, `11_Appendix_A_Supplementary_Materials.md`, `12_References.bib`) |
+| Official bibliography | `paper/sections/12_References.bib` (sole `.bib` source; no duplicate under `paper/reference/`) |
 | Manuscript workspace init | `paper/manuscript_workspace_init.md` |
 | Consistency audit | `paper/consistency_audit/` |
 | Publication figures | `paper/final_results_package/figures/` |
-| Overleaf bibliography | `manuscript/overleaf/bibliography/` |
+| Overleaf bibliography | `manuscript/overleaf/bibliography/` (LaTeX sync target) |
 | Architecture decision | `experiments/architecture_freeze_revision/Final_Architecture_Decision.md` |
 | Model specification | `experiments/architecture_freeze_revision/final_model_specification.md` |
 

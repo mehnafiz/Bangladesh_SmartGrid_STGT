@@ -145,7 +145,7 @@ See `Reviewer_Risk_Register.md` for anticipated challenges.
 
 ## Citations
 
-- Do not invent references; add to `manuscript/overleaf/bibliography/` using `Citation_Map.md`.
+- Do not invent references; add entries to `paper/sections/12_References.bib` using `Citation_Map.md`. Do not create a Markdown references section.
 - Cite baseline methods at first mention (RF, XGBoost, T-GCN, etc.).
 - Distinguish this work (S2) from prior literature clearly.
 

@@ -1,4 +1,3 @@
-# Title
+# Final Title
 
-<!-- Workspace scaffold — Stage 06 prose not written -->
-<!-- Outline: Paper_Outline.md §1 -->
+A Correlation-Aware Graph Transformer Framework for Joint Regional Load and Operational Stress Forecasting in Bangladesh

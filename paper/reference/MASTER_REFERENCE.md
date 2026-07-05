@@ -43,7 +43,7 @@ Sections are **written** in this sequence (not journal appearance order):
 | 9 | 1 — Title | `paper/sections/01_Title.md` |
 | 10 | 3 — Keywords | `paper/sections/03_Keywords.md` |
 
-**Final paper order** (journal IMRaD): 1 Title → 2 Abstract → 3 Keywords → 4 Introduction → 5 Related Work → 6 Methodology → 7 Experimental Setup → 8 Results → 9 Discussion → 10 Conclusion → 11 References (`11_References.md`).
+**Final paper order** (journal IMRaD): 1 Title → 2 Abstract → 3 Keywords → 4 Introduction → 5 Related Work → 6 Methodology → 7 Experimental Setup → 8 Results → 9 Discussion → 10 Conclusion → 11 Appendix A (`11_Appendix_A_Supplementary_Materials.md`) → 12 References (`12_References.bib`).
 
 ---
 
@@ -61,7 +61,8 @@ Sections are **written** in this sequence (not journal appearance order):
 | 8 | Results | `08_Results.md` | Pending |
 | 9 | Discussion | `09_Discussion.md` | Pending |
 | 10 | Conclusion | `10_Conclusion.md` | Pending |
-| 11 | References | `11_References.md` | Pending |
+| 11 | Appendix A | `11_Appendix_A_Supplementary_Materials.md` | Complete |
+| 12 | References | `12_References.bib` | Complete (BibTeX) |
 
 ---
 

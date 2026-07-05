@@ -27,7 +27,7 @@ retraining or regenerating experiment outputs.
 
 | Item | Location |
 | --- | --- |
-| Section scaffolds (11 files) | `sections/` |
+| Section files (12) | `sections/` |
 | Reference repository | `reference/` |
 | Workspace init record | `manuscript_workspace_init.md` |
 | Consistency audit | `consistency_audit/` |
@@ -38,8 +38,8 @@ retraining or regenerating experiment outputs.
 
 | Directory | Purpose |
 | --- | --- |
-| `sections/` | One Markdown file per manuscript section (scaffold only) |
-| `../manuscript/overleaf/` | LaTeX project, figures, tables, bibliography |
+| `sections/` | Manuscript sections: `01`–`10` (Markdown), `11_Appendix_A_Supplementary_Materials.md`, `12_References.bib` |
+| `../manuscript/overleaf/` | LaTeX project, figures, tables (sync `12_References.bib` to `bibliography/`) |
 | `../manuscript/drafts/` | Working prose |
 | `prompts/` | Execution prompts (including this freeze) |
 

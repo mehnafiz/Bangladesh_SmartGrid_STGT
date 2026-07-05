@@ -1,0 +1,18 @@
+\begin{table}[!t]
+\caption{Frozen training configuration (S2 / A6).}
+\label{tab:2}
+\centering
+\small
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Setting} & \textbf{Value} \\
+\hline
+Loss & $\mathcal{L} = \mathrm{Huber(demand)}/100 + \lambda_2 \cdot \mathrm{MSE(OSI)}$ \\
+$\lambda_2$ & 20.0 \\
+Optimiser & Adam, lr $= 5\times 10^{-4}$, wd $= 10^{-4}$ \\
+Batch size & 32 \\
+Early stopping & Patience 15 (composite val.\ score) \\
+Parameters & 749,058 \\
+\hline
+\end{tabular}
+\end{table}

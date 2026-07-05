@@ -1,15 +1,14 @@
 # Manuscript Sections — Workspace Index
 
-**Stage:** 06 initialization (workspace prep)  
-**Status:** Scaffold only — no manuscript prose  
+**Stage:** 06 manuscript (complete prose + BibTeX bibliography)  
 **Outline authority:** `paper/paper_outline/Paper_Outline.md`  
 **Audit authority:** `paper/consistency_audit/final_readiness_report.md`
 
 ---
 
-## Section files
+## Section files (final submission order)
 
-| File | Outline § | Title | Tables | Figures |
+| File | Order | Title | Tables | Figures |
 | --- | ---: | --- | --- | --- |
 | `01_Title.md` | 1 | Title | — | — |
 | `02_Abstract.md` | 2 | Abstract | — | — |
@@ -21,7 +20,17 @@
 | `08_Results.md` | 8 | Results | 3–7 | 4–9 |
 | `09_Discussion.md` | 9 | Discussion | — | — |
 | `10_Conclusion.md` | 10 | Conclusion | — | — |
-| `11_References.md` | 11 | References | — | — |
+| `11_Appendix_A_Supplementary_Materials.md` | 11 | Appendix A — Supplementary Materials | S1–S4 | — |
+| `12_References.bib` | 12 | References (BibTeX) | — | — |
+
+---
+
+## Bibliography policy
+
+- **Official bibliography:** `12_References.bib` (BibTeX only).
+- References are generated and maintained exclusively in this `.bib` file.
+- **Do not** create `11_References.md`, `12_References.md`, or any Markdown references chapter.
+- For LaTeX/Overleaf export, copy or symlink `12_References.bib` into `manuscript/overleaf/bibliography/`.
 
 ---
 
@@ -31,7 +40,7 @@
 | --- | --- | --- |
 | Figures 1–9 | `paper/final_results_package/figures/` | `manuscript/overleaf/figures/` |
 | Tables 1–7 | `paper/final_results_package/publication_tables.md` | `manuscript/overleaf/tables/` |
-| Bibliography | — | `manuscript/overleaf/bibliography/` |
+| Bibliography | `paper/sections/12_References.bib` | `manuscript/overleaf/bibliography/` |
 
 ---
 
@@ -41,3 +50,4 @@
 2. Cross-check numbers against `paper/final_results_package/statistical_summary.md`.
 3. Apply claim guardrails from `paper/consistency_audit/claim_audit.md`.
 4. Do not modify experiment outputs or regenerate frozen figures.
+5. Add or edit bibliography entries only in `12_References.bib`; never recreate a Markdown references section.

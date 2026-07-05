@@ -450,14 +450,10 @@ Each subsection maps to one or more **contributions** (Part V). Draft prose late
 
 ---
 
-## 11. References
+## 11. Appendix A — Supplementary Materials
 
-- Journal-formatted bibliography (compile during drafting)
-- Include: GNN forecasting, transformers, multi-task learning, SHAP, Bangladesh energy context
-
----
-
-## Appendix (Optional — Supplementary Material)
+- Manuscript file: `paper/sections/11_Appendix_A_Supplementary_Materials.md`
+- Supporting tables, statistics, hyperparameters, features, graph specs, XAI paths, reproducibility checklist
 
 | ID | Content | Source |
 | --- | --- | --- |
@@ -470,6 +466,14 @@ Each subsection maps to one or more **contributions** (Part V). Draft prose late
 | Figure S3 | Residual distribution — S1 | Exp02A |
 | Figure S4 | Permutation ΔMAE ranking | Exp04 |
 | Figure S5 | Regional SHAP contribution | Exp04 |
+
+---
+
+## 12. References
+
+- Official bibliography: `paper/sections/12_References.bib` (BibTeX; maintained exclusively here)
+- Include: GNN forecasting, transformers, multi-task learning, SHAP, Bangladesh energy context
+- Do not create a Markdown references chapter (`11_References.md`, `12_References.md`, or similar)
 
 ---
 
@@ -598,7 +602,8 @@ Exp04 → S2 interpretability validated
 | 8 | Results | 5 | 7 (+1 subfigure) |
 | 9 | Discussion | 0 | 0 |
 | 10 | Conclusion | 0 | 0 |
-| 11 | References | 0 | 0 |
+| 11 | Appendix A | — | — | `11_Appendix_A_Supplementary_Materials.md` |
+| 12 | References | 0 | 0 | `12_References.bib` |
 
 ---
 
