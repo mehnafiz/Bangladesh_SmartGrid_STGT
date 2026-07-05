@@ -1,0 +1,15 @@
+\section{Experimental Setup}\label{sec:experimental_setup}
+
+\subsection{Baselines and Metrics}
+
+We compare S2 against seven reference models spanning classical machine learning (linear regression, random forest \cite{Breiman2001RandomForest}, XGBoost \cite{Chen2016XGBoost}), recurrent deep learning (LSTM \cite{Hochreiter1997LSTM}, GRU \cite{Cho2014GRU}), graph convolution (T-GCN \cite{Zhao2020TGCN}), and the historical PF-STGT reference B07 (hybrid geographical--correlation graph, W20 protocol). All models share chronological partitions, the frozen feature store, windowing ($T{=}7$, $H{=}1$), and leakage policies, ensuring that performance differences reflect architecture rather than data handling.
+
+Task~1 is evaluated with macro-averaged MAE (primary ranking metric), RMSE, MAPE, and $R^2$ over nine divisions. Macro MAE assigns equal weight to each division and is preferred over $R^2$ for planning because absolute megawatt error directly affects dispatch decisions. Task~2 uses MAE and $R^2$ on OSI. Paired Wilcoxon signed-rank tests \cite{Wilcoxon1945SignedRank} on per-window macro demand MAE apply Bonferroni correction \cite{Dunn1961Bonferroni}; bootstrap 95\% confidence intervals \cite{Efron1993Bootstrap} and Cohen's $d$ \cite{Cohen1988StatisticalPower} supplement $p$-values. Inferential testing targets demand MAE because it is the primary optimisation and selection criterion; OSI performance is reported through point estimates.
+
+\subsection{Training Configuration}
+
+S2 trains with Adam \cite{Kingma2015Adam} ($\eta{=}5{\times}10^{-4}$, weight decay $10^{-4}$), batch size 32, up to 200 epochs with early stopping (patience 15 on composite validation score), and gradient clipping at 1.0. Model capacity: $d_{\mathrm{model}}{=}128$, four heads, two spatial and two temporal layers (749,058 parameters). Deep baselines use AdamW with up to 60 epochs; classical models use training-partition standardisation only. Seed 42 governs all stochastic operations.
+
+\subsection{Ablation Design}
+
+Six PF-STGT configurations (A1--A6) isolate graph topology (none, geographical, hybrid, correlation-only), transformer removal, and single-task demand-only training. A1 equals B07; A6 equals S2. This design permits component-wise attribution of demand and OSI performance to graph prior, temporal encoder, and multi-task formulation.

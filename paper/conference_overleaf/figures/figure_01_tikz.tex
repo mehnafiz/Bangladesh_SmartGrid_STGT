@@ -1,0 +1,53 @@
+\input{figures/ieee_fig_colors}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  font=\scriptsize,
+  >=Stealth,
+  inputbox/.style={rectangle, draw=ieeeblue, fill=ieeelightblue, rounded corners=1.5pt,
+    text width=2.45cm, minimum height=0.72cm, align=center, line width=0.45pt, inner sep=2pt},
+  procbox/.style={rectangle, draw=ieeeblue, fill=ieeelightblue, rounded corners=1.5pt,
+    text width=2.15cm, minimum height=0.72cm, align=center, line width=0.45pt, inner sep=2pt},
+  headbox/.style={rectangle, draw=ieeeblue, fill=ieeelightblue, rounded corners=1.5pt,
+    text width=1.05cm, minimum height=0.85cm, align=center, line width=0.45pt, inner sep=1pt},
+  arr/.style={->, line width=0.4pt, color=ieeegray}
+]
+% Title
+\node[font=\small\bfseries, text=ieeedark] at (3.85,2.35) {PF-STGT Multi-Task Forecasting Framework};
+
+% Inputs
+\node[inputbox] (nin) at (0,1.55) {Regional node features\\{\fontsize{6}{7}\selectfont$(B,T{=}7,N{=}9,F{=}9)$}};
+\node[inputbox] (gin) at (0,0.45) {Global context\\{\fontsize{6}{7}\selectfont$(B,T{=}7,F{=}17)$}};
+\node[inputbox] (ain) at (0,-0.65) {Graph adjacency\\{\fontsize{6}{7}\selectfont$(N,N)$}};
+
+% Embedding
+\node[procbox, minimum height=1.05cm] (emb) at (2.95,0.45) {Embedding $+$\\Positional Encoding};
+
+% Encoders
+\node[procbox] (gt) at (5.55,1.55) {Graph Transformer\\(spatial attention)};
+\node[procbox] (tt) at (5.55,0.45) {Temporal Transformer\\(lag attention)};
+\node[procbox] (fus) at (5.55,-0.65) {Gated Parallel Fusion};
+
+% Heads
+\node[headbox] (dh) at (7.75,1.0) {Demand\\Head\\{\fontsize{6}{7}\selectfont(9 MW)}};
+\node[headbox] (sh) at (7.75,-0.35) {Stress\\Head\\(OSI)};
+
+% Arrows: inputs -> embedding
+\draw[arr] (nin.east) -- (emb.west |- nin);
+\draw[arr] (gin) -- (emb);
+\draw[arr] (ain.east) -- (emb.west |- ain);
+
+% embedding -> encoders
+\draw[arr] (emb.east) -- (gt.west);
+\draw[arr] (emb.east) -- (tt.west);
+\draw[arr] (emb.east) -- (fus.west);
+
+% encoders -> heads
+\draw[arr] (gt.east) -- (dh.west |- gt);
+\draw[arr] (tt.east) -- (dh.west);
+\draw[arr] (fus.east) -- (sh.west);
+
+% Footer
+\node[font=\fontsize{6}{7}\selectfont\itshape, text=ieeegray] at (3.85,-1.35)
+  {Final model S2: correlation graph ($\tau{=}0.65$); geographical hybrid removed};
+\end{tikzpicture}%
+}

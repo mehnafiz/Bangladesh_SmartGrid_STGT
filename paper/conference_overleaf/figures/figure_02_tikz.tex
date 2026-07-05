@@ -1,0 +1,37 @@
+\input{figures/ieee_fig_colors}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  font=\scriptsize,
+  >=Stealth,
+  s1box/.style={rectangle, draw=ieered, fill=ieeelightred, rounded corners=1.5pt,
+    text width=3.6cm, minimum height=0.85cm, align=center, line width=0.45pt, inner sep=2pt},
+  s2box/.style={rectangle, draw=ieeegreen, fill=ieeelightgreen, rounded corners=1.5pt,
+    text width=3.6cm, minimum height=0.85cm, align=center, line width=0.45pt, inner sep=2pt},
+  bluebox/.style={rectangle, draw=ieeeblue, fill=ieeelightblue, rounded corners=1.5pt,
+    align=center, line width=0.45pt, inner sep=2pt},
+  arr/.style={->, line width=0.55pt, color=ieeegreen}
+]
+% Title
+\node[font=\small\bfseries, text=ieeedark] at (3.9,2.55)
+  {S2 --- Correlation-Only PF-STGT (Final Architecture)};
+
+% S1 -> S2 evolution
+\node[s1box] (s1) at (0.9,1.75) {S1 (superseded)\\Hybrid geo + corr graph};
+\node[s2box] (s2) at (6.9,1.75) {\textbf{S2 (final)}\\Correlation graph only};
+\draw[arr] (s1.east) -- node[above, font=\fontsize{6}{7}\selectfont, text=ieeegreen] {$-$4.66 MW} (s2.west);
+
+% Shared trunk
+\node[bluebox, text width=7.8cm, minimum height=0.75cm] (trunk) at (3.9,0.75)
+  {Shared trunk: PF-STGT --- Graph + Temporal transformers + Fusion (749{,}058 params)};
+
+% Loss and metrics
+\node[bluebox, text width=3.65cm, minimum height=0.8cm] (loss) at (1.95,-0.55)
+  {Multi-task loss\\Huber$/100 + 20\cdot\mathrm{MSE}(\mathrm{OSI})$};
+\node[bluebox, text width=3.65cm, minimum height=0.8cm] (met) at (5.85,-0.55)
+  {Test demand MAE: 88.65 MW\\Stress $R^2$: 0.745};
+
+% Connect trunk to bottom boxes
+\draw[color=ieeegray, line width=0.35pt] (trunk.south) -- ++(0,-0.12) -| (loss.north);
+\draw[color=ieeegray, line width=0.35pt] (trunk.south) -- ++(0,-0.12) -| (met.north);
+\end{tikzpicture}%
+}
