@@ -3,47 +3,38 @@
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
-\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{microtype}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning}
 \usepackage{url}
 \usepackage{xurl}
-\def\BibTeX{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% Float placement tuning (IEEE production defaults)
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.08}
+\renewcommand{\floatpagefraction}{0.85}
+
+% Widow/orphan control
+\clubpenalty=10000
+\widowpenalty=10000
+\displaywidowpenalty=10000
+
+% Caption spacing (IEEE production)
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{0pt}
 
 \begin{document}
 
 \title{A Correlation-Aware Graph Transformer for Joint Regional Load and Operational Stress Forecasting in Bangladesh}
 
-\author{
-\IEEEauthorblockN{MD. Nafiz Ahmed Tanim}
-\IEEEauthorblockA{\textit{Dept.\ of CSE, AIUB}\\
-Dhaka, Bangladesh\\
-24-56644-1@student.aiub.edu}
-\and
-\IEEEauthorblockN{MD. Tanvir Hasan}
-\IEEEauthorblockA{\textit{Dept.\ of CSE, AIUB}\\
-Dhaka, Bangladesh\\
-23-54796-3@student.aiub.edu}
-\and
-\IEEEauthorblockN{MD. Robiul Islam}
-\IEEEauthorblockA{\textit{Dept.\ of CSE, AIUB}\\
-Dhaka, Bangladesh\\
-24-56643-1@student.aiub.edu}
-\and
-\IEEEauthorblockN{Wasimul Bari Tonmoy}
-\IEEEauthorblockA{\textit{Dept.\ of CSE, AIUB}\\
-Dhaka, Bangladesh\\
-24-56653-1@student.aiub.edu}
-\and
-\IEEEauthorblockN{MD. Hasanuzzaman}
-\IEEEauthorblockA{\textit{Dept.\ of CSE, AIUB}\\
-Dhaka, Bangladesh\\
-24-56666-1@student.aiub.edu}
-\and
-\IEEEauthorblockN{Dipta Justin Gomes}
-\IEEEauthorblockA{\textit{Dept.\ of CSE, AIUB}\\
-Dhaka, Bangladesh\\
-diptagomes@aiub.edu}
-}
+\input{authors}
 
 \maketitle
 

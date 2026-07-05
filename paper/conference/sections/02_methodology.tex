@@ -4,40 +4,44 @@
 
 Let $\mathcal{V} = \{1, \ldots, N\}$ denote $N{=}9$ administrative divisions. At forecast origin $t$, the model receives a lookback window of $T{=}7$ days and predicts targets at horizon $H{=}1$. Node features $\mathbf{X}^{\mathrm{node}} \in \mathbb{R}^{T \times N \times F_n}$ ($F_n{=}9$) encode division-level demand, supply, load, lags, rolling means, and regional shares. Global features $\mathbf{X}^{\mathrm{global}} \in \mathbb{R}^{T \times F_g}$ ($F_g{=}17$) encode calendar indicators, grid aggregates, limitation variables, and national generation scalars. Task~1 outputs regional demand $\hat{\mathbf{y}}^{\mathrm{demand}} \in \mathbb{R}^N$ (MW); Task~2 outputs graph-level OSI $\hat{y}^{\mathrm{osi}} \in [0,1]$.
 
-OSI integrates three train-normalised components:
+OSI integrates three train-normalised components that capture distinct pressure mechanisms:
 \begin{align}
-c_1 &= L_{\mathrm{total}}/D_{\mathrm{total}}, \quad
-c_2 = 1 - GR/\mathrm{Highest\_Gen}, \quad
-c_3 = \mathrm{TOL}/\mathrm{Highest\_Gen}, \nonumber\\
+c_1 &= L_{\mathrm{total}}/D_{\mathrm{total}}, \nonumber\\
+c_2 &= 1 - GR/\mathrm{Highest\_Gen}, \nonumber\\
+c_3 &= \mathrm{TOL}/\mathrm{Highest\_Gen}, \nonumber\\
 \mathrm{OSI} &= \mathrm{mean}\bigl(\mathrm{minmax}_{\mathrm{train}}(c_1),\,
-\mathrm{minmax}_{\mathrm{train}}(c_2),\,
-\mathrm{minmax}_{\mathrm{train}}(c_3)\bigr),
+\mathrm{minmax}_{\mathrm{train}}(c_2), \nonumber\\
+&\quad \mathrm{minmax}_{\mathrm{train}}(c_3)\bigr),
 \end{align}
-where $L_{\mathrm{total}}$, $D_{\mathrm{total}}$, $GR$, and $\mathrm{TOL}$ denote total shedding, demand, generation reserve, and operational limitation. Same-day OSI is excluded from inputs when forecasting $\mathrm{OSI}(t{+}1)$ to prevent leakage.
+where $L_{\mathrm{total}}$, $D_{\mathrm{total}}$, $GR$, and $\mathrm{TOL}$ denote total shedding, demand, generation reserve, and operational limitation. Component $c_1$ reflects shedding intensity relative to demand; $c_2$ captures reserve shortfall; and $c_3$ encodes infrastructure limitation pressure. Continuous OSI regression preserves graded stress magnitude even when shedding is absent. Same-day OSI is excluded from inputs when forecasting $\mathrm{OSI}(t{+}1)$ to prevent leakage.
 
 The joint objective combines macro-averaged Huber loss on demand \cite{Huber1964RobustEstimation} with MSE on OSI:
 \begin{equation}
 \mathcal{L} = \mathcal{L}_{\mathrm{demand}}^{\mathrm{raw}}/100 + \lambda_2 \, \mathcal{L}_{\mathrm{osi}}, \quad \lambda_2 = 20.
 \label{eq:loss}
 \end{equation}
-Demand-loss scaling prevents collapse to demand-only learning when OSI targets lie on $[0,1]$.
+Without demand-loss scaling, megawatt-scale gradients dominate the bounded OSI term and the model collapses to demand-only learning; dividing by 100~MW and setting $\lambda_2{=}20$ restores comparable optimisation pressure across both heads.
 
 \subsection{Dataset and Graph Construction}
 
-We use the Bangladesh Smart Grid dataset (Mendeley Data, Version~5) \cite{Hossain2025BangladeshSmartGrid}: 1,850 daily records (Nov.\ 2019--Dec.\ 2024) across nine divisions. Chronological partitions yield 1,281 training, 263 validation, and 264 test sliding windows (Table~\ref{tab:setup}). All preprocessing parameters---scaling, encoding, graph weights, OSI bounds---are estimated on training data only.
+We use the Bangladesh Smart Grid dataset (Mendeley Data, Version~5) \cite{Hossain2025BangladeshSmartGrid}: 1,850 daily records (Nov.\ 2019--Dec.\ 2024) across nine divisions. Chronological partitions yield 1,281 training, 263 validation, and 264 test sliding windows (Table~\ref{tab:setup}). All preprocessing parameters---scaling, encoding, graph weights, and OSI bounds---are estimated on training data only.
 
-Pairwise Pearson correlations $\rho_{ij}$ on training-partition evening-peak demand define undirected edges with $\rho_{ij} \geq 0.65$; weights equal $\rho_{ij}$ and are row-normalised to form adjacency $\mathbf{A}$. This correlation-only graph (33 of 36 pairs retained) replaces geographical and hybrid priors following ablation evidence. Geographical adjacency (21 pairs) and hybrid adjacency (24 pairs) serve as ablation comparators only.
+\input{tables/table_01_setup}
+
+Inter-regional evening-peak demand on the Bangladesh grid exhibits strong positive co-movement driven by shared national growth and seasonality rather than border adjacency alone. We therefore construct a data-driven spatial prior: pairwise Pearson correlations $\rho_{ij}$ computed on training-partition demand define undirected edges with $\rho_{ij} \geq 0.65$, weighted by $\rho_{ij}$ and row-normalised to form adjacency $\mathbf{A}$. The correlation-only graph retains 33 of 36 possible pairs. Geographical adjacency (21 pairs) and hybrid adjacency (24 pairs) serve as ablation comparators only.
 
 \subsection{PF-STGT Architecture}
 
-Fig.~\ref{fig:1} shows the end-to-end pipeline; Fig.~\ref{fig:2} details configuration S2. Node and global tensors are embedded with regional identity and positional encoding. A \emph{spatial branch} applies graph-transformer self-attention over nodes at each timestep with additive bias from $\mathbf{A}$:
+Fig.~\ref{fig:1} shows the end-to-end pipeline; Fig.~\ref{fig:2} details configuration S2. Node and global tensors are embedded with regional identity and positional encoding.
+
+\input{figures/figure_01.tex}
+
+A \emph{spatial branch} applies graph-transformer self-attention over nodes at each timestep with additive bias from $\mathbf{A}$:
 \begin{equation}
 \mathrm{Attn}_{\mathrm{spatial}}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) =
 \mathrm{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d}} + \mathbf{B}_{\mathrm{adj}}\right)\mathbf{V}.
 \label{eq:spatial}
 \end{equation}
-A \emph{temporal branch} applies a shared transformer encoder over each node's seven-day sequence. Learnable gating fuses the branches; the final timestep yields shared node embeddings $\mathbf{H}_{\mathrm{shared}}$. A per-node linear head decodes regional demand; a graph-level head combining pooled node states and global context decodes OSI through a bounded activation. Both tasks share encoders and differ only in decoding layers.
+A \emph{temporal branch} applies a shared transformer encoder over each node's seven-day sequence. Learnable gating fuses the branches rather than forcing a fixed spatial-then-temporal ordering, allowing the model to emphasise cross-division synchronisation or within-division persistence depending on context. The final timestep yields shared node embeddings $\mathbf{H}_{\mathrm{shared}}$. A per-node linear head decodes regional demand; a graph-level head combining pooled node states and global context decodes OSI through a bounded activation. Both tasks share encoders and differ only in decoding layers, so limitation and calendar structure learned for stress prediction remains available to the demand head without duplicating feature extraction across separate models.
 
-\input{tables/table_01_setup}
-\input{figures/figure_01.tex}
 \input{figures/figure_02.tex}
