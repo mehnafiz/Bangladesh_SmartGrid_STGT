@@ -1,6 +1,6 @@
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\linewidth]{figures/figure_06_shap_summary_demand.png}
-\caption{Grouped SHAP attributions for Dhaka demand.}
+\includegraphics[width=\linewidth]{figures/figure_06_shap_summary_demand.pdf}
+\caption{Grouped GradientSHAP mean absolute attributions ($|\phi|$) for Dhaka regional demand on the frozen S2 checkpoint (validation $n{=}20$). Calendar/trend (G6, $|\phi|{=}162.34$), engineered lags and rolling statistics (G4, 101.26), and national generation scalars (G10, 91.44) receive the highest attribution, contrasting with the limitation-dominated stress profile in Fig.~\ref{fig:6a}. The divergence supports task-specialised head behaviour within the shared encoder: demand forecasting prioritises autoregressive and calendar channels, whereas stress forecasting prioritises limitation structure.}
 \label{fig:6b}
 \end{figure}

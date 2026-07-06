@@ -1,6 +1,6 @@
 # Case Studies — Experiment 04
 
-Generated: 2026-06-25
+Generated: 2026-07-06
 
 **24** cases (20 stratified validation + 4 representative test).
 

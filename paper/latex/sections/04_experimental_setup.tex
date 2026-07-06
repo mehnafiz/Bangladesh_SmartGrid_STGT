@@ -95,6 +95,12 @@ Inferential analysis targets Task 1 macro demand MAE across three families: benc
 
 \textbf{Effect size and uncertainty.} Cohen's \(d\) \cite{Cohen1988StatisticalPower} and bootstrap 95\% confidence intervals \cite{Efron1993Bootstrap} (2{,}000 resamples, seed 42) supplement \(p\)-values. Significance indicates systematic per-window MAE difference; practical importance follows megawatt magnitude, bootstrap intervals, and effect-size conventions.
 
+\subsection{Explainability Protocol}\label{subsection:explainability_protocol}
+
+Post-hoc explainability (Experiment 04) applies to the frozen S2 checkpoint (A6, seed 42) \textbf{without retraining} and without altering benchmark metrics from Experiments 01--03. Attribution methods comprise: (i) grouped integrated gradients (GradientSHAP-style coalition attributions, 25 steps, zero baseline) over feature coalitions G1--G11; (ii) coalition-level permutation importance on validation batches; (iii) spatial and temporal attention export from the graph-transformer forward pass (\texttt{return\_attention=True}); and (iv) dual-path stress comparison between gradient attributions and OSI component decomposition (reserve margin \(c_2\), limitation stack \(c_3\), shedding \(c_1\)) on stratified case studies.
+
+Global gradient attributions use 20 validation batches; 24 case studies (20 validation, 4 test) span high/low OSI, peak demand, shedding, and representative test strata. Outputs are frozen in \texttt{results/explainability/} and \texttt{xai\_metrics.json}. Figures in Section~\ref{subsection:explainability_analysis} derive from these verified artefacts; attributions describe model behaviour on the evaluation sample, not physical causation.
+
 
 % --- Section floats (publication package) ---
 \input{figures/figure_03.tex}

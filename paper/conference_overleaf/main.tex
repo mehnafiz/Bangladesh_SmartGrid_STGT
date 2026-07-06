@@ -3,23 +3,28 @@
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{graphicx}
+\usepackage{dblfloatfix}
 \usepackage{textcomp}
 \usepackage{microtype}
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,calc,positioning}
+\usepackage{array}
 \usepackage{url}
 \usepackage{xurl}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 % Float placement tuning (IEEE production defaults)
-\setcounter{topnumber}{2}
+\setcounter{topnumber}{3}
 \setcounter{bottomnumber}{2}
-\setcounter{totalnumber}{4}
-\renewcommand{\topfraction}{0.9}
-\renewcommand{\bottomfraction}{0.8}
-\renewcommand{\textfraction}{0.08}
-\renewcommand{\floatpagefraction}{0.85}
+\setcounter{totalnumber}{5}
+\renewcommand{\topfraction}{0.95}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.06}
+\renewcommand{\floatpagefraction}{0.80}
+\setlength{\textfloatsep}{7pt plus 2pt minus 2pt}
+\setlength{\floatsep}{6pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
 
 % Widow/orphan control
 \clubpenalty=10000
@@ -31,6 +36,7 @@
 \setlength{\belowcaptionskip}{0pt}
 
 \begin{document}
+\raggedbottom
 
 \title{A Correlation-Aware Graph Transformer for Joint Regional Load and Operational Stress Forecasting in Bangladesh}
 
@@ -52,9 +58,6 @@ Multi-task learning, spatio-temporal forecasting, operational stress index, corr
 \input{sections/04_results}
 \input{sections/05_discussion}
 \input{sections/06_conclusion}
-
-\section*{Acknowledgment}
-The authors thank Dipta Justin Gomes (AIUB) for guidance and supervision throughout this research.
 
 \bibliographystyle{IEEEtran}
 \bibliography{bibliography/12_References}

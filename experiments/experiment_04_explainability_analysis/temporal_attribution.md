@@ -1,6 +1,6 @@
 # Temporal Attribution — Experiment 04
 
-Generated: 2026-06-25
+Generated: 2026-07-06
 
 Mean temporal attention weights α_t across case studies (T=7 window).
 

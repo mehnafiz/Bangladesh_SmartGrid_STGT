@@ -1,6 +1,6 @@
 # SHAP Summary — Experiment 04
 
-Generated: 2026-06-25
+Generated: 2026-07-06
 
 ## Model
 
@@ -36,8 +36,8 @@ Generated: 2026-06-25
 
 ## Quality
 
-- SHAP–permutation Spearman (demand): **-0.564**
-- SHAP–permutation Spearman (stress): **0.366**
+- SHAP–permutation Spearman (demand): **-0.345**
+- SHAP–permutation Spearman (stress): **0.627**
 
 ## Figures
 

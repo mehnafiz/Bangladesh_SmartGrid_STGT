@@ -1,29 +1,16 @@
-\section{Results}\label{sec:results}
-
-\subsection{Benchmark Performance}
-
-Table~\ref{tab:benchmark} and Fig.~\ref{fig:4} summarise held-out test performance ($n{=}264$ windows). S2 attains the lowest macro demand MAE (88.65~MW; RMSE 127.29~MW; MAPE 6.55\%) and highest OSI $R^2$ (0.745; MAE 0.0371), improving 4.66~MW (5.0\%) over B07 (93.31~MW) and 8.38~MW over random forest B02 (97.03~MW). Recurrent baselines B04/B05 exceed 233~MW MAE with negative macro $R^2$; T-GCN B06 reaches 257.21~MW, suggesting that shallow graph convolution without full temporal-transformer capacity is insufficient when nodes are densely correlated and the input window spans a full weekly cycle. Classical ensembles remain competitive on variance explanation---B02 records macro $R^2$ of 0.984---but do not match S2 on megawatt accuracy, confirming that $R^2$ and MAE can rank models differently when error concentrates in high-load divisions.
-
-\input{tables/table_02_benchmark}
-\input{figures/figure_04.tex}
-
-Paired Wilcoxon tests on per-window macro demand MAE confirm the benchmark ordering. S2 versus B07 yields median $\Delta$MAE of $-5.43$~MW ($p{=}5.5{\times}10^{-5}$) with bootstrap 95\% CI $[-7.17, -2.16]$~MW---the only graph-variant comparison with statistically supported demand improvement over the historical hybrid reference. With B07 as Wilcoxon reference and Bonferroni $\alpha{=}0.0083$, B07 significantly outperforms B01--B06 as well.
-
-\subsection{Regional and Stress Analysis}
-
-Per-region MAE under S2 spans 32.73~MW (Barishal) to 293.98~MW (Dhaka). Dhaka accounts for approximately 35.7\% of national demand and dominates the megawatt error budget; S2 reduces Dhaka MAE by 5.80~MW versus B07 while peripheral divisions remain below 60~MW. Equal-weight macro summaries therefore understate planning significance for the principal load centre, which operators should monitor separately.
-
-On OSI, S2 reduces MAE by 0.0128 and raises $R^2$ by 0.160 absolute versus B07, explaining approximately three-quarters of held-out stress variance. Deep baselines B04--B06 yield negative stress $R^2$ ($-$0.191 to $-$0.304), indicating uninformative stress predictions. No paired Wilcoxon tests were computed for OSI; stress claims rest on point estimates from the frozen test split.
-
-\subsection{Ablation Study}
-
-Table~\ref{tab:ablation} and Fig.~\ref{fig:5} report configuration results on the identical test split. Correlation-graph A6 (S2) delivers the lowest demand MAE among all multi-task variants (88.65~MW) with OSI $R^2$ of 0.745. Geographical-graph A5 attains marginally better stress metrics (OSI MAE 0.0340, $R^2$ 0.764) but at 9.33~MW higher demand error. Demand-only A4 achieves the lowest demand MAE (86.89~MW) without producing OSI output---a 1.76~MW advantage over S2 that documents a genuine demand--stress Pareto trade-off. Transformer removal on the hybrid graph (A3) is not statistically distinguishable from A1 ($p{=}0.384$), whereas geographical graph A5 significantly degrades demand ($p{=}1.48{\times}10^{-4}$).
-
-\input{tables/table_03_ablation}
-\input{figures/figure_05.tex}
-
 \subsection{Explainability}
 
-Post-hoc attribution \cite{Lundberg2017SHAP,Sundararajan2017IntegratedGradients} on the S2 checkpoint applies grouped GradientSHAP, permutation importance, and spatial attention export without retraining. On the stress task, limitation stack (G8) and calendar/trend (G6) coalitions rank highest ($|\phi|{=}0.0191$ and 0.0190). On Dhaka demand, calendar (G6), engineered lags (G4), and national generation (G10) dominate ($|\phi|{=}162.34$, 101.26, 91.44). Fig.~\ref{fig:7} shows node-level attribution mass concentrated on Dhaka (340.36), Rajshahi, and Khulna; Spearman correlation between spatial attention and correlation adjacency is $\rho{=}0.422$. Dual-path comparison of gradient attributions with OSI component drivers agrees in 13 of 24 case studies (52.2\%); demand gradient and permutation rankings disagree ($\rho{=}{-}0.564$), so explanation views should be reported separately.
+Post-hoc attribution \cite{Lundberg2017SHAP,Sundararajan2017IntegratedGradients} on the frozen S2 checkpoint applies grouped GradientSHAP, permutation importance, and spatial attention export without retraining (Experiment~04).
+
+\noindent\textbf{Spatial attention.}
+Fig.~\ref{fig:7} visualises mean spatial attention on the train-estimated correlation graph, averaged over 24 case studies. Attribution mass concentrates on Dhaka (340.36), Rajshahi, and Khulna; peripheral divisions receive lower mass. The Spearman correlation between learned attention and frozen adjacency is $\rho{=}0.422$, indicating moderate alignment between data-driven graph structure and learned spatial coupling.
 
 \input{figures/figure_07.tex}
+
+\noindent\textbf{Coalition attributions.}
+Fig.~\ref{fig:6} summarises grouped GradientSHAP magnitudes ($|\phi|$) on coalition registry G1--G11 (validation $n{=}20$). On the stress task, limitation stack (G8) and calendar/trend (G6) rank highest ($|\phi|{=}0.0191$ and 0.0190; panel~(b)). On Dhaka demand, calendar (G6), engineered lags (G4), and national generation (G10) dominate ($|\phi|{=}162.34$, 101.26, 91.44; panel~(a)), indicating task-specific coalition emphasis under shared encoding.
+
+\input{figures/figure_06.tex}
+
+\noindent\textbf{Cross-method check.}
+Dual-path stress comparison agrees in 13 of 24 case studies (52.2\%). Demand gradient and permutation rankings disagree ($\rho{=}{-}0.564$), whereas stress rankings partially align ($\rho{=}0.366$). Attributions describe model behaviour on the evaluation sample, not physical causation.

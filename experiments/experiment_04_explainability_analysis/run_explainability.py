@@ -457,6 +457,18 @@ def run_experiment() -> None:
     adj = coordinator.x_graph.adjacency
     attn_rho = attn_extractor.spearman_with_adjacency(mean_spatial, adj)
 
+    attn_dir = RESULTS_ROOT / "attention"
+    attn_dir.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(mean_spatial, index=REGIONS, columns=REGIONS).to_csv(
+        attn_dir / "mean_spatial_matrix.csv"
+    )
+    (attn_dir / "mean_spatial_matrix.json").write_text(
+        json.dumps(
+            {"regions": list(REGIONS), "matrix": mean_spatial.tolist()},
+            indent=2,
+        )
+    )
+
     # --- Figures ---
     print("Generating figures...", flush=True)
     stress_ids = stress_global.grouped.group_ids
@@ -569,6 +581,7 @@ def run_experiment() -> None:
         "perm_spearman_demand": rho_demand,
         "perm_spearman_stress": rho_stress,
         "attention_adjacency_spearman": attn_rho,
+        "mean_spatial": mean_spatial.tolist(),
         "mean_temporal_alpha": mean_temporal.tolist(),
         "node_mass_mean": {REGIONS[i]: float(node_mass_stack[i]) for i in range(len(REGIONS))},
         "regional_phi": {k: v.tolist() for k, v in regional_phi.items()},

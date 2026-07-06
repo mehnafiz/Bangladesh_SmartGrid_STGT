@@ -1,6 +1,6 @@
 # Node Attribution — Experiment 04
 
-Generated: 2026-06-25
+Generated: 2026-07-06
 
 Combined SHAP node mass and spatial attention (averaged over case studies).
 

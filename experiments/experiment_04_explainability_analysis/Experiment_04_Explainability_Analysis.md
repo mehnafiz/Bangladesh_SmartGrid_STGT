@@ -126,9 +126,11 @@ xai_summary.md
 
 ---
 
+---
+
 ## Execution Record
 
-**Date:** 2026-06-25
+**Date:** 2026-07-06
 **Model:** S2 (A6 checkpoint)
 **Script:** `experiments/experiment_04_explainability_analysis/run_explainability.py`
 **Deliverables:** 8 markdown reports + 7 figures
