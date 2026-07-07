@@ -366,165 +366,96 @@ def figure_01_framework() -> None:
 
 
 def figure_02_s2_architecture() -> None:
-    """Three-tier S2 diagram with explicit gutters — no box overlap."""
+    """Minimal three-tier S2 diagram — uniform boxes, single-tone arrows."""
     apply_rc()
-    fig_w, fig_h = 10.5, 5.35
+    fig_w, fig_h = 7.15, 3.55
     fig, ax = plt.subplots(figsize=(fig_w, fig_h))
     ax.set_xlim(0, fig_w)
     ax.set_ylim(0, fig_h)
     ax.axis("off")
 
-    cx = fig_w / 2
-    ax.text(cx, 5.05, "Frozen S2 Architecture — Correlation-Only PF-STGT", ha="center", fontsize=12.0, fontweight="bold", color=IEEE_DARK)
+    fs, bh = 7.8, 0.44
+    arr, alw = IEEE_GRAY, 1.0
+    mid = lambda y: y + bh / 2
 
-    # Tier 1 — model selection
-    sel_y, sel_h = 3.42, 1.22
-    ax.add_patch(
-        FancyBboxPatch(
-            (0.35, sel_y),
-            fig_w - 0.70,
-            sel_h,
-            boxstyle="round,pad=0.02,rounding_size=0.10",
-            linewidth=BOX_LW,
-            edgecolor=IEEE_BLUE,
-            facecolor=IEEE_LIGHT_BLUE,
-            alpha=0.30,
-            zorder=0,
-        )
-    )
-    ax.text(0.55, sel_y + sel_h - 0.12, "Model selection", ha="left", fontsize=8.5, fontweight="bold", color=IEEE_GRAY)
+    # Tier separators (dashed guides, no tinted bands)
+    for y in (2.38, 1.28):
+        ax.plot([0.22, fig_w - 0.22], [y, y], color=IEEE_MUTED, linewidth=0.45,
+                linestyle=(0, (4, 3)), alpha=0.55, zorder=0)
 
-    s1_w, s1_h = 2.05, 0.58
-    s1_x = 0.65
-    s1_y = sel_y + 0.34
-    ax.add_patch(
-        FancyBboxPatch(
-            (s1_x, s1_y),
-            s1_w,
-            s1_h,
-            boxstyle="round,pad=0.02,rounding_size=0.08",
-            linewidth=0.9,
-            edgecolor=IEEE_RED,
-            facecolor="#fafafa",
-            linestyle="dashed",
-            alpha=0.70,
-            zorder=1,
-        )
-    )
-    ax.text(s1_x + s1_w / 2, s1_y + s1_h * 0.68, "S1 (superseded)", ha="center", fontsize=7.2, color=IEEE_GRAY, style="italic")
-    ax.text(s1_x + s1_w / 2, s1_y + s1_h * 0.28, "Hybrid geo + corr.", ha="center", fontsize=6.8, color=IEEE_MUTED)
-
-    s2_x, s2_w = 3.15, 6.85
-    s2_y = sel_y + 0.26
-    s2_h = 0.86
-    ax.add_patch(
-        FancyBboxPatch(
-            (s2_x - 0.06, s2_y - 0.06),
-            s2_w + 0.12,
-            s2_h + 0.12,
-            boxstyle="round,pad=0.02,rounding_size=0.10",
-            linewidth=0.0,
-            facecolor=IEEE_GREEN,
-            alpha=0.10,
-            zorder=1,
-        )
-    )
-    ax.add_patch(
-        FancyBboxPatch(
-            (s2_x, s2_y),
-            s2_w,
-            s2_h,
-            boxstyle="round,pad=0.02,rounding_size=0.10",
-            linewidth=BOX_LW_HERO,
-            edgecolor=IEEE_GREEN,
-            facecolor=IEEE_LIGHT_GREEN,
-            zorder=2,
-        )
-    )
-    ax.text(s2_x + s2_w / 2, s2_y + s2_h * 0.72, "S2 — Final model (A6)", ha="center", fontsize=10.0, fontweight="bold", color=IEEE_DARK)
-    ax.text(
-        s2_x + s2_w / 2,
-        s2_y + s2_h * 0.30,
-        "Correlation graph only  |  $\\tau{=}0.65$  |  749,058 params",
-        ha="center",
-        fontsize=7.8,
-        color=IEEE_GRAY,
-    )
-
-    gain_x = s1_x + s1_w + 0.12
-    _arrow(ax, (s1_x + s1_w, s1_y + s1_h / 2), (s2_x, s2_y + s2_h / 2), color=IEEE_GREEN, lw=ARROW_LW_EMPHASIS)
-    ax.add_patch(
-        FancyBboxPatch(
-            (gain_x, s1_y + s1_h + 0.06),
-            0.82,
-            0.26,
-            boxstyle="round,pad=0.02,rounding_size=0.05",
-            linewidth=0.8,
-            edgecolor=IEEE_GREEN,
-            facecolor="white",
-            zorder=3,
-        )
-    )
-    ax.text(gain_x + 0.41, s1_y + s1_h + 0.19, "$-$4.66 MW", ha="center", fontsize=7.5, fontweight="bold", color=IEEE_GREEN)
-
-    # Tier 2 — encoder trunk
-    trunk_y, trunk_h = 1.95, 1.25
-    ax.add_patch(
-        FancyBboxPatch(
-            (0.35, trunk_y),
-            fig_w - 0.70,
-            trunk_h,
-            boxstyle="round,pad=0.02,rounding_size=0.10",
-            linewidth=BOX_LW,
-            edgecolor=IEEE_BLUE,
-            facecolor="#ffffff",
-            zorder=0,
-        )
-    )
-    ax.text(cx, trunk_y + trunk_h - 0.14, "Shared PF-STGT encoder trunk", ha="center", fontsize=8.8, fontweight="bold", color=IEEE_DARK)
-
-    box_y = trunk_y + 0.22
-    box_h = 0.58
-    specs = [
-        (0.55, 2.15, "Node + global", "embedding"),
-        (2.95, 2.05, "Graph transformer", "spatial attn."),
-        (5.25, 2.05, "Temporal transformer", "lag attn."),
-        (7.55, 2.10, "Gated fusion", None),
+    tier_labels = [
+        (3.18, "Model selection"),
+        (2.08, "Shared PF-STGT encoder trunk"),
+        (0.98, "Objective and held-out metrics"),
     ]
-    for i, (x, w, title, sub) in enumerate(specs):
-        face = IEEE_LIGHT_GREEN if i == 3 else IEEE_LIGHT_BLUE
-        edge = IEEE_GREEN if i == 3 else IEEE_BLUE
-        bold = i == 3
-        _draw_box(ax, x, box_y, w, box_h, title, sub, face=face, edge=edge, fontsize=7.8, bold=bold, lw=BOX_LW)
-        if i < len(specs) - 1:
+    for y, label in tier_labels:
+        ax.text(0.28, y, label, ha="left", va="bottom",
+                fontsize=7.5, fontweight="bold", color=IEEE_GRAY, zorder=1)
+
+    # --- Tier 1: S1 → S2 ---
+    s1_x, s1_w = 0.32, 1.48
+    s1_y = 2.72
+    ax.add_patch(
+        FancyBboxPatch(
+            (s1_x, s1_y), s1_w, bh,
+            boxstyle="round,pad=0.015,rounding_size=0.06",
+            linewidth=0.75, edgecolor=IEEE_MUTED, facecolor="#ffffff",
+            linestyle=(0, (3, 2)), zorder=2,
+        )
+    )
+    ax.text(s1_x + s1_w / 2, s1_y + bh * 0.62, "S1 (superseded)", ha="center", va="center",
+            fontsize=fs - 0.6, color=IEEE_GRAY, style="italic", zorder=3)
+    ax.text(s1_x + s1_w / 2, s1_y + bh * 0.30, "Hybrid geo + corr.", ha="center", va="center",
+            fontsize=fs - 1.4, color=IEEE_MUTED, zorder=3)
+
+    s2_x, s2_w = 2.18, 4.65
+    s2_y = 2.70
+    _draw_minibox(ax, s2_x, s2_y, s2_w, bh + 0.06,
+                  "S2 — Final model (A6)",
+                  "Correlation graph only  |  $\\tau{=}0.65$  |  749,058 params",
+                  fontsize=fs)
+
+    _route_arrow(ax, [(s1_x + s1_w, mid(s1_y)), (s2_x, mid(s2_y))], color=arr, lw=alw)
+    ax.text(s1_x + s1_w + 0.22, mid(s1_y) + 0.18, "$-$4.66 MW", ha="center", va="bottom",
+            fontsize=7.2, color=IEEE_DARK, zorder=3)
+
+    # --- Tier 2: encoder chain ---
+    enc_y = 1.42
+    enc_specs = [
+        (0.32, 1.38, "Node + global", "embedding"),
+        (1.88, 1.38, "Graph transformer", "spatial attn."),
+        (3.44, 1.38, "Temporal transformer", "lag attn."),
+        (5.00, 1.38, "Gated fusion", None),
+    ]
+    for i, (x, w, title, sub) in enumerate(enc_specs):
+        _draw_minibox(ax, x, enc_y, w, bh, title, sub, fontsize=fs - 0.2)
+        if i < len(enc_specs) - 1:
             x_end = x + w
-            x_next = specs[i + 1][0]
-            col = IEEE_GREEN if i == 2 else IEEE_GRAY
-            lw = ARROW_LW_EMPHASIS if i == 2 else ARROW_LW
-            _arrow(ax, (x_end, box_y + box_h / 2), (x_next, box_y + box_h / 2), color=col, lw=lw)
+            x_next = enc_specs[i + 1][0]
+            _route_arrow(ax, [(x_end, mid(enc_y)), (x_next, mid(enc_y))], color=arr, lw=alw)
 
-    _arrow(ax, (cx, sel_y), (cx, trunk_y + trunk_h), color=IEEE_GRAY, lw=ARROW_LW)
+    trunk_cx = fig_w / 2
+    _route_arrow(ax, [(trunk_cx, s2_y), (trunk_cx, enc_y + bh)], color=arr, lw=alw)
 
-    # Tier 3 — objective + metrics
-    bot_y, bot_h = 0.30, 0.82
-    _draw_box(ax, 0.55, bot_y, 4.35, bot_h, "Multi-task objective", "$\\mathcal{L} = \\mathrm{Huber}(D)/100 + 20 \\cdot \\mathrm{MSE}(\\mathrm{OSI})$", fontsize=7.8, lw=BOX_LW)
-    _draw_box(
-        ax,
-        5.35,
-        bot_y,
-        4.55,
-        bot_h,
+    # --- Tier 3: objective + metrics ---
+    bot_y = 0.30
+    _draw_minibox(
+        ax, 0.32, bot_y, 3.18, bh + 0.10,
+        "Multi-task objective",
+        "$\\mathcal{L} = \\mathrm{Huber}(D)/100 + 20 \\cdot \\mathrm{MSE}(\\mathrm{OSI})$",
+        fontsize=fs - 0.2,
+    )
+    _draw_minibox(
+        ax, 3.65, bot_y, 3.18, bh + 0.10,
         "Held-out test performance",
         "Demand MAE: 88.65 MW  |  Stress $R^2$: 0.745",
-        face=IEEE_LIGHT_GREEN,
-        edge=IEEE_GREEN,
-        lw=BOX_LW_HERO,
-        fontsize=7.8,
-        bold=True,
+        fontsize=fs - 0.2,
     )
 
-    _arrow(ax, (cx, trunk_y), (2.72, bot_y + bot_h), color=IEEE_GRAY, lw=ARROW_LW)
-    _arrow(ax, (cx, trunk_y), (7.62, bot_y + bot_h), color=IEEE_GREEN, lw=ARROW_LW_EMPHASIS)
+    split_y = 0.88
+    _route_arrow(ax, [(trunk_cx, enc_y), (trunk_cx, split_y)], color=arr, lw=alw)
+    _route_arrow(ax, [(trunk_cx, split_y), (1.91, split_y), (1.91, bot_y + bh + 0.10)], color=arr, lw=alw)
+    _route_arrow(ax, [(trunk_cx, split_y), (5.24, split_y), (5.24, bot_y + bh + 0.10)], color=arr, lw=alw)
 
     export_triple(fig, FIG / "figure_02_s2_architecture")
     plt.close(fig)
