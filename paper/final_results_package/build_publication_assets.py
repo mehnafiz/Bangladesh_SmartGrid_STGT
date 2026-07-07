@@ -250,139 +250,116 @@ def _draw_box(
         ax.text(x + w / 2, y + h / 2, label, ha="center", va="center", fontsize=fontsize, fontweight=weight)
 
 
+def _draw_minibox(
+    ax,
+    x: float,
+    y: float,
+    w: float,
+    h: float,
+    label: str,
+    sub: str | None = None,
+    *,
+    lw: float = 0.75,
+    fontsize: float = 8.2,
+) -> None:
+    """Uniform white box for academic system diagrams."""
+    ax.add_patch(
+        FancyBboxPatch(
+            (x, y), w, h,
+            boxstyle="round,pad=0.015,rounding_size=0.06",
+            linewidth=lw, edgecolor=IEEE_DARK, facecolor="#ffffff", zorder=2,
+        )
+    )
+    if sub:
+        ax.text(x + w / 2, y + h * 0.60, label, ha="center", va="center",
+                fontsize=fontsize, color=IEEE_DARK, zorder=3)
+        ax.text(x + w / 2, y + h * 0.30, sub, ha="center", va="center",
+                fontsize=fontsize - 1.4, color=IEEE_GRAY, zorder=3)
+    else:
+        ax.text(x + w / 2, y + h / 2, label, ha="center", va="center",
+                fontsize=fontsize, color=IEEE_DARK, zorder=3)
+
+
 def figure_01_framework() -> None:
-    """Vertical pipeline layout — avoids column-width overlap when scaled to \\linewidth."""
+    """Minimal horizontal pipeline — uniform boxes, single-tone arrows."""
     apply_rc()
-    fig_w, fig_h = 7.2, 7.0
+    fig_w, fig_h = 7.15, 2.72
     fig, ax = plt.subplots(figsize=(fig_w, fig_h))
     ax.set_xlim(0, fig_w)
     ax.set_ylim(0, fig_h)
     ax.axis("off")
 
-    cx = fig_w / 2
-    ax.text(cx, 6.72, "PF-STGT Multi-Task Forecasting Framework", ha="center", fontsize=12.5, fontweight="bold", color=IEEE_DARK)
-    ax.plot([0.55, fig_w - 0.55], [6.55, 6.55], color=IEEE_MUTED, linewidth=0.7, alpha=0.5, zorder=0)
+    fs, bh = 8.0, 0.46
+    mid = lambda y: y + bh / 2
+    arr = IEEE_GRAY
+    alw = 1.0
 
-    bw, bh, gap = 2.05, 0.58, 0.24
-    y = 5.72
-    row_w = 3 * bw + 2 * gap
-    x0 = cx - row_w / 2
-    xs = [x0, x0 + bw + gap, x0 + 2 * (bw + gap)]
-    input_labels = [
-        ("Node features", "$T{=}7$, $N{=}9$, $F_n{=}9$"),
-        ("Global context", "$T{=}7$, $F_g{=}17$"),
-        ("Corr. graph $\\mathbf{A}$", "$\\tau{=}0.65$"),
+    # Column guides (subtle, no tinted bands)
+    for x in (2.02, 5.58):
+        ax.plot([x, x], [0.22, 2.38], color=IEEE_MUTED, linewidth=0.45,
+                linestyle=(0, (4, 3)), alpha=0.55, zorder=0)
+    for label, xc in (("Inputs", 1.01), ("Encoding", 3.80), ("Outputs", 6.37)):
+        ax.text(xc, 2.48, label, ha="center", va="bottom",
+                fontsize=7.5, fontweight="bold", color=IEEE_GRAY, zorder=1)
+
+    # --- Inputs ---
+    x_in, bw_in = 0.30, 1.42
+    inputs = [
+        (1.82, "Node features", "$T{=}7$, $N{=}9$, $F_n{=}9$"),
+        (1.18, "Global context", "$T{=}7$, $F_g{=}17$"),
+        (0.54, "Corr. graph $\\mathbf{A}$", "$\\tau{=}0.65$"),
     ]
-    for x, (title, sub) in zip(xs, input_labels):
-        _draw_accent_box(ax, x, y, bw, bh, title, sub, accent=IEEE_ACCENT, fontsize=8.0, bar_w=0.05)
+    for y, title, sub in inputs:
+        _draw_minibox(ax, x_in, y, bw_in, bh, title, sub, fontsize=fs)
 
-    y_emb = 4.55
-    emb_w = 4.55
-    _draw_accent_box(
-        ax,
-        cx - emb_w / 2,
-        y_emb,
-        emb_w,
-        0.68,
-        "Embedding + positional encoding",
-        "node and global tensors",
-        accent=IEEE_BLUE,
-        lw=1.2,
-        bold=True,
-        fontsize=8.5,
-        bar_w=0.05,
-    )
+    # --- Encoding ---
+    x_enc, bw_enc = 2.18, 3.22
+    y_emb = 1.82
+    _draw_minibox(ax, x_enc, y_emb, bw_enc, bh,
+                  "Embedding + positional encoding", "node and global tensors", fontsize=fs)
 
-    y_br = 3.18
-    tw = 2.35
-    _draw_accent_box(ax, cx - tw - 0.28, y_br, tw, 0.62, "Graph transformer", "spatial attention", accent=IEEE_BLUE, fontsize=8.0, bar_w=0.05)
-    _draw_accent_box(ax, cx + 0.28, y_br, tw, 0.62, "Temporal transformer", "lag attention", accent=IEEE_BLUE, fontsize=8.0, bar_w=0.05)
+    tw = 1.46
+    y_tr = 1.02
+    gt_x, tt_x = 2.18, 3.94
+    _draw_minibox(ax, gt_x, y_tr, tw, bh, "Graph transformer", "spatial attention", fontsize=fs)
+    _draw_minibox(ax, tt_x, y_tr, tw, bh, "Temporal transformer", "lag attention", fontsize=fs)
 
-    y_fus = 2.05
-    fus_w = 3.55
-    _draw_accent_box(
-        ax,
-        cx - fus_w / 2,
-        y_fus,
-        fus_w,
-        0.62,
-        "Gated parallel fusion",
-        "spatial + temporal branches",
-        accent=IEEE_GREEN,
-        face="#f0fff4",
-        lw=1.4,
-        bold=True,
-        fontsize=8.5,
-        bar_w=0.05,
-    )
+    fus_w, fus_x, y_fus = 2.12, 2.73, 0.30
+    _draw_minibox(ax, fus_x, y_fus, fus_w, bh,
+                  "Gated parallel fusion", "spatial + temporal branches", fontsize=fs)
 
-    y_out = 0.72
-    ow = 2.55
-    _draw_accent_box(
-        ax,
-        cx - ow - 0.22,
-        y_out,
-        ow,
-        0.68,
-        "Demand head",
-        "9 regional MW",
-        accent=IEEE_GREEN,
-        face="#f0fff4",
-        bold=True,
-        fontsize=8.5,
-        bar_w=0.05,
-    )
-    _draw_accent_box(
-        ax,
-        cx + 0.22,
-        y_out,
-        ow,
-        0.68,
-        "Stress head",
-        "graph-level OSI",
-        accent=IEEE_GREEN,
-        face="#f0fff4",
-        bold=True,
-        fontsize=8.5,
-        bar_w=0.05,
-    )
+    # --- Outputs ---
+    x_out, ow = 5.78, 1.18
+    _draw_minibox(ax, x_out, 1.62, ow, bh, "Demand head", "9 regional MW", fontsize=fs)
+    _draw_minibox(ax, x_out, 0.54, ow, bh, "Stress head", "graph-level OSI", fontsize=fs)
 
-    merge_y = 5.15
-    for i, x in enumerate(xs):
-        if i == 2:
-            continue
-        _arrow(ax, (x + bw / 2, y), (cx, merge_y), color=IEEE_ACCENT, lw=ARROW_LW)
-    _arrow(ax, (cx, merge_y), (cx, y_emb + 0.68), color=IEEE_ACCENT, lw=ARROW_LW)
+    # --- Arrows (single colour, orthogonal) ---
+    bus_x = 1.92
+    ax.plot([bus_x, bus_x], [mid(0.54), mid(1.82)], color=arr, linewidth=alw,
+            solid_capstyle="round", zorder=1)
+    for y_in in (1.82, 1.18, 0.54):
+        ax.plot([x_in + bw_in, bus_x], [mid(y_in), mid(y_in)], color=arr, linewidth=alw, zorder=1)
 
-    _arrow(ax, (cx - 0.55, y_emb), (cx - tw / 2 - 0.28, y_br + 0.62), color=IEEE_BLUE, lw=ARROW_LW)
-    _arrow(ax, (cx + 0.55, y_emb), (cx + tw / 2 + 0.28, y_br + 0.62), color=IEEE_BLUE, lw=ARROW_LW)
-    _arrow_path(
-        ax,
-        [
-            (xs[2] + bw / 2, y),
-            (xs[2] + bw / 2, y_br + 1.05),
-            (cx - tw / 2 - 0.28, y_br + 1.05),
-            (cx - tw / 2 - 0.28, y_br + 0.62),
-        ],
-        color=IEEE_ACCENT,
-        lw=ARROW_LW,
-    )
+    _route_arrow(ax, [(bus_x, mid(1.82)), (x_enc, mid(y_emb))], color=arr, lw=alw)
+    _route_arrow(ax, [(bus_x, mid(0.54)), (bus_x, mid(y_tr)), (gt_x, mid(y_tr))], color=arr, lw=alw)
 
-    _arrow(ax, (cx - tw / 2 - 0.28, y_br), (cx - 0.55, y_fus + 0.62), color=IEEE_GREEN, lw=ARROW_LW_EMPHASIS)
-    _arrow(ax, (cx + tw / 2 + 0.28, y_br), (cx + 0.55, y_fus + 0.62), color=IEEE_GREEN, lw=ARROW_LW_EMPHASIS)
+    emb_cx = x_enc + bw_enc / 2
+    _route_arrow(ax, [(emb_cx - 0.52, y_emb), (emb_cx - 0.52, 0.72),
+                      (gt_x + tw / 2, 0.72), (gt_x + tw / 2, y_tr + bh)], color=arr, lw=alw)
+    _route_arrow(ax, [(emb_cx + 0.52, y_emb), (emb_cx + 0.52, 0.72),
+                      (tt_x + tw / 2, 0.72), (tt_x + tw / 2, y_tr + bh)], color=arr, lw=alw)
 
-    _arrow(ax, (cx - 0.55, y_fus), (cx - ow / 2 - 0.22, y_out + 0.68), color=IEEE_GREEN, lw=ARROW_LW_EMPHASIS)
-    _arrow(ax, (cx + 0.55, y_fus), (cx + ow / 2 + 0.22, y_out + 0.68), color=IEEE_GREEN, lw=ARROW_LW_EMPHASIS)
+    _route_arrow(ax, [(gt_x + tw / 2, y_tr), (gt_x + tw / 2, 0.64),
+                      (fus_x + fus_w * 0.28, 0.64), (fus_x + fus_w * 0.28, y_fus + bh)], color=arr, lw=alw)
+    _route_arrow(ax, [(tt_x + tw / 2, y_tr), (tt_x + tw / 2, 0.64),
+                      (fus_x + fus_w * 0.72, 0.64), (fus_x + fus_w * 0.72, y_fus + bh)], color=arr, lw=alw)
 
-    ax.text(
-        cx,
-        0.18,
-        "Frozen S2: correlation-only graph; seven-day lookback; dual-task decoding",
-        ha="center",
-        fontsize=7.8,
-        style="italic",
-        color=IEEE_GRAY,
-    )
+    out_bus = 5.52
+    fus_rx = fus_x + fus_w
+    _route_arrow(ax, [(fus_rx, mid(y_fus)), (out_bus, mid(y_fus)),
+                      (out_bus, mid(1.62)), (x_out, mid(1.62))], color=arr, lw=alw)
+    _route_arrow(ax, [(fus_rx, mid(y_fus)), (out_bus, mid(y_fus)),
+                      (out_bus, mid(0.54)), (x_out, mid(0.54))], color=arr, lw=alw)
 
     export_triple(fig, FIG / "figure_01_framework")
     plt.close(fig)
