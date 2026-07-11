@@ -1,0 +1,44 @@
+\section{Methodology}\label{sec:methodology}
+
+\subsection{Problem Formulation}
+
+Let $\mathcal{V} = \{1, \ldots, N\}$ denote $N{=}9$ administrative divisions. At forecast origin $t$, the model receives a lookback window of $T{=}7$ days and predicts targets at horizon $H{=}1$. Node features $\mathbf{X}^{\mathrm{node}} \in \mathbb{R}^{T \times N \times F_n}$ ($F_n{=}9$) encode division-level demand, supply, load, lags, rolling means, and regional shares. Global features $\mathbf{X}^{\mathrm{global}} \in \mathbb{R}^{T \times F_g}$ ($F_g{=}17$) encode calendar indicators, grid aggregates, limitation variables, and national generation scalars. Task~1 outputs regional demand $\hat{\mathbf{y}}^{\mathrm{demand}} \in \mathbb{R}^N$ (MW); Task~2 outputs graph-level OSI $\hat{y}^{\mathrm{osi}} \in [0,1]$.
+
+OSI combines three train-normalised components:
+\begin{align}
+c_1 &= L_{\mathrm{total}}/D_{\mathrm{total}}, \nonumber\\
+c_2 &= 1 - GR/\mathrm{Highest\_Gen}, \nonumber\\
+c_3 &= \mathrm{TOL}/\mathrm{Highest\_Gen}, \nonumber\\
+\mathrm{OSI} &= \mathrm{mean}\bigl(\mathrm{minmax}_{\mathrm{train}}(c_1),\,
+\mathrm{minmax}_{\mathrm{train}}(c_2), \nonumber\\
+&\quad \mathrm{minmax}_{\mathrm{train}}(c_3)\bigr),
+\end{align}
+where $L_{\mathrm{total}}$, $D_{\mathrm{total}}$, $GR$, and $\mathrm{TOL}$ are total shedding, demand, generation reserve, and operational limitation. Component $c_1$ tracks shedding relative to demand, $c_2$ captures reserve shortfall, and $c_3$ reflects limitation pressure. Regressing a continuous OSI preserves graded stress even on days without shedding. When forecasting $\mathrm{OSI}(t{+}1)$, same-day OSI is excluded from inputs to avoid leakage.
+
+The training objective pairs macro-averaged Huber loss on demand \cite{Huber1964RobustEstimation} with MSE on OSI:
+\begin{equation}
+\mathcal{L} = \mathcal{L}_{\mathrm{demand}}^{\mathrm{raw}}/100 + \lambda_2 \, \mathcal{L}_{\mathrm{osi}}, \quad \lambda_2 = 20.
+\label{eq:loss}
+\end{equation}
+Raw demand loss is on the order of hundreds of megawatts, so without scaling it overwhelms the bounded OSI term and the model effectively trains as demand-only. Dividing by 100~MW and setting $\lambda_2{=}20$ brings both heads onto a comparable gradient scale.
+
+\subsection{Dataset and Graph Construction}
+
+We use the Bangladesh Smart Grid dataset (Mendeley Data, Version~5) \cite{Hossain2025BangladeshSmartGrid}: 1,850 daily records from Nov.\ 2019 to Dec.\ 2024 across nine divisions. Chronological splitting yields 1,281 training, 263 validation, and 264 test sliding windows (Table~\ref{tab:setup}). Scaling, encoding, graph weights, and OSI bounds are fit on training data only.
+
+Evening-peak demand across divisions moves together more through shared national growth and seasonality than through border adjacency. We therefore build a data-driven graph: pairwise Pearson correlations $\rho_{ij}$ on training demand define undirected edges where $\rho_{ij} \geq 0.65$, weighted by $\rho_{ij}$ and row-normalised to form $\mathbf{A}$. This correlation graph keeps 33 of 36 possible pairs. Geographical adjacency (21 pairs) and hybrid adjacency (24 pairs) are retained only for ablation comparisons.
+
+\input{tables/table_01_setup}
+
+\subsection{PF-STGT Architecture}
+
+Fig.~\ref{fig:1} shows the full pipeline; Fig.~\ref{fig:2} details the selected S2 configuration. Node and global tensors pass through embedding layers with regional identity and positional encoding. A \emph{spatial branch} applies graph-transformer self-attention over nodes at each timestep with additive bias from $\mathbf{A}$:
+\begin{equation}
+\mathrm{Attn}_{\mathrm{spatial}}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) =
+\mathrm{softmax}\!\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d}} + \mathbf{B}_{\mathrm{adj}}\right)\mathbf{V}.
+\label{eq:spatial}
+\end{equation}
+A \emph{temporal branch} runs a shared transformer encoder over each division's seven-day sequence. Learnable gating merges the two branches instead of fixing a spatial-then-temporal order, so the model can emphasise cross-division synchronisation or within-division persistence as needed. The final timestep produces shared node embeddings $\mathbf{H}_{\mathrm{shared}}$. A per-node linear head predicts regional demand; a graph-level head pools node states with global context and outputs OSI through a bounded activation. Both tasks share the encoder and differ only in the decoding layers.
+
+\input{figures/figure_01.tex}
+\input{figures/figure_02.tex}

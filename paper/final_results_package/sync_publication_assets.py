@@ -10,6 +10,7 @@ PKG = Path(__file__).resolve().parent
 SRC = PKG / "figures"
 LATEX = PKG.parent / "latex" / "figures"
 CONF = PKG.parent / "conference" / "figures"
+OVERLEAF = PKG.parent / "conference_overleaf" / "figures"
 
 # Basename -> extensions to copy (PDF preferred in wrappers; PNG for Overleaf heatmap fallback)
 ASSETS = {
@@ -41,8 +42,8 @@ def _copy_tree(dest: Path) -> list[str]:
 
 
 def main() -> None:
-    copied = _copy_tree(LATEX) + _copy_tree(CONF)
-    print(f"Synced {len(copied)} assets to latex/ and conference/ figures/")
+    copied = _copy_tree(LATEX) + _copy_tree(CONF) + _copy_tree(OVERLEAF)
+    print(f"Synced {len(copied)} assets to latex/, conference/, and conference_overleaf/ figures/")
     for p in sorted(set(copied)):
         print(f"  {p}")
 

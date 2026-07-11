@@ -11,6 +11,8 @@
 \usepackage{array}
 \usepackage{url}
 \usepackage{xurl}
+\usepackage[hidelinks,breaklinks]{hyperref}
+\hypersetup{urlcolor=black,linkcolor=black,citecolor=black}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -45,11 +47,11 @@
 \maketitle
 
 \begin{abstract}
-Day-ahead grid planning needs both regional load forecasts and a view of system-wide operational pressure, yet these are often produced by separate tools. In Bangladesh, daily records from nine divisions report evening-peak load together with limitation, reserve, and shedding fields, which makes joint forecasting a natural fit. We build a Parallel-Fusion Spatio-Temporal Graph Transformer (PF-STGT) that reads a seven-day lookback with a train-estimated correlation graph and predicts regional demand and a bounded Operational Stress Index (OSI) from shared encoding and task-specific heads. On a held-out test year, correlation-graph configuration S2 gives the best joint results in our suite: macro demand MAE 88.65~MW and OSI $R^2$ 0.745, with significant demand improvement over the historical hybrid reference (median $\Delta$MAE $-$5.43~MW, $p = 5.5 \times 10^{-5}$). Ablations favour correlation adjacency over geographical or hybrid graphs and show a trade-off between demand-only accuracy and joint stress output. Post-hoc attribution highlights limitation and calendar coalitions, with only partial agreement across methods. All results are from offline chronological evaluation on Bangladesh division-level data; field deployment is left to future work.
+Day-ahead grid planning requires both regional load forecasts and view of system-wide operational pressure, yet these are regularly produced by individual tools. In Bangladesh, daily records from nine divisions present evening-peak load together with reserve, limitation, and shedding fields, which produces joint forecasting a realistic fit. We build a parallel-Fusion Spatio Temporal Graph Transformer (PF-STGT) that interprets a seven-day lookback with a train-estimated correlation graph and predicts regional demand and a restricted Operational Stress Index (OSI) from joint encoding and task-specific heads. On a held-out test year, correlation-graph configuration S2 provides the highest-performing joint outcomes in our suite: macro demand MAE 88.65~MW and OSI $R^2$ 0.745, with remarkable demand enhancement over the historical hybrid reference (median $\Delta$MAE $-$5.43~MW, $p = 5.5 \times 10^{-5}$). Ablation supports correlation adjacency over geographical or hybrid graphs and illustrates a trade-off among demand-only accuracy and joint stress output. Post-hoc attribution emphasizes limitation and calendar coalitions, with only moderate consistency across methods. All outcomes are from offline chronological assessment on Bangladesh division-level data; field execution is left to future work. 
 \end{abstract}
 
 \begin{IEEEkeywords}
-Multi-task learning, spatio-temporal forecasting, operational stress index, correlation graph, smart grid, Bangladesh
+Spatio-temporal forecasting, Multi-task learning, operational stress index, smart grid, correlation graph, Bangladesh
 \end{IEEEkeywords}
 
 \input{sections/01_introduction}

@@ -1,0 +1,22 @@
+\begin{table}[!htbp]
+\caption{Dataset properties and S2 training configuration.}
+\label{tab:setup}
+\begin{center}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Dataset} & \textbf{Value} & \textbf{Training} & \textbf{Value} \\
+\hline
+Divisions ($N$) & 9 & Optimiser & Adam, lr $5{\times}10^{-4}$ \\
+Window ($T$) / horizon & 7 / 1 day & Batch / epochs & 32 / $\leq$200 \\
+Node / global features & 9 / 17 & $\lambda_2$ (Eq.~\ref{eq:loss}) & 20.0 \\
+Train / val / test windows & 1281 / 263 / 264 & Parameters & 749,058 \\
+Graph edges ($\tau{=}0.65$) & 33 / 36 pairs & Early stop & Patience 15 \\
+\hline
+\end{tabular}%
+}
+\end{center}
+\end{table}

@@ -28,12 +28,12 @@ IEEEtran.cls
 bibliography/12_References.bib
 sections/*.tex
 tables/*.tex
-figures/figure_01_tikz.tex
-figures/figure_02_tikz.tex
-figures/ieee_fig_colors.tex
+figures/figure_01_framework.pdf
+figures/figure_02_s2_architecture.pdf
 figures/figure_04_benchmark_comparison.pdf
 figures/figure_05_ablation_comparison.pdf
-figures/figure_07_node_importance.png   ← real 67 KB PNG, not symlink
+figures/figure_06_dual_shap.pdf
+figures/figure_07_node_importance.png   ← real PNG, not symlink
 ```
 
 ## Rebuild zip locally

@@ -1,0 +1,15 @@
+\section{Experimental Setup}\label{sec:experimental_setup}
+
+\subsection{Baselines and Metrics}
+
+We compare the selected model S2 against seven references: linear regression, random forest \cite{Breiman2001RandomForest}, XGBoost \cite{Chen2016XGBoost}, LSTM \cite{Hochreiter1997LSTM}, GRU \cite{Cho2014GRU}, T-GCN \cite{Zhao2020TGCN}, and the historical PF-STGT reference B07 (hybrid geographical--correlation graph, W20 protocol). All models use the same chronological splits, feature store, windowing ($T{=}7$, $H{=}1$), and leakage rules, so differences reflect model design rather than preprocessing choices.
+
+For Task~1 we report macro-averaged MAE (primary metric), RMSE, MAPE, and $R^2$ across nine divisions. Macro MAE is our main ranking criterion because dispatch planning cares about absolute megawatt error, not variance explained alone. Task~2 is scored with MAE and $R^2$ on OSI. We run paired Wilcoxon signed-rank tests \cite{Wilcoxon1945SignedRank} on per-window macro demand MAE with Bonferroni correction \cite{Dunn1961Bonferroni}, and report bootstrap 95\% confidence intervals \cite{Efron1993Bootstrap} and Cohen's $d$ \cite{Cohen1988StatisticalPower}. Hypothesis tests focus on demand MAE because that is the primary selection criterion; OSI results are reported as point estimates.
+
+\subsection{Training Configuration}
+
+S2 is trained with Adam \cite{Kingma2015Adam} ($\eta{=}5{\times}10^{-4}$, weight decay $10^{-4}$), batch size 32, up to 200 epochs with early stopping (patience 15 on composite validation score), and gradient clipping at 1.0. Model size is $d_{\mathrm{model}}{=}128$, four heads, two spatial and two temporal layers (749,058 parameters). Deep baselines use AdamW for up to 60 epochs; classical models use training-set standardisation only. All runs use seed 42.
+
+\subsection{Ablation Design}
+
+Six PF-STGT configurations (A1--A6) isolate graph topology (none, geographical, hybrid, correlation-only), transformer removal, and single-task demand-only training. A1 matches B07; A6 matches S2. Together they show how much each design choice contributes to demand and OSI performance.
